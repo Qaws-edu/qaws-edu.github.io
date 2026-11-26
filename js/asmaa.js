@@ -2,7 +2,7 @@
    الصور: assets/asmaa/asmaa-exact.png (صورة واحدة بلا أي تعديل، والتنوع بالحركة والموضع والجمل فقط)
    لإضافة وضع جديد أضف اسمه في POSES. لتغيير حركتها عدّل SCREENS. */
 (function(){
-var DIR='assets/asmaa/'; var V='?v=20261127-5';
+var DIR='assets/asmaa/'; var V='?v=20261127-6';
 var GROUPS=['wave','point','cheer','think','book'];
 var FILE='asmaa-exact'; var POSES=[FILE];
 function grp(k){return GROUPS.indexOf(k)>-1?k:null;}
@@ -17,7 +17,9 @@ var SCREENS={
   progress:[{say:'progress'},{say:'progressGo',wait:5500}],
   stage:[{say:'stage'},{say:'stageGo',wait:5500}],
   lesson:[{say:'lesson'},{say:'lessonGo',wait:5500}],
-  test:[{say:'test'},{say:'testGo',wait:5500}]
+  test:[{say:'test'},{say:'testGo',wait:5500}],
+  profiles:[{say:'profiles'},{say:'progressGo',wait:5500}],
+  parent:[{say:'parent'},{say:'progressGo',wait:5500}]
 };
 /* مجموعات الجمل: تدور الجمل ولا تتكرر الجملة نفسها مرتين متتاليتين */
 var POOLS={
@@ -32,6 +34,8 @@ var POOLS={
   test:['ركّز جيدًا، أنت قادر على ذلك','فكّر قبل أن تجيب','تذكّر ما تعلّمته'],
   testGo:['بعد أن تجيب، سلّم إجاباتك','عندما تنتهي، اضغط هنا','راجع إجاباتك ثم سلّمها'],
   progress:['كل خطوة تقرّبك من الإتقان','انظر كم تقدّمت حتى الآن','تقدّمك يسعدني كثيرًا'],
+  profiles:['لكل واحد ملفه وتقدّمه الخاص','هنا تُدار الملفات الشخصية'],
+  parent:['تابع التقدّم أولًا بأول','هنا ترى نشاط كل ملف'],
   progressGo:['واصل، فالإنجاز قريب','هيا نضيف خطوة جديدة','أنت تتقدّم بثبات'],
   tap:['أحسنت، أنا هنا معك','هيا بنا نتعلّم','أنت تتقدّم بثبات','استمر، أنت رائع','أنا سعيدة برؤيتك','لا تتوقف، أنت على الطريق'],
   pick:['فكّر جيدًا قبل أن تثبّت إجابتك','اختيار جيد، هل أنت متأكد؟','خذ لحظة وراجع اختيارك','حسنًا، تابع بقية الأسئلة'],

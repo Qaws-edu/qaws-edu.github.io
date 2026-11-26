@@ -383,3 +383,90 @@ footer{background:linear-gradient(180deg,#EDE4CC,#E2D7B8);color:var(--ink)}
 .c-body[data-mood=point]{animation:mShake .6s ease-in-out 1,breathe 4.2s .6s ease-in-out infinite}
 .c-body[data-mood=book]{animation:mNod .9s ease-in-out 1,breathe 4.2s .9s ease-in-out infinite}
 .companion{width:108px}
+
+/* ===== ماذا سنتعلّم؟ tiles ===== */
+.cards{padding-top:0}
+.cards .section-title.sm{margin-bottom:14px}
+.tiles3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.tile3{background:linear-gradient(180deg,#fff,var(--cream));border:2.5px solid rgba(74,59,110,.16);border-radius:22px;box-shadow:0 5px 0 rgba(74,59,110,.12);padding:14px 8px 12px;text-align:center}
+.tile3 .tic{width:64px;height:64px;margin:0 auto 8px}
+.tile3 .tic svg{width:100%;height:100%}
+.tile3 h3{font-size:15px;margin-bottom:5px}
+.tile3 p{font-size:11.5px;line-height:1.5;margin:0}
+.tplay{display:inline-block;margin-top:9px;background:linear-gradient(180deg,#FFE48A,var(--yellow));color:#6A3F00;border-radius:99px;padding:3px 12px;font-family:'Almarai';font-weight:800;font-size:11.5px;box-shadow:0 3px 0 rgba(74,59,110,.18)}
+
+/* ===== بطاقة مس أسماء ===== */
+.acard{position:relative;margin:16px 18px 0;border-radius:26px;overflow:hidden;min-height:168px;background:linear-gradient(180deg,#CBE4F7,#EAF5FC 68%,#B9E3A4 68%,#9CD285);border:2px solid rgba(74,59,110,.12);box-shadow:var(--shadow-s)}
+.acard .abub{position:relative;z-index:2;display:inline-block;margin:16px 0 0;padding:9px 16px;margin-inline-end:14px;background:#fff;border-radius:16px 16px 4px 16px;font-family:'Almarai';font-weight:800;font-size:15.5px;color:var(--ink);box-shadow:var(--shadow-s);max-width:58%}
+.acard .aimg{position:absolute;bottom:-4px;inset-inline-start:8px;height:158px;width:auto;filter:drop-shadow(0 4px 5px rgba(74,59,110,.25))}
+
+/* ===== صورة الملف في الهيدر ===== */
+.havatar{width:42px;height:42px;border-radius:50%;overflow:hidden;background:#fff;border:2.5px solid rgba(74,59,110,.18);box-shadow:var(--shadow-s);display:flex;align-items:center;justify-content:center;flex:none}
+.havatar img{width:100%;height:100%;object-fit:cover}
+.avsvg{display:block;width:100%;height:100%}
+.avsvg svg{width:100%;height:100%;display:block}
+
+/* ===== زر مرحلتي ===== */
+.stage{position:relative}
+.pick{position:absolute;top:10px;inset-inline-end:10px;z-index:2;background:#fff;border:2px solid rgba(74,59,110,.22);border-radius:99px;padding:3px 12px;font-family:'Almarai';font-weight:800;font-size:12px;color:var(--ink);box-shadow:var(--shadow-s);cursor:pointer}
+.pick:active{transform:translateY(2px)}
+.pickme{position:absolute;top:10px;inset-inline-end:10px;z-index:2;background:linear-gradient(180deg,#B9E3A4,var(--green));border-radius:99px;padding:4px 13px;font-family:'Almarai';font-weight:800;font-size:12px;color:#0B4A28;box-shadow:var(--shadow-s)}
+.chlink{display:inline-block;margin-top:6px;font-family:'Almarai';font-weight:800;font-size:13px;color:var(--ink);text-decoration:underline}
+
+/* ===== صفوف الوحدات ===== */
+.urow{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid rgba(74,59,110,.1);border-radius:18px;box-shadow:var(--shadow-s);padding:10px 14px;margin-bottom:10px}
+.urow .un2{width:38px;height:38px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-family:'Almarai';font-weight:800;font-size:17px;color:var(--ink);box-shadow:var(--hi),var(--shadow-s)}
+.urow .um{flex:1}
+.urow .um h4{font-family:'Almarai';font-weight:800;font-size:15px;margin-bottom:5px}
+.urow .upct{font-family:'Almarai';font-weight:800;font-size:14px;color:var(--ink-soft);flex:none}
+
+/* ===== حالة فارغة ===== */
+.emptybox{text-align:center;padding:14px 24px 6px}
+.emptybox h2{font-family:'Cairo';font-weight:800;font-size:21px;margin-bottom:8px}
+.emptybox p{font-family:'Tajawal';font-size:15px;color:var(--ink-soft);line-height:1.7;max-width:300px;margin:0 auto}
+.emptynote{text-align:center;font-family:'Tajawal';font-size:14.5px;color:var(--ink-soft);padding:14px 0 6px}
+
+/* ===== الملفات الشخصية ===== */
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px 18px 4px}
+.pcard{background:#fff;border:2.5px solid rgba(74,59,110,.14);border-radius:22px;box-shadow:var(--shadow-s);padding:14px 10px;text-align:center;cursor:pointer}
+.pcard.on{border-color:var(--green);box-shadow:0 0 0 2px rgba(156,210,133,.45),var(--shadow-s)}
+.pcard .pav{width:64px;height:64px;border-radius:50%;overflow:hidden;margin:0 auto 8px;background:#fff;border:2px solid rgba(74,59,110,.14)}
+.pcard .pav img{width:100%;height:100%;object-fit:cover}
+.pcard h3{font-size:16px}
+.pcard .psub{font-family:'Tajawal';font-size:12px;color:var(--ink-soft);margin-top:2px}
+.pcard .pedit{display:inline-block;margin-top:8px;background:#EFE8D6;border-radius:12px;padding:3px 14px;font-family:'Almarai';font-weight:800;font-size:12.5px;color:var(--ink)}
+
+/* ===== تعديل الملف ===== */
+.editbox{text-align:center;padding-bottom:8px}
+.bigav{width:110px;height:110px;border-radius:50%;overflow:hidden;border:3px solid rgba(74,59,110,.2);box-shadow:var(--shadow-s);margin:18px auto 12px;background:#fff}
+.bigav img{width:100%;height:100%;object-fit:cover}
+.namein{width:100%;max-width:300px;display:block;margin:0 auto 16px;background:#fff;border:2.5px solid rgba(74,59,110,.18);border-radius:16px;padding:10px 16px;font-family:'Almarai';font-weight:800;font-size:17px;color:var(--ink);text-align:center;outline:none}
+.namein:focus{border-color:var(--blue)}
+.minih{font-family:'Cairo';font-weight:800;font-size:17px;text-align:start;margin-bottom:4px}
+.avpick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:12px 0 6px}
+.avpick button{border-radius:50%;border:3px solid transparent;padding:0;background:#fff;box-shadow:var(--shadow-s);cursor:pointer;aspect-ratio:1;overflow:hidden}
+.avpick button svg{width:100%;height:100%;display:block}
+.avpick button.sel{border-color:var(--green)}
+.uploadbtn{margin-top:14px}
+
+/* ===== متابعة التقدّم ===== */
+.pchips{display:flex;gap:10px;overflow-x:auto;padding:14px 18px 4px}
+.pchip{display:flex;align-items:center;gap:7px;background:#fff;border:2.5px solid rgba(74,59,110,.14);border-radius:99px;padding:4px 12px 4px 12px;box-shadow:var(--shadow-s);cursor:pointer;font-family:'Almarai';font-weight:800;font-size:14px;color:var(--ink);flex:none}
+.pchip.on{border-color:var(--yellow);background:#FFF6E0}
+.pchip .cav{width:30px;height:30px;border-radius:50%;overflow:hidden;flex:none}
+.pchip .cav img{width:100%;height:100%;object-fit:cover}
+.phead{text-align:center}
+.pname{font-family:'Cairo';font-weight:800;font-size:22px}
+.stgbadge{display:inline-block;margin-top:6px;background:linear-gradient(180deg,#FFE48A,var(--yellow));color:#6A3F00;border-radius:99px;padding:3px 16px;font-family:'Almarai';font-weight:800;font-size:13px;box-shadow:var(--shadow-s)}
+.parentbar{max-width:330px;margin:16px auto 18px}
+.tl{position:relative;padding-inline-start:22px;margin-top:4px}
+.tl:before{content:"";position:absolute;top:6px;bottom:6px;inset-inline-start:6px;width:3px;background:rgba(74,59,110,.18);border-radius:2px}
+.tl .ev{position:relative;background:#fff;border:2px solid rgba(74,59,110,.1);border-radius:16px;box-shadow:var(--shadow-s);padding:10px 14px;margin-bottom:10px}
+.tl .ev:before{content:"";position:absolute;top:15px;inset-inline-start:-21px;width:11px;height:11px;border-radius:50%;background:var(--yellow);border:2px solid #fff;box-shadow:0 0 0 2px rgba(74,59,110,.2)}
+.tl .ev .et{font-family:'Almarai';font-weight:800;font-size:14.5px;color:var(--ink)}
+.tl .ev .ed{font-family:'Tajawal';font-size:12px;color:var(--ink-soft);margin-top:2px}
+
+/* ===== زر اللعبة داخل الدرس ===== */
+.gbtn{display:flex;align-items:center;justify-content:center;gap:10px;background:#fff;border:2.5px solid rgba(74,59,110,.16);border-radius:22px;box-shadow:var(--shadow-s);padding:10px;margin:0 0 14px;font-family:'Almarai';font-weight:800;font-size:16.5px;color:var(--ink)}
+.gbtn svg{width:30px;height:30px;flex:none}
+.gbtn:active{transform:translateY(3px)}

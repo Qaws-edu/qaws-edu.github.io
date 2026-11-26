@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>لعبة الحروف — قَوْس</title>
+<link rel="stylesheet" href="css/fonts.css?v=20261127-6">
+<link rel="stylesheet" href="css/style.css?v=20261127-6">
+<style>
+html,body{height:100%;overflow:hidden}
+#sky{position:fixed;inset:0;background:linear-gradient(180deg,#BEE3F5 0%,#DFF2F7 45%,var(--cream) 100%);touch-action:none;user-select:none;-webkit-user-select:none}
+.cloud{position:absolute;background:#fff;border-radius:99px;opacity:.9;box-shadow:var(--shadow-s)}
+.cloud:before,.cloud:after{content:'';position:absolute;background:#fff;border-radius:50%}
+.cl1{width:86px;height:26px;top:12%;inset-inline-start:8%}
+.cl1:before{width:34px;height:34px;top:-16px;inset-inline-start:14px}
+.cl1:after{width:24px;height:24px;top:-10px;inset-inline-start:44px}
+.cl2{width:64px;height:20px;top:24%;inset-inline-end:10%}
+.cl2:before{width:26px;height:26px;top:-12px;inset-inline-start:12px}
+.cl2:after{width:18px;height:18px;top:-7px;inset-inline-start:34px}
+.sun{position:absolute;top:8%;inset-inline-end:14%;width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFE9A8,#FFD25E);box-shadow:0 0 24px rgba(255,210,94,.5)}
+#hud{position:absolute;top:12px;inset-inline:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;z-index:5}
+#exitbtn{background:#fff;border:2.5px solid rgba(74,59,110,.16);border-radius:20px;box-shadow:0 4px 0 rgba(74,59,110,.12);padding:10px 15px;font-family:'Almarai';font-weight:800;font-size:15px;color:var(--ink);cursor:pointer}
+#exitbtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(74,59,110,.12)}
+#score{background:#fff;border:2.5px solid rgba(74,59,110,.16);border-radius:20px;box-shadow:0 4px 0 rgba(74,59,110,.12);padding:8px 14px;display:flex;align-items:center;gap:7px;font-family:'Almarai';font-weight:800;font-size:19px;color:var(--ink)}
+#score svg{width:22px;height:22px}
+#target{background:#fff;border:2.5px solid rgba(74,59,110,.16);border-radius:20px;box-shadow:0 4px 0 rgba(74,59,110,.12);padding:8px 20px;display:flex;align-items:center;gap:12px;font-family:'Almarai';font-weight:800;font-size:17px;color:var(--ink)}
+#target .tl{font-family:'Cairo';font-weight:800;font-size:34px;color:var(--coral);line-height:1;background:#FFF6E0;border-radius:12px;padding:4px 14px}
+.lchip{position:absolute;left:0;top:0;width:54px;height:54px;border-radius:50%;background:linear-gradient(180deg,#fff,#F4EBD8);border:2.5px solid rgba(74,59,110,.25);box-shadow:0 4px 0 rgba(74,59,110,.14);display:flex;align-items:center;justify-content:center;font-family:'Cairo';font-weight:800;font-size:28px;color:var(--ink);will-change:transform;z-index:3}
+.lchip.hit{transition:opacity .3s,scale .3s;opacity:0;scale:1.5}
+.lchip.nope{animation:wob .4s}
+@keyframes wob{25%{margin-inline-start:-7px}75%{margin-inline-start:7px}}
+#asmaa{position:absolute;left:0;bottom:8px;width:120px;will-change:transform;z-index:4;pointer-events:none;filter:drop-shadow(0 4px 4px rgba(8,60,80,.2))}
+#bubble{position:absolute;bottom:150px;z-index:6;background:#fff;border:2.5px solid rgba(74,59,110,.18);border-radius:18px 18px 18px 4px;padding:8px 16px;font-family:'Almarai';font-weight:800;font-size:17px;color:var(--ink);box-shadow:var(--shadow-s);opacity:0;transition:opacity .25s;pointer-events:none}
+#bubble.on{opacity:1}
+.spark{position:absolute;z-index:6;pointer-events:none;font-size:0}
+.spark i{position:absolute;width:8px;height:8px;border-radius:50%}
+#startov{position:fixed;inset:0;background:rgba(255,251,240,.82);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:10}
+#startov .panel{background:#fff;border:2.5px solid rgba(74,59,110,.18);border-radius:28px;box-shadow:var(--shadow);padding:26px 26px 22px;text-align:center;max-width:320px}
+#startov h1{font-size:24px;margin-bottom:8px}
+#startov p{font-family:'Tajawal';font-size:15px;color:#6f6392;margin-bottom:14px;line-height:1.7}
+#ground{position:absolute;bottom:0;inset-inline:0;height:26px;background:linear-gradient(180deg,#B7E3A0,#9AD084);border-top:3px solid rgba(74,59,110,.14);z-index:2}
+</style>
+</head>
+<body>
+<div id="sky">
+  <div class="sun"></div>
+  <div class="cloud cl1"></div>
+  <div class="cloud cl2"></div>
+  <div id="hud"><button id="exitbtn" type="button">→ خروج</button><div id="target"><span>أمسك الحرف</span><span class="tl" id="tletter">ب</span></div><div id="score"><svg viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="#FFD25E" stroke="#4A3B6E" stroke-width="2" stroke-linejoin="round"/></svg><span id="scn">٠</span></div></div>
+  <div id="bubble">أحسنت!</div>
+  <img id="asmaa" src="assets/asmaa/asmaa-exact.png" alt="">
+  <div id="ground"></div>
+</div>
+<div id="startov"><div class="panel">
+  <h1>لعبة الحروف</h1>
+  <p>حروف عربية تنزل من السماء. حرّك مس أسماء يمينًا ويسارًا بإصبعك لتمسك الحرف المطلوب.</p>
+  <button class="cta green" id="startbtn">ابدأ اللعب</button>
+  <div style="margin-top:12px"><button id="exitbtn2" type="button" style="background:none;border:0;font-family:'Almarai';font-weight:800;font-size:14.5px;color:#7D7592;cursor:pointer;text-decoration:underline">→ خروج</button></div>
+</div></div>
+<script>
+(function(){
+var sky=document.getElementById('sky'), asmaa=document.getElementById('asmaa'),
+    bub=document.getElementById('bubble'), tletter=document.getElementById('tletter');
+var LETTERS='ابتثجحخدذرزسشصضطظعغفقكلمنهوي'.split('');
+var W=0,H=0,ax=0,tx=0,chips=[],target='ب',running=false,last=0,spawnT=0,spawnN=0,bubT=null,score=0;
+var scn=document.getElementById('scn');
+function ar(n){return String(n).replace(/\d/g,function(d){return '٠١٢٣٤٥٦٧٨٩'[d];});}
+function goBack(){if(window.history.length>1){window.history.back();}else{location.href='index.html';}}
+document.getElementById('exitbtn').onclick=goBack;
+document.getElementById('exitbtn2').onclick=goBack;
+function size(){W=sky.clientWidth;H=sky.clientHeight;ax=ax||W/2;asmaa.style.transform='translateX('+(ax-60)+'px)';}
+window.addEventListener('resize',size);size();
+function pop(){try{var ctx=pop.ctx||(pop.ctx=new (window.AudioContext||window.webkitAudioContext)());
+var o=ctx.createOscillator(),g=ctx.createGain();o.type='triangle';
+o.frequency.setValueAtTime(480,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(920,ctx.currentTime+.09);
+g.gain.setValueAtTime(.22,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.16);
+o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.17);}catch(e){}}
+function say(t){bub.textContent=t;bub.classList.add('on');clearTimeout(bubT);bubT=setTimeout(function(){bub.classList.remove('on')},1100);
+  bub.style.insetInlineStart=Math.min(Math.max(ax-50,8),W-120)+'px';}
+function newTarget(){var prev=target;while(target===prev)target=LETTERS[Math.floor(Math.random()*LETTERS.length)];tletter.textContent=target;}
+function spawn(){spawnN++;var isT=(spawnN%3===0)||!chips.some(function(c){return c.ch===target});
+  var ch=isT?target:LETTERS.filter(function(l){return l!==target})[Math.floor(Math.random()*(LETTERS.length-1))];
+  var el=document.createElement('div');el.className='lchip';el.textContent=ch;
+  var x=30+Math.random()*(W-60);sky.appendChild(el);
+  chips.push({el:el,ch:ch,x:x,y:-60,vy:55+Math.random()*35,vx:(Math.random()-0.5)*14});}
+function sparkle(x,y){var s=document.createElement('div');s.className='spark';s.style.left=x+'px';s.style.top=y+'px';
+  var cols=['#FFD25E','#F29682','#5BB5F0','#A6E8BA'];
+  for(var i=0;i<8;i++){var d=document.createElement('i');d.style.background=cols[i%4];
+    var a=i/8*Math.PI*2;d.style.transition='transform .5s ease-out,opacity .5s';s.appendChild(d);
+    requestAnimationFrame(function(dd,aa){return function(){dd.style.transform='translate('+Math.cos(aa)*34+'px,'+Math.sin(aa)*34+'px)';dd.style.opacity='0';};}(d,a));}
+  sky.appendChild(s);setTimeout(function(){s.remove()},600);}
+function frame(t){if(!running)return;var dt=Math.min((t-last)/1000,.05);last=t;
+  ax+=(tx-ax)*Math.min(1,dt*10);
+  asmaa.style.transform='translateX('+(ax-60)+'px)';
+  spawnT+=dt;if(spawnT>1.7&&chips.length<6){spawnT=0;spawn();}
+  for(var i=chips.length-1;i>=0;i--){var c=chips[i];c.y+=c.vy*dt;c.x+=c.vx*dt;
+    if(c.x<28||c.x>W-28)c.vx*=-1;
+    c.el.style.transform='translate('+(c.x-27)+'px,'+(c.y-27)+'px)';
+    var ay=H-130;
+    if(c.y>ay&&c.y<ay+85&&Math.abs(c.x-ax)<62){
+      if(c.ch===target){pop();sparkle(c.x,c.y);say('أحسنت!');score++;scn.textContent=ar(score);c.el.classList.add('hit');setTimeout(function(e){return function(){e.remove()};}(c.el),300);chips.splice(i,1);newTarget();}
+      else{c.el.classList.remove('nope');void c.el.offsetWidth;c.el.classList.add('nope');c.vy=-70;c.vx=(c.x<ax?-1:1)*50;}
+      continue;}
+    if(c.y>H+40){c.el.remove();chips.splice(i,1);}}
+  requestAnimationFrame(frame);}
+function point(x){tx=Math.min(Math.max(x,60),W-60);}
+sky.addEventListener('pointermove',function(e){if(e.pressure>0||e.buttons>0||e.pointerType!=='mouse')point(e.clientX);});
+sky.addEventListener('pointerdown',function(e){point(e.clientX);});
+sky.addEventListener('touchmove',function(e){e.preventDefault();point(e.touches[0].clientX);},{passive:false});
+document.getElementById('startbtn').onclick=function(){document.getElementById('startov').remove();running=true;last=performance.now();spawn();requestAnimationFrame(frame);};
+/* demo hook for screenshots/recording */
+window.G={setAx:function(x){tx=x;ax=x;asmaa.style.transform='translateX('+(ax-60)+'px)';},
+  auto:function(){window._auto=true;},chips:function(){return chips;},target:function(){return target;},
+  start:function(){document.getElementById('startbtn').click();}};
+setInterval(function(){if(window._auto&&running){var c=chips.find(function(c){return c.ch===target});if(c)tx=c.x;}},80);
+})();
+</script>
+</body>
+</html>
