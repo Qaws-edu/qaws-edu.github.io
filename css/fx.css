@@ -11,10 +11,7 @@
 @keyframes fx-ripple{0%{opacity:.7;transform:translate(-50%,-50%) scale(.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.6)}}
 @keyframes fx-glow{0%,100%{box-shadow:var(--shadow)}50%{box-shadow:var(--shadow),0 0 0 7px rgba(245,211,73,.55)}}
 
-.hero .cloud.c1{animation:fx-drift 9s ease-in-out infinite}
-.hero .cloud.c2{animation:fx-drift 12s ease-in-out infinite reverse}
 .hero .sun{animation:fx-sun 6s ease-in-out infinite}
-.hero .mascot-wrap .asmaa,.hero-guide{animation:fx-bob 3.2s ease-in-out infinite}
 .guide .asmaa{animation:fx-bob 3.6s ease-in-out infinite}
 .asmaa{transition:rotate .25s ease-out;cursor:pointer;pointer-events:auto}
 .asmaa.fx-jump{animation:fx-jump .7s ease-out !important}
@@ -25,6 +22,17 @@
 .lesson.now .go{animation:fx-pulse 1.6s ease-in-out infinite}
 .hero h1,.hero p,.hero .cta{animation:fx-pop .6s ease-out both}
 .hero p{animation-delay:.12s}.hero .cta{animation-delay:.25s}
+
+@keyframes fx-walk{0.00%{translate:-90px 0px;scale:1 1}2.81%{translate:-78px -9px;scale:1 1}5.62%{translate:-67px 0px;scale:1 1}8.44%{translate:-56px -9px;scale:1 1}11.25%{translate:-45px 0px;scale:1 1}14.06%{translate:-33px -9px;scale:1 1}16.88%{translate:-22px 0px;scale:1 1}19.69%{translate:-11px -9px;scale:1 1}22.50%{translate:0px 0px;scale:1 1}25.31%{translate:11px -9px;scale:1 1}28.12%{translate:22px 0px;scale:1 1}30.94%{translate:33px -9px;scale:1 1}33.75%{translate:45px 0px;scale:1 1}36.56%{translate:56px -9px;scale:1 1}39.38%{translate:67px 0px;scale:1 1}42.19%{translate:78px -9px;scale:1 1}45.00%{translate:90px 0px;scale:1 1}50.00%{translate:90px 0px;scale:-1 1}52.81%{translate:78px -9px;scale:-1 1}55.62%{translate:67px 0px;scale:-1 1}58.44%{translate:56px -9px;scale:-1 1}61.25%{translate:45px 0px;scale:-1 1}64.06%{translate:33px -9px;scale:-1 1}66.88%{translate:22px 0px;scale:-1 1}69.69%{translate:11px -9px;scale:-1 1}72.50%{translate:0px 0px;scale:-1 1}75.31%{translate:-11px -9px;scale:-1 1}78.12%{translate:-22px 0px;scale:-1 1}80.94%{translate:-33px -9px;scale:-1 1}83.75%{translate:-45px 0px;scale:-1 1}86.56%{translate:-56px -9px;scale:-1 1}89.38%{translate:-67px 0px;scale:-1 1}92.19%{translate:-78px -9px;scale:-1 1}95.00%{translate:-90px 0px;scale:-1 1}100.00%{translate:-90px 0px;scale:1 1}}
+@keyframes fx-cloud{from{translate:-130px 0}to{translate:calc(min(100vw,430px) + 130px) 0}}
+
+.hero .cloud{left:0 !important;right:auto !important;animation:fx-cloud 22s linear infinite}
+.hero .cloud.c1{animation-duration:20s;animation-delay:-6s}
+.hero .cloud.c2{animation-duration:32s;animation-delay:-20s}
+.hero .cloud.c3{top:62px;width:44px;height:16px;border-radius:30px 34px 28px 32px / 20px 22px 18px 20px;animation-duration:26s;animation-delay:-2s;opacity:.9}
+.hero .hero-guide,.hero .mascot-wrap .asmaa{animation:fx-walk 14s linear infinite}
+@keyframes fx-spin{0%{rotate:0deg}100%{rotate:360deg}}
+.hero .hero-guide.fx-jump,.hero .mascot-wrap .asmaa.fx-jump{animation:fx-walk 14s linear infinite,fx-spin .8s ease-out !important}
 
 /* hover / press feedback */
 .card,.stage,.node,.lesson,.cta,.chip,.pill,.back{transition:translate .18s,scale .18s,rotate .18s,box-shadow .18s}
