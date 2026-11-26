@@ -39,8 +39,6 @@ function frame(){
     var mx=(b.left+b.width/2)/innerWidth; m.style.rotate=Math.max(-9,Math.min(9,(px-mx)*22))+'deg';
   });
   var s=document.querySelector('.hero .sun'); if(s) s.style.marginTop=dy*14+'px', s.style.marginLeft=dx*-18+'px';
-  var c1=document.querySelector('.hero .c1'); if(c1) c1.style.marginTop=dy*8+'px';
-  var c2=document.querySelector('.hero .c2'); if(c2) c2.style.marginLeft=dx*22+'px';
   var h=document.querySelector('.hero .rainbow'); if(h) h.style.translate=dx*-10+'px '+dy*-6+'px';
   requestAnimationFrame(frame);
 }
@@ -62,6 +60,7 @@ document.addEventListener('click',function(e){
 var io=new IntersectionObserver(function(es){ es.forEach(function(en){
   if(en.isIntersecting){ en.target.classList.add('fx-in'); io.unobserve(en.target); } }); },{threshold:.12});
 function prep(){
+  var hh=document.querySelector('.hero'); if(hh&&!hh.querySelector('.c3')){var c=document.createElement('div'); c.className='cloud c3'; hh.appendChild(c);}
   var i=0;
   document.querySelectorAll('.card,.stage,.unit,.node-col .node,.section-title,.banner').forEach(function(el){
     if(el.dataset.fx) return; el.dataset.fx=1; el.classList.add('fx-hide');
