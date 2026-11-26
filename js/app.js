@@ -25,9 +25,7 @@ const Store = {
   },
   testOpen(si,u){ const st=STAGES[si]; return st.units[u].lessons.every((_,l)=>this.lessonDone(si,u,l)); },
   unitOpen(si,u){ return u===0 ? this.stageOpen(si) : this.testDone(si,u-1); },
-  stageOpen(si){ if(si===0) return true;
-    const prev=STAGES[si-1];
-    return prev.units.every((_,u)=>this.testDone(si-1,u)); },
+  stageOpen(si){ return true; },
   stagePct(si){ const st=STAGES[si]; let done=0,total=0;
     st.units.forEach((un,u)=>{ un.lessons.forEach((_,l)=>{total++; if(this.lessonDone(si,u,l))done++;});
       total++; if(this.testDone(si,u))done++; });
@@ -112,7 +110,7 @@ function vStages(){
       +'<div class="bar"><i style="width:'+pct+'%"></i></div><div class="pct">'+(pct? AR(pct)+'٪ مكتمل':'لم تبدأ بعد')+'</div></a>';
   }).join('');
   return header({})
-  +'<section class="banner"><h1>اختر مرحلتك</h1><p>من التمهيدي إلى الثالث الإعدادي</p>'
+  +'<section class="banner"><h1>اختر مرحلتك</h1><p>من Pre-Kg إلى الثالث الإعدادي</p>'
   +'<div class="pbar"><div class="lbl"><span>تقدّمك العام</span><span>'+AR(T.pct)+'٪</span></div>'+rail(T.pct)+'</div></section>'
   +BAND
   +'<div class="grid">'+cards+'</div>'

@@ -26,8 +26,8 @@ function makeUnits(){
 }
 
 window.QAWS_STAGES = [
-  {id:'prekg',  name:'تمهيدي',        sub:'Pre-KG',  badge:'ت', color:'c-coral'},
-  {id:'kg',     name:'رياض الأطفال',  sub:'KG',      badge:'ر', color:'c-yellow'},
+  {id:'prekg',  name:'Pre-Kg',        sub:'Pre-KG',  badge:'P', color:'c-coral'},
+  {id:'kg',     name:'KG',            sub:'KG',      badge:'K', color:'c-yellow'},
   {id:'p1',     name:'الأول الابتدائي',  sub:'',        badge:'١', color:'c-blue'},
   {id:'p2',     name:'الثاني الابتدائي', sub:'',        badge:'٢', color:'c-pink'},
   {id:'p3',     name:'الثالث الابتدائي', sub:'',        badge:'٣', color:'c-green'},
