@@ -73,6 +73,7 @@
 @media(min-width:700px){
  :root{--wmax:760px}
  .wrap{max-width:760px}
+ .hero .cta{max-width:380px;width:100%}
  .hero h1{font-size:42px}.hero p{font-size:20px}
  .hero .mascot-wrap{max-width:460px}
  .hero .hero-guide,.mascot-wrap .asmaa{height:230px}
