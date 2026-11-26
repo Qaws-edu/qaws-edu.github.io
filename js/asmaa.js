@@ -2,7 +2,7 @@
    الصور: assets/asmaa/asmaa-exact.png (صورة واحدة بلا أي تعديل، والتنوع بالحركة والموضع والجمل فقط)
    لإضافة وضع جديد أضف اسمه في POSES. لتغيير حركتها عدّل SCREENS. */
 (function(){
-var DIR='assets/asmaa/'; var V='?v=20261127-7';
+var DIR='assets/asmaa/'; var V='?v=20261127-8';
 var GROUPS=['wave','point','cheer','think','book'];
 var FILE='asmaa-exact'; var POSES=[FILE];
 function grp(k){return GROUPS.indexOf(k)>-1?k:null;}
@@ -96,6 +96,7 @@ window.Asmaa={
   get:function(name,cls){return '<img class="asmaa '+(cls||'')+'" src="'+DIR+FILE+'.png'+V+'" alt="الأستاذة أسماء">';},
   enter:function(screen){
     if(!el) build();
+    el.style.display='';
     clearTimeout(stepT); clearTimeout(talkT);
     var steps=SCREENS[screen]||SCREENS.home;
     side=null; var wasSide=null;
@@ -109,6 +110,7 @@ window.Asmaa={
     }
     run(0);
   },
+  hide:function(){ if(el) el.style.display='none'; },
   event:function(k){
     clearTimeout(stepT);
     Asmaa.say(pick(k),ACTION_POSE[k]||null,3800);

@@ -79,7 +79,7 @@ function nav(active){
   return '<nav class="tabbar">'+t.map(x=>'<a class="tab'+(x[0]===active?' on':'')+'" href="'+x[1]+'">'+NAV_ICONS[x[0]]+'<span>'+x[2]+'</span></a>').join('')+'</nav>';
 }
 const BAND = '<section class="aband"></section>';
-function acard(txt){ return '<section class="acard"><div class="abub">'+txt+'</div><img class="aimg" src="assets/asmaa/asmaa-exact.png?v=20261127-7" alt="الأستاذة أسماء"></section>'; }
+function acard(txt){ return '<section class="acard"><div class="abub">'+txt+'</div><img class="aimg" src="assets/asmaa/asmaa-exact.png?v=20261127-8" alt="الأستاذة أسماء"></section>'; }
 
 function header(opts){
   opts = opts||{};
@@ -129,7 +129,6 @@ function vStages(){
   return header({})
   +'<section class="banner"><h1>اختر مرحلتك</h1><p>من Pre-Kg إلى الثالث الإعدادي</p></section>'
   +acard('أهلًا بك، أي مرحلة تريد؟')
-  +BAND
   +'<div class="grid">'+cards+'</div>'
   +GROUND+nav('stages');
 }
@@ -145,7 +144,6 @@ function vProgress(){
   if(my==null || !STAGES[my]){
     return header({})
     +'<section class="banner"><h1>تقدّمي</h1><p>كل طالب يتابع مرحلته من هنا</p></section>'
-    +BAND
     +acard('كل خطوة تقرّبك من الإتقان')
     +'<section class="emptybox"><h2>لم تختر مرحلتك بعد</h2><p>افتح صفحة المراحل واضغط «مرحلتي» على المرحلة التي تدرسها</p><a class="cta" href="#/stages">اختيار مرحلتي</a></section>'
     +GROUND+nav('progress');
@@ -158,7 +156,6 @@ function vProgress(){
   return header({})
   +'<section class="banner"><div class="bnum '+st.color+'">'+st.badge+'</div><h1>مرحلتك: '+st.name+'</h1><a class="chlink" href="#/stages">تغيير المرحلة</a>'
   +'<div class="pbar"><div class="lbl"><span>تقدّمك في المرحلة</span><span>'+AR(pct)+'٪</span></div>'+rail(pct)+'</div></section>'
-  +BAND
   +acard('انظر كم تقدّمت حتى الآن')
   +'<section class="content"><h2 class="section-title sm">وحداتك</h2>'+urows+'</section>'
   +GROUND+nav('progress');
@@ -241,7 +238,6 @@ function vProfiles(){
   }).join('');
   return header({})
   +'<section class="banner"><h1>الملفات الشخصية</h1><p>كل شخص ملفه وصورته وتقدّمه الخاص</p></section>'
-  +BAND
   +acard('تقدّمك يسعدني كثيرًا!')
   +'<div class="pgrid">'+cards+'</div>'
   +'<div class="content"><button class="cta blue" id="newprof">+ ملف جديد</button></div>'
@@ -259,7 +255,6 @@ function vProfileEdit(){
   editTmp={avatar:p.avatar||0, img:p.img||null};
   const picks=AVATARS.map((a,i)=>'<button type="button" class="'+(i===editTmp.avatar&&!editTmp.img?'sel':'')+'" data-av="'+i+'">'+a+'</button>').join('');
   return header({back:'#/profiles', title:'تعديل الملف'})
-  +BAND
   +acard('تقدّمك يسعدني كثيرًا!')
   +'<section class="content editbox"><div class="bigav" id="avprev">'+AVIMG(editTmp.img?{img:editTmp.img}:{avatar:editTmp.avatar})+'</div>'
   +'<input class="namein" id="pname" type="text" maxlength="20" placeholder="اكتب الاسم" value="'+(p.name||'')+'">'
@@ -326,7 +321,6 @@ function vParent(){
   const badge=(p.myStage!=null&&STAGES[p.myStage])?'<span class="stgbadge">'+STAGES[p.myStage].name+'</span>':'';
   return header({})
   +'<section class="banner"><h1>متابعة التقدّم</h1><p>تابع المستوى أولًا بأول على مدار السنة</p></section>'
-  +BAND
   +acard('تقدّمك يسعدني كثيرًا!')
   +'<div class="pchips">'+chips+'</div>'
   +'<section class="content"><div class="phead"><div class="bigav">'+AVIMG(p)+'</div><h2 class="pname">'+(p.name||'بلا اسم')+'</h2>'+badge+'</div>'
@@ -378,11 +372,11 @@ function route(){
   window.scrollTo(0,0);
   let m;
   if(h==='#/'||h==='#'){ app.innerHTML=vHome(); Asmaa.enter('home'); return; }
-  if(h==='#/stages'){ app.innerHTML=vStages(); bindStages(); Asmaa.enter('stages'); return; }
-  if(h==='#/progress'){ app.innerHTML=vProgress(); Asmaa.enter('progress'); return; }
-  if(h==='#/profiles'){ app.innerHTML=vProfiles(); bindProfiles(); Asmaa.enter('profiles'); return; }
-  if(h==='#/profile-edit'){ app.innerHTML=vProfileEdit(); bindProfileEdit(); Asmaa.enter('profiles'); return; }
-  if(h==='#/parent'){ app.innerHTML=vParent(); bindParent(); Asmaa.enter('parent'); return; }
+  if(h==='#/stages'){ app.innerHTML=vStages(); bindStages(); Asmaa.hide(); return; }
+  if(h==='#/progress'){ app.innerHTML=vProgress(); Asmaa.hide(); return; }
+  if(h==='#/profiles'){ app.innerHTML=vProfiles(); bindProfiles(); Asmaa.hide(); return; }
+  if(h==='#/profile-edit'){ app.innerHTML=vProfileEdit(); bindProfileEdit(); Asmaa.hide(); return; }
+  if(h==='#/parent'){ app.innerHTML=vParent(); bindParent(); Asmaa.hide(); return; }
   if(m=h.match(/^#\/stage\/(\d+)$/)){ app.innerHTML=vStage(+m[1]); Asmaa.enter('stage'); return; }
   if(m=h.match(/^#\/lesson\/(\d+)\/(\d+)\/(\d+)$/)){ app.innerHTML=vLesson(+m[1],+m[2],+m[3]); bindLesson(+m[1],+m[2],+m[3]); Asmaa.enter('lesson'); return; }
   if(m=h.match(/^#\/test\/(\d+)\/(\d+)$/)){ app.innerHTML=vTest(+m[1],+m[2]); bindTest(+m[1],+m[2]); Asmaa.enter('test'); return; }
