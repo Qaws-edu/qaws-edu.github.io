@@ -78,7 +78,7 @@ var D={el:null,mode:'walk',x:0,y:0,vy:0,dir:1,base:0,sx:0,sy:0,px0:0,py0:0,moved
 function walker(){ return document.querySelector('.hero .hero-guide')||document.querySelector('.hero .mascot-wrap .asmaa'); }
 function adopt(el){
   var cs=(getComputedStyle(el).translate||'0 0').split(' '), x0=parseFloat(cs[0])||0, y0=parseFloat(cs[1])||0;
-  var b=el.getBoundingClientRect(); D.el=el; D.base=b.left+b.width/2-x0; D.x=x0; D.y=0; D.mode='walk'; D.lim=Math.min(innerWidth*.42,170);
+  var b=el.getBoundingClientRect(); D.el=el; D.base=b.left+b.width/2-x0; D.x=x0; D.y=0; D.mode='walk'; var hr=el.closest('.hero'); D.lim=Math.min((hr?hr.clientWidth:innerWidth)*.4,innerWidth>=1024?420:innerWidth>=700?300:170);
   D.nextSay=performance.now()+9000; if(!D.greeted){D.greeted=true; setTimeout(function(){ if(document.contains(el)) say(el,'ازيك أنا مس أسماء',D.x,4500); },700);} el.classList.add('fx-follow'); el.draggable=false; el.style.translate=x0+'px 0px';
 }
 function seen(e){ D.ptrX=e.clientX; D.ptrT=performance.now(); }
