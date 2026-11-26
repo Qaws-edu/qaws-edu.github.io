@@ -3,7 +3,7 @@
    لتبديل الأوضاع انسخ ملفات جديدة بنفس الأسماء، ولا حاجة لتعديل الكود.
    لإضافة وضع جديد أضف اسمه في POSES. لتغيير حركتها عدّل SCREENS. */
 (function(){
-var DIR='assets/asmaa/';
+var DIR='assets/asmaa/'; var V='?v=20261127-1';
 var POSES=['wave','point','book','think','cheer','bust'];
 var W=150,H=156;
 var REDUCED=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -68,7 +68,7 @@ function build(){
 function setPose(p){
   if(!p||p===cur) return; cur=p;
   var show=front==='A'?imgB:imgA, hide=front==='A'?imgA:imgB;
-  show.src=DIR+p+'.png'; show.classList.add('on'); hide.classList.remove('on');
+  show.src=DIR+p+'.png'+V; show.classList.add('on'); hide.classList.remove('on');
   front=front==='A'?'B':'A';
 }
 function ensureSlot(screen){
@@ -102,7 +102,7 @@ function goTo(step,instant){
 }
 window.Asmaa={
   dir:DIR, names:POSES,
-  get:function(name,cls){return '<img class="asmaa '+(cls||'')+'" src="'+DIR+name+'.png" alt="الأستاذة أسماء">';},
+  get:function(name,cls){return '<img class="asmaa '+(cls||'')+'" src="'+DIR+name+'.png'+V+'" alt="الأستاذة أسماء">';},
   enter:function(screen){
     if(!el) build();
     clearTimeout(stepT); clearTimeout(talkT);
