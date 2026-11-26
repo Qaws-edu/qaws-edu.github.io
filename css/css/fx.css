@@ -1,0 +1,58 @@
+/* Qaws interactive layer: additive, uses individual transform props (translate/scale/rotate) so it never fights style.css */
+@keyframes fx-drift{0%{translate:-14px 0}50%{translate:16px -4px}100%{translate:-14px 0}}
+@keyframes fx-bob{0%,100%{translate:0 0}50%{translate:0 -9px}}
+@keyframes fx-sun{0%,100%{scale:1;rotate:0deg}50%{scale:1.1;rotate:8deg}}
+@keyframes fx-pulse{0%,100%{scale:1}50%{scale:1.07}}
+@keyframes fx-jump{0%{translate:0 0;scale:1 1}25%{translate:0 6px;scale:1.1 .88}55%{translate:0 -42px;scale:.93 1.1}80%{translate:0 0;scale:1.08 .92}100%{translate:0 0;scale:1 1}}
+@keyframes fx-pop{0%{opacity:0;translate:0 26px;scale:.92}100%{opacity:1;translate:0 0;scale:1}}
+@keyframes fx-wiggle{0%,100%{rotate:0deg}25%{rotate:-6deg}75%{rotate:6deg}}
+@keyframes fx-draw{from{stroke-dashoffset:var(--len,600)}to{stroke-dashoffset:0}}
+@keyframes fx-burst{0%{opacity:1;transform:translate(-50%,-50%) translate(0,0) scale(1) rotate(0)}100%{opacity:0;transform:translate(-50%,-50%) translate(var(--dx),var(--dy)) scale(.2) rotate(var(--rot))}}
+@keyframes fx-ripple{0%{opacity:.7;transform:translate(-50%,-50%) scale(.2)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.6)}}
+@keyframes fx-glow{0%,100%{box-shadow:var(--shadow)}50%{box-shadow:var(--shadow),0 0 0 7px rgba(245,211,73,.55)}}
+
+.hero .cloud.c1{animation:fx-drift 9s ease-in-out infinite}
+.hero .cloud.c2{animation:fx-drift 12s ease-in-out infinite reverse}
+.hero .sun{animation:fx-sun 6s ease-in-out infinite}
+.hero .mascot-wrap .asmaa,.hero-guide{animation:fx-bob 3.2s ease-in-out infinite}
+.guide .asmaa{animation:fx-bob 3.6s ease-in-out infinite}
+.asmaa{transition:rotate .25s ease-out;cursor:pointer;pointer-events:auto}
+.asmaa.fx-jump{animation:fx-jump .7s ease-out !important}
+@keyframes fx-rb{0%{scale:.6;opacity:0}100%{scale:1;opacity:1}}
+.hero .rainbow{transform-origin:50% 100%;animation:fx-rb .9s cubic-bezier(.3,1.5,.5,1) both}
+.node.current{animation:fx-pulse 1.8s ease-in-out infinite}
+.node .start-tag{animation:fx-wiggle 2.4s ease-in-out infinite}
+.lesson.now .go{animation:fx-pulse 1.6s ease-in-out infinite}
+.hero h1,.hero p,.hero .cta{animation:fx-pop .6s ease-out both}
+.hero p{animation-delay:.12s}.hero .cta{animation-delay:.25s}
+
+/* hover / press feedback */
+.card,.stage,.node,.lesson,.cta,.chip,.pill,.back{transition:translate .18s,scale .18s,rotate .18s,box-shadow .18s}
+@media(hover:hover){
+ .card:hover{translate:0 -4px;scale:1.02}
+ .stage:not(.locked):hover{translate:0 -5px;scale:1.04;rotate:1.2deg}
+ .node:not(.lock):hover{scale:1.12;rotate:-6deg}
+ .lesson:not(.lock):hover{translate:-4px 0}
+ .lesson:not(.lock):hover .ic{animation:fx-wiggle .5s}
+ .cta:not(:disabled):hover{scale:1.06;rotate:-1.5deg}
+ .chip:hover,.pill:hover{scale:1.1}
+ .back:hover{scale:1.1;rotate:-8deg}
+}
+.cta:active,.node:active,.stage:active,.card:active{scale:.94}
+.stage.locked:active,.node.lock:active{animation:fx-wiggle .35s}
+.cta.green,.cta.blue,.cta:not(:disabled){animation:fx-glow 2.6s ease-in-out infinite}
+.cta:disabled{animation:none}
+
+/* scroll reveal */
+.fx-hide{opacity:0;translate:0 28px;scale:.95}
+.fx-in{opacity:1;translate:0 0;scale:1;animation:fx-pop .5s ease-out var(--d,0s) both}
+
+/* particles */
+.fx-p{position:fixed;z-index:9999;pointer-events:none;font-size:var(--s,18px);line-height:1;animation:fx-burst .8s ease-out forwards;color:var(--c,#F5D349);text-shadow:1.5px 1.5px 0 #413C9C}
+.fx-r{position:fixed;z-index:9998;pointer-events:none;width:70px;height:70px;border:4px solid #413C9C;border-radius:50%;animation:fx-ripple .6s ease-out forwards}
+.fx-trail{position:fixed;z-index:9997;pointer-events:none;width:10px;height:10px;border-radius:50%;background:var(--c,#F0A6C2);border:2px solid #413C9C;animation:fx-ripple .7s ease-out forwards}
+.fx-tip{position:absolute;z-index:30;background:#fff;border:3px solid #413C9C;border-radius:16px;padding:4px 12px;font-weight:800;font-size:15px;color:#413C9C;box-shadow:2px 3px 0 rgba(65,60,155,.3);pointer-events:none;white-space:nowrap;animation:fx-pop .3s ease-out both}
+@media(prefers-reduced-motion:reduce){
+ *{animation:none !important;transition:none !important}
+ .fx-hide{opacity:1;translate:none;scale:none}
+}
