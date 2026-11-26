@@ -397,7 +397,7 @@ footer{background:linear-gradient(180deg,#EDE4CC,#E2D7B8);color:var(--ink)}
 
 /* ===== بطاقة مس أسماء ===== */
 .acard{position:relative;margin:16px 18px 0;border-radius:26px;overflow:hidden;min-height:168px;background:linear-gradient(180deg,#CBE4F7,#EAF5FC 68%,#B9E3A4 68%,#9CD285);border:2px solid rgba(74,59,110,.12);box-shadow:var(--shadow-s)}
-.acard .abub{position:relative;z-index:2;display:inline-block;margin:16px 0 0;padding:9px 16px;margin-inline-end:14px;background:#fff;border-radius:16px 16px 4px 16px;font-family:'Almarai';font-weight:800;font-size:15.5px;color:var(--ink);box-shadow:var(--shadow-s);max-width:58%}
+.acard .abub{position:relative;z-index:2;display:inline-block;float:inline-end;margin:16px 14px 0;padding:9px 16px;background:#fff;border-radius:16px 16px 4px 16px;font-family:'Almarai';font-weight:800;font-size:15.5px;color:var(--ink);box-shadow:var(--shadow-s);max-width:58%}
 .acard .aimg{position:absolute;bottom:-4px;inset-inline-start:8px;height:158px;width:auto;filter:drop-shadow(0 4px 5px rgba(74,59,110,.25))}
 
 /* ===== صورة الملف في الهيدر ===== */

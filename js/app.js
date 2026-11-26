@@ -20,6 +20,16 @@ const Store = {
       this.s={active:'p1', profiles:{p1:p}};
       this.save();
     }
+    const ids=Object.keys(this.s.profiles);
+    if(ids.length>1 || ids[0]!=='p1'){
+      const cur=this.s.profiles[this.s.active]||this.s.profiles[ids[0]];
+      const m=this.newProfile(cur.name); m.avatar=cur.avatar; m.img=cur.img; m.myStage=cur.myStage;
+      ids.forEach(id=>{ const p=this.s.profiles[id]||{};
+        Object.assign(m.lessons, p.lessons||{}); Object.assign(m.tests, p.tests||{});
+        m.events=m.events.concat(p.events||[]); });
+      m.events.sort((x,y)=>x.t-y.t); m.events=m.events.slice(-100);
+      this.s={active:'p1', profiles:{p1:m}}; this.save();
+    }
     return this.s; },
   save(){ try{ localStorage.setItem(this.key, JSON.stringify(this.s)); }catch(e){} },
   cur(){ const s=this.load(); return s.profiles[s.active] || (s.profiles[s.active=Object.keys(s.profiles)[0]]); },
@@ -79,7 +89,7 @@ function nav(active){
   return '<nav class="tabbar">'+t.map(x=>'<a class="tab'+(x[0]===active?' on':'')+'" href="'+x[1]+'">'+NAV_ICONS[x[0]]+'<span>'+x[2]+'</span></a>').join('')+'</nav>';
 }
 const BAND = '<section class="aband"></section>';
-function acard(txt){ return '<section class="acard"><div class="abub">'+txt+'</div><img class="aimg" src="assets/asmaa/asmaa-exact.png?v=20261127-8" alt="الأستاذة أسماء"></section>'; }
+function acard(txt){ return '<section class="acard"><div class="abub">'+txt+'</div><img class="aimg" src="assets/asmaa/asmaa-exact.png?v=20261127-9" alt="الأستاذة أسماء"></section>'; }
 
 function header(opts){
   opts = opts||{};
@@ -230,25 +240,15 @@ function vTest(si,u){
 
 /* ---------------- profiles ---------------- */
 function vProfiles(){
-  const s = Store.load();
-  const cards = Object.keys(s.profiles).map(id=>{
-    const p=s.profiles[id], on=id===s.active;
-    const sub = (p.myStage!=null && STAGES[p.myStage]) ? 'مرحلتي: '+STAGES[p.myStage].name : 'لم يختر مرحلته بعد';
-    return '<div class="pcard'+(on?' on':'')+'" data-pid="'+id+'"><div class="pav">'+AVIMG(p)+'</div><h3>'+(p.name||'بلا اسم')+'</h3><div class="psub">'+sub+'</div><span class="pedit" data-edit="'+id+'">تعديل</span></div>';
-  }).join('');
+  const p=Store.cur();
+  const sub=(p.myStage!=null && STAGES[p.myStage])?'<span class="stgbadge">'+STAGES[p.myStage].name+'</span>':'<div class="emptynote">لم تختر مرحلتك بعد</div>';
   return header({})
-  +'<section class="banner"><h1>الملفات الشخصية</h1><p>كل شخص ملفه وصورته وتقدّمه الخاص</p></section>'
+  +'<section class="banner"><h1>الملف الشخصي</h1><p>اسمك وصورتك ومرحلتك</p></section>'
   +acard('تقدّمك يسعدني كثيرًا!')
-  +'<div class="pgrid">'+cards+'</div>'
-  +'<div class="content"><button class="cta blue" id="newprof">+ ملف جديد</button></div>'
+  +'<section class="content"><div class="phead"><div class="bigav">'+AVIMG(p)+'</div><h2 class="pname">'+(p.name||'بلا اسم')+'</h2>'+sub+'</div>'
+  +'<a class="cta blue" href="#/profile-edit">تعديل الملف</a></section>'
   +GROUND+nav('');
 }
-function bindProfiles(){
-  document.querySelectorAll('.pcard').forEach(c=>c.onclick=()=>{ Store.setActive(c.dataset.pid); route(); });
-  document.querySelectorAll('.pedit').forEach(b=>b.onclick=e=>{ e.stopPropagation(); Store.setActive(b.dataset.edit); location.hash='#/profile-edit'; });
-  const nb=$('#newprof'); if(nb) nb.onclick=()=>{ Store.addProfile(); location.hash='#/profile-edit'; };
-}
-
 let editTmp=null;
 function vProfileEdit(){
   const p=Store.cur();
@@ -287,7 +287,6 @@ function bindProfileEdit(){
 }
 
 /* ---------------- parent follow ---------------- */
-let parentSel=null;
 function evText(e){
   const st=STAGES[e.si]; if(!st) return '';
   const un=st.units[e.u]; if(!un) return '';
@@ -295,13 +294,7 @@ function evText(e){
   return 'اجتاز «'+un.test.title+'»، '+st.name;
 }
 function vParent(){
-  const s=Store.load();
-  if(!parentSel || !s.profiles[parentSel]) parentSel=s.active;
-  const chips=Object.keys(s.profiles).map(id=>{
-    const p=s.profiles[id];
-    return '<button class="pchip'+(id===parentSel?' on':'')+'" data-pc="'+id+'"><span class="cav">'+AVIMG(p)+'</span>'+(p.name||'بلا اسم')+'</button>';
-  }).join('');
-  const p=s.profiles[parentSel];
+  const p=Store.cur();
   let mid;
   if(p.myStage==null || !STAGES[p.myStage]){
     mid='<div class="emptynote">لم يختر مرحلته بعد</div>';
@@ -322,16 +315,11 @@ function vParent(){
   return header({})
   +'<section class="banner"><h1>متابعة التقدّم</h1><p>تابع المستوى أولًا بأول على مدار السنة</p></section>'
   +acard('تقدّمك يسعدني كثيرًا!')
-  +'<div class="pchips">'+chips+'</div>'
   +'<section class="content"><div class="phead"><div class="bigav">'+AVIMG(p)+'</div><h2 class="pname">'+(p.name||'بلا اسم')+'</h2>'+badge+'</div>'
   +mid
   +'<h2 class="section-title sm">خط التقدّم</h2>'+timeline+'</section>'
   +GROUND+nav('parent');
 }
-function bindParent(){
-  document.querySelectorAll('.pchip').forEach(c=>c.onclick=()=>{ parentSel=c.dataset.pc; route(); });
-}
-
 /* ---------------- wiring ---------------- */
 function bindLesson(si,u,l){
   const b=$('#finish'); if(!b) return;
@@ -374,9 +362,9 @@ function route(){
   if(h==='#/'||h==='#'){ app.innerHTML=vHome(); Asmaa.enter('home'); return; }
   if(h==='#/stages'){ app.innerHTML=vStages(); bindStages(); Asmaa.hide(); return; }
   if(h==='#/progress'){ app.innerHTML=vProgress(); Asmaa.hide(); return; }
-  if(h==='#/profiles'){ app.innerHTML=vProfiles(); bindProfiles(); Asmaa.hide(); return; }
+  if(h==='#/profiles'){ app.innerHTML=vProfiles(); Asmaa.hide(); return; }
   if(h==='#/profile-edit'){ app.innerHTML=vProfileEdit(); bindProfileEdit(); Asmaa.hide(); return; }
-  if(h==='#/parent'){ app.innerHTML=vParent(); bindParent(); Asmaa.hide(); return; }
+  if(h==='#/parent'){ app.innerHTML=vParent(); Asmaa.hide(); return; }
   if(m=h.match(/^#\/stage\/(\d+)$/)){ app.innerHTML=vStage(+m[1]); Asmaa.enter('stage'); return; }
   if(m=h.match(/^#\/lesson\/(\d+)\/(\d+)\/(\d+)$/)){ app.innerHTML=vLesson(+m[1],+m[2],+m[3]); bindLesson(+m[1],+m[2],+m[3]); Asmaa.enter('lesson'); return; }
   if(m=h.match(/^#\/test\/(\d+)\/(\d+)$/)){ app.innerHTML=vTest(+m[1],+m[2]); bindTest(+m[1],+m[2]); Asmaa.enter('test'); return; }
