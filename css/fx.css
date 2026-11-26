@@ -24,7 +24,7 @@
 .hero p{animation-delay:.12s}.hero .cta{animation-delay:.25s}
 
 @keyframes fx-walk{0.00%{translate:-90px 0px;scale:1 1}2.81%{translate:-78px -9px;scale:1 1}5.62%{translate:-67px 0px;scale:1 1}8.44%{translate:-56px -9px;scale:1 1}11.25%{translate:-45px 0px;scale:1 1}14.06%{translate:-33px -9px;scale:1 1}16.88%{translate:-22px 0px;scale:1 1}19.69%{translate:-11px -9px;scale:1 1}22.50%{translate:0px 0px;scale:1 1}25.31%{translate:11px -9px;scale:1 1}28.12%{translate:22px 0px;scale:1 1}30.94%{translate:33px -9px;scale:1 1}33.75%{translate:45px 0px;scale:1 1}36.56%{translate:56px -9px;scale:1 1}39.38%{translate:67px 0px;scale:1 1}42.19%{translate:78px -9px;scale:1 1}45.00%{translate:90px 0px;scale:1 1}50.00%{translate:90px 0px;scale:-1 1}52.81%{translate:78px -9px;scale:-1 1}55.62%{translate:67px 0px;scale:-1 1}58.44%{translate:56px -9px;scale:-1 1}61.25%{translate:45px 0px;scale:-1 1}64.06%{translate:33px -9px;scale:-1 1}66.88%{translate:22px 0px;scale:-1 1}69.69%{translate:11px -9px;scale:-1 1}72.50%{translate:0px 0px;scale:-1 1}75.31%{translate:-11px -9px;scale:-1 1}78.12%{translate:-22px 0px;scale:-1 1}80.94%{translate:-33px -9px;scale:-1 1}83.75%{translate:-45px 0px;scale:-1 1}86.56%{translate:-56px -9px;scale:-1 1}89.38%{translate:-67px 0px;scale:-1 1}92.19%{translate:-78px -9px;scale:-1 1}95.00%{translate:-90px 0px;scale:-1 1}100.00%{translate:-90px 0px;scale:1 1}}
-@keyframes fx-cloud{from{translate:-130px 0}to{translate:calc(min(100vw,430px) + 130px) 0}}
+@keyframes fx-cloud{from{translate:-130px 0}to{translate:calc(min(100vw,var(--wmax,430px)) + 130px) 0}}
 
 .hero .cloud{left:0 !important;right:auto !important;animation:fx-cloud 22s linear infinite}
 .hero .cloud.c1{animation-duration:20s;animation-delay:-6s}
@@ -67,4 +67,38 @@
 @media(prefers-reduced-motion:reduce){
  *{animation:none !important;transition:none !important}
  .fx-hide{opacity:1;translate:none;scale:none}
+}
+
+/* responsive: phone stays a single column, tablets and desktops get a wider layout */
+@media(min-width:700px){
+ :root{--wmax:760px}
+ .wrap{max-width:760px}
+ .hero h1{font-size:42px}.hero p{font-size:20px}
+ .hero .mascot-wrap{max-width:460px}
+ .hero .hero-guide,.mascot-wrap .asmaa{height:230px}
+ .grid{grid-template-columns:repeat(3,1fr);gap:18px;padding:26px 24px 36px}
+ .cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;padding:30px 24px 36px}
+ .cards .card{margin-bottom:0}
+ .path{padding:30px 28px 40px}
+ .lesson-body{padding:28px 32px 40px}
+}
+@media(min-width:1024px){
+ :root{--wmax:1120px}
+ body{background:#E9E2D0 var(--grain)}
+ .wrap{max-width:1120px}
+ .hero{padding:80px 48px 0}
+ .hero h1{font-size:54px}.hero p{font-size:22px}
+ .hero .mascot-wrap{max-width:560px}
+ .hero .hero-guide,.mascot-wrap .asmaa{height:270px}
+ .hero .sun{width:76px;height:76px;top:22px;left:40px}
+ .hero .c1{width:110px;height:34px}.hero .c2{width:80px;height:26px}.hero .c3{width:62px;height:22px}
+ .grid{grid-template-columns:repeat(4,1fr);gap:20px;padding:32px 40px 44px}
+ .cards{grid-template-columns:repeat(3,1fr);padding:36px 40px 44px}
+ .card{flex-direction:column;text-align:center}
+ .node-col{flex-direction:row;justify-content:center;flex-wrap:wrap;gap:36px}
+ .guide{padding:14px 40px}
+ .unit{max-width:900px;margin-left:auto;margin-right:auto}
+ .lesson-body{max-width:860px;margin:0 auto;padding:36px 32px 48px}
+ .banner{padding:30px 48px}.banner h1{font-size:38px}.banner p{font-size:18px}
+ .stage:not(.locked):hover{scale:1.04}
 }
