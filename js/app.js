@@ -79,7 +79,7 @@ function nav(active){
   return '<nav class="tabbar">'+t.map(x=>'<a class="tab'+(x[0]===active?' on':'')+'" href="'+x[1]+'">'+NAV_ICONS[x[0]]+'<span>'+x[2]+'</span></a>').join('')+'</nav>';
 }
 const BAND = '<section class="aband"></section>';
-function acard(txt){ return '<section class="acard"><div class="abub">'+txt+'</div><img class="aimg" src="assets/asmaa/asmaa-exact.png?v=20261127-6" alt="الأستاذة أسماء"></section>'; }
+function acard(txt){ return '<section class="acard"><div class="abub">'+txt+'</div><img class="aimg" src="assets/asmaa/asmaa-exact.png?v=20261127-7" alt="الأستاذة أسماء"></section>'; }
 
 function header(opts){
   opts = opts||{};
@@ -259,6 +259,7 @@ function vProfileEdit(){
   editTmp={avatar:p.avatar||0, img:p.img||null};
   const picks=AVATARS.map((a,i)=>'<button type="button" class="'+(i===editTmp.avatar&&!editTmp.img?'sel':'')+'" data-av="'+i+'">'+a+'</button>').join('');
   return header({back:'#/profiles', title:'تعديل الملف'})
+  +BAND
   +acard('تقدّمك يسعدني كثيرًا!')
   +'<section class="content editbox"><div class="bigav" id="avprev">'+AVIMG(editTmp.img?{img:editTmp.img}:{avatar:editTmp.avatar})+'</div>'
   +'<input class="namein" id="pname" type="text" maxlength="20" placeholder="اكتب الاسم" value="'+(p.name||'')+'">'
