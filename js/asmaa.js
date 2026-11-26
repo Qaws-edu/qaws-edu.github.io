@@ -1,20 +1,23 @@
 /* الأستاذة أسماء: رفيقة متحركة تنتقل بين أماكن الصفحة وتتحدث بفقرات قصيرة بالفصحى.
-   الصور: assets/asmaa/{wave,point,cheer,think,book,bust}.png
-   لتبديل الأوضاع انسخ ملفات جديدة بنفس الأسماء، ولا حاجة لتعديل الكود.
+   الصور: assets/asmaa/asmaa-exact.png (صورة واحدة بلا أي تعديل، والتنوع بالحركة والموضع والجمل فقط)
    لإضافة وضع جديد أضف اسمه في POSES. لتغيير حركتها عدّل SCREENS. */
 (function(){
-var DIR='assets/asmaa/'; var V='?v=20261127-1';
-var POSES=['wave','point','book','think','cheer','bust'];
-var W=150,H=156;
+var DIR='assets/asmaa/'; var V='?v=20261127-2';
+var GROUPS=['wave','point','cheer','think','book'];
+var FILE='asmaa-exact'; var POSES=[FILE];
+function grp(k){return GROUPS.indexOf(k)>-1?k:null;}
+function variant(g){return g;}
+var W=108,H=156;
 var REDUCED=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* خطوات كل شاشة: t = العنصر المقصود، pos = أين تقف، wait = الانتظار قبل الانتقال، say = اسم مجموعة الجمل */
 var SCREENS={
-  home:[{t:'.mascot-wrap',pos:'inside-bottom',say:'home'},{t:'.node.current',pos:'left',say:'homeGo',wait:5200}],
-  stages:[{t:'.aslot',pos:'inside',say:'stages'},{t:'.stage:not(.locked)',pos:'above',say:'stagesGo',wait:5000}],
-  stage:[{t:'.aslot',pos:'inside',say:'stage'},{t:'.lesson.now',pos:'above',say:'stageGo',wait:5000}],
-  lesson:[{t:'.aslot',pos:'inside',say:'lesson'},{t:'#finish',pos:'above-right',say:'lessonGo',wait:5500}],
-  test:[{t:'.aslot',pos:'inside',say:'test'},{t:'#submit',pos:'above-right',say:'testGo',wait:5500}]
+  home:[{say:'home'},{say:'homeGo',wait:5500}],
+  stages:[{say:'stages'},{say:'stagesGo',wait:5500}],
+  progress:[{say:'progress'},{say:'progressGo',wait:5500}],
+  stage:[{say:'stage'},{say:'stageGo',wait:5500}],
+  lesson:[{say:'lesson'},{say:'lessonGo',wait:5500}],
+  test:[{say:'test'},{say:'testGo',wait:5500}]
 };
 /* مجموعات الجمل: تدور الجمل ولا تتكرر الجملة نفسها مرتين متتاليتين */
 var POOLS={
@@ -28,6 +31,8 @@ var POOLS={
   lessonGo:['عندما تنتهي، اضغط هنا','بعد المشاهدة، اضغط هنا','أنهِ الدرس من هنا'],
   test:['ركّز جيدًا، أنت قادر على ذلك','فكّر قبل أن تجيب','تذكّر ما تعلّمته'],
   testGo:['بعد أن تجيب، سلّم إجاباتك','عندما تنتهي، اضغط هنا','راجع إجاباتك ثم سلّمها'],
+  progress:['كل خطوة تقرّبك من الإتقان','انظر كم تقدّمت حتى الآن','تقدّمك يسعدني كثيرًا'],
+  progressGo:['واصل، فالإنجاز قريب','هيا نضيف خطوة جديدة','أنت تتقدّم بثبات'],
   tap:['أحسنت، أنا هنا معك','هيا بنا نتعلّم','أنت تتقدّم بثبات','استمر، أنت رائع','أنا سعيدة برؤيتك','لا تتوقف، أنت على الطريق'],
   pick:['فكّر جيدًا قبل أن تثبّت إجابتك','اختيار جيد، هل أنت متأكد؟','خذ لحظة وراجع اختيارك','حسنًا، تابع بقية الأسئلة'],
   correct:['أحسنت! اجتزت الاختبار','رائع! إجاباتك صحيحة','ممتاز، أنت بطل','عمل رائع، استمر هكذا'],
@@ -42,15 +47,15 @@ function pick(k){
   lastIdx[k]=i; lastLine=p[i]; return p[i];
 }
 var ACTION_POSE={pick:'think',correct:'cheer',wrong:'point',done:'cheer',tap:null};
-var MAIN=['wave','point','cheer','think','book'];
+var MAIN=GROUPS;
 function initialPose(){
   var last=null; try{last=localStorage.getItem('qaws-asmaa-pose');}catch(e){}
-  var c=MAIN.filter(function(p){return p!==last;});
+  var c=MAIN.filter(function(p){return p!==grp(last);});
   var p=c[Math.floor(Math.random()*c.length)];
   try{localStorage.setItem('qaws-asmaa-pose',p);}catch(e){}
   return p;
 }
-var el,imgA,imgB,bub,talkT,stepT,cur=null,front='A',visits=0,curStep=null,curX=0;
+var el,imgA,imgB,bub,talkT,stepT,cur=null,front='A',visits=0,curStep=null,curX=0,side=null;
 
 function build(){
   el=document.createElement('div'); el.className='companion';
@@ -59,60 +64,42 @@ function build(){
   bub=el.querySelector('.c-bubble'); imgA=el.querySelector('.a'); imgB=el.querySelector('.b');
   imgA.removeAttribute('src');
   el.querySelector('.c-body').addEventListener('click',function(){
-    var c=MAIN.filter(function(p){return p!==cur;});
+    var c=MAIN.filter(function(p){return p!==grp(cur);});
     Asmaa.say(pick('tap'),c[Math.floor(Math.random()*c.length)],4000);
   });
   window.addEventListener('resize',function(){ if(curStep) goTo(curStep,true); });
   window.addEventListener('load',function(){ if(curStep) goTo(curStep,true); });
 }
 function setPose(p){
-  if(!p||p===cur) return; cur=p;
-  var show=front==='A'?imgB:imgA, hide=front==='A'?imgA:imgB;
-  show.src=DIR+p+'.png'+V; show.classList.add('on'); hide.classList.remove('on');
-  front=front==='A'?'B':'A';
-}
-function ensureSlot(screen){
-  var s=document.querySelector('.aslot'); if(s) return s;
-  if(screen==='home') return null;
-  s=document.createElement('div'); s.className='aslot';
-  var ref=document.querySelector('.banner')||document.querySelector('header');
-  ref.insertAdjacentElement('afterend',s);
-  return s;
-}
-function rectOf(t){
-  var n=document.querySelector(t); if(!n) return null;
-  var r=n.getBoundingClientRect();
-  return {l:r.left+scrollX,t:r.top+scrollY,w:r.width,h:r.height};
+  if(!p) return; var g=grp(p)||'wave';
+  var b=el.querySelector('.c-body'); b.setAttribute('data-mood',''); void b.offsetWidth; b.setAttribute('data-mood',g);
+  if(imgA.getAttribute('src')) { cur=g; return; }
+  imgA.src=DIR+FILE+'.png'+V; imgA.classList.add('on'); cur=g;
 }
 function goTo(step,instant){
-  var r=rectOf(step.t); if(!r) return;
-  var wrap=document.getElementById('app').getBoundingClientRect();
-  var minX=wrap.left+scrollX, maxX=wrap.right+scrollX-W;
-  var x,y,cx=r.l+r.w/2-W/2;
-  if(step.pos==='inside'){ x=cx; y=r.t+r.h-H-4; }
-  else if(step.pos==='inside-bottom'){ x=cx; y=r.t+r.h-H+4; }
-  else if(step.pos==='above-right'){ x=r.l+r.w-W+30; y=r.t-H+8; }
-  else if(step.pos==='above'){ x=cx; y=r.t-H+34; }
-  else if(step.pos==='left'){ x=r.l-W+24; y=r.t+r.h/2-H/2; }
-  else { x=cx; y=r.t; }
-  x=Math.max(minX+4,Math.min(maxX-4,x)); y=Math.max(70,y);
+  var n=document.querySelector('.aband'); if(!n) return;
+  var r=n.getBoundingClientRect(), L=r.left+scrollX, T=r.top+scrollY;
+  side = step.side || (side==='r'?'l':'r');
+  var x = side==='r' ? L+r.width-W-6 : L+6;
+  var y = T+r.height-H+4;
   if(instant||REDUCED) el.classList.add('jump'); else el.classList.remove('jump');
+  el.classList.toggle('side-r',side==='r'); el.classList.toggle('side-l',side==='l');
   el.style.transform='translate('+Math.round(x)+'px,'+Math.round(y)+'px)';
-  curStep=step; curX=x;
+  curStep={say:step.say,side:side}; curX=x;
 }
 window.Asmaa={
   dir:DIR, names:POSES,
-  get:function(name,cls){return '<img class="asmaa '+(cls||'')+'" src="'+DIR+name+'.png'+V+'" alt="الأستاذة أسماء">';},
+  get:function(name,cls){return '<img class="asmaa '+(cls||'')+'" src="'+DIR+FILE+'.png'+V+'" alt="الأستاذة أسماء">';},
   enter:function(screen){
     if(!el) build();
     clearTimeout(stepT); clearTimeout(talkT);
     var steps=SCREENS[screen]||SCREENS.home;
-    ensureSlot(screen);
+    side=null; var wasSide=null;
     var first=visits===0; visits++;
     if(first) setPose(initialPose());
     function run(i){
       var st=steps[i]; if(!st) return;
-      goTo(st,first&&i===0);
+      goTo(i===0?{say:st.say,side:'r'}:st,first&&i===0); if(i>0){} 
       setTimeout(function(){ Asmaa.say(pick(st.say),null,i===0?6000:4500); },(first&&i===0)?100:(REDUCED?0:900));
       if(steps[i+1] && !REDUCED) stepT=setTimeout(function(){run(i+1);}, steps[i+1].wait||5000);
     }
@@ -126,10 +113,6 @@ window.Asmaa={
     if(!el) build();
     if(pose) setPose(pose);
     bub.textContent=text;
-    var bw=bub.offsetWidth, wr=document.getElementById('app').getBoundingClientRect();
-    var cx=curX+W/2, l=cx-bw/2, lo=wr.left+scrollX+8, hi=wr.right+scrollX-8-bw;
-    var off=Math.max(lo,Math.min(hi,l))-l;
-    bub.style.setProperty('--bx',Math.round(off)+'px');
     el.classList.add('talk');
     clearTimeout(talkT);
     talkT=setTimeout(function(){el.classList.remove('talk');},ms||4500);
