@@ -44,10 +44,7 @@ const ICONS = {
   starGrey:'<svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="none" stroke="#A79FB8" stroke-width="2" stroke-linejoin="round"/></svg>'
 };
 const LOGO = '<a class="logo" href="#/"><svg width="40" height="26" viewBox="0 0 40 26"><path d="M3 23 A17 17 0 0 1 37 23" fill="none" stroke="#F29682" stroke-width="5" stroke-linecap="round"/><path d="M8 23 A12 12 0 0 1 32 23" fill="none" stroke="#F2E394" stroke-width="5" stroke-linecap="round"/><path d="M13 23 A7 7 0 0 1 27 23" fill="none" stroke="#AEC6F0" stroke-width="5" stroke-linecap="round"/></svg><div class="word">قَوْس</div></a>';
-const HUD = '<div class="hud">'
-  +'<div class="pill"><svg viewBox="0 0 24 24"><path d="M12 2 C14 6 18 8 18 13 a6 6 0 0 1-12 0 c0-5 4-7 6-11z" fill="#F29682" stroke="#4A3B6E" stroke-width="2"/></svg> ٥</div>'
-  +'<div class="pill"><svg viewBox="0 0 24 24"><path d="M12 20 C4 14 3 8 7.5 6.5 C10 5.7 12 8 12 9 c0-1 2-3.3 4.5-2.5 C21 8 20 14 12 20z" fill="#F0B8D0" stroke="#4A3B6E" stroke-width="2"/></svg> ٣</div>'
-  +'</div>';
+const HUD = '';
 const AR = n => String(n).replace(/\d/g, d=>'٠١٢٣٤٥٦٧٨٩'[d]);
 const GROUND = '<footer class="ground"><svg width="44" height="28" viewBox="0 0 40 26"><path d="M3 23 A17 17 0 0 1 37 23" fill="none" stroke="#F5806A" stroke-width="5" stroke-linecap="round"/><path d="M8 23 A12 12 0 0 1 32 23" fill="none" stroke="#FFD25E" stroke-width="5" stroke-linecap="round"/><path d="M13 23 A7 7 0 0 1 27 23" fill="none" stroke="#5BB5F0" stroke-width="5" stroke-linecap="round"/></svg><div class="mini">قَوْس</div><div class="tag">تعلّم العربية باللعب</div></footer>';
 const NAV_ICONS = {
