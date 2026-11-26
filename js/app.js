@@ -18,13 +18,9 @@ const Store = {
   testDone(si,u){ return !!this.load().tests[si+'/'+u]; },
   markLesson(si,u,l){ this.load().lessons[this.lkey(si,u,l)] = 1; this.save(); },
   markTest(si,u){ this.load().tests[si+'/'+u] = 1; this.save(); },
-  lessonOpen(si,u,l){
-    if(l>0) return this.lessonDone(si,u,l-1);
-    if(u>0) return this.testDone(si,u-1);
-    return this.stageOpen(si);
-  },
-  testOpen(si,u){ const st=STAGES[si]; return st.units[u].lessons.every((_,l)=>this.lessonDone(si,u,l)); },
-  unitOpen(si,u){ return u===0 ? this.stageOpen(si) : this.testDone(si,u-1); },
+  lessonOpen(si,u,l){ return true; },
+  testOpen(si,u){ return true; },
+  unitOpen(si,u){ return true; },
   stageOpen(si){ return true; },
   stagePct(si){ const st=STAGES[si]; let done=0,total=0;
     st.units.forEach((un,u)=>{ un.lessons.forEach((_,l)=>{total++; if(this.lessonDone(si,u,l))done++;});

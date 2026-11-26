@@ -2,7 +2,7 @@
    الصور: assets/asmaa/asmaa-exact.png (صورة واحدة بلا أي تعديل، والتنوع بالحركة والموضع والجمل فقط)
    لإضافة وضع جديد أضف اسمه في POSES. لتغيير حركتها عدّل SCREENS. */
 (function(){
-var DIR='assets/asmaa/'; var V='?v=20261127-4';
+var DIR='assets/asmaa/'; var V='?v=20261127-5';
 var GROUPS=['wave','point','cheer','think','book'];
 var FILE='asmaa-exact'; var POSES=[FILE];
 function grp(k){return GROUPS.indexOf(k)>-1?k:null;}
