@@ -34,6 +34,10 @@
 @keyframes fx-spin{0%{rotate:0deg}100%{rotate:360deg}}
 .hero .hero-guide.fx-jump,.hero .mascot-wrap .asmaa.fx-jump{animation:fx-walk 14s linear infinite,fx-spin .8s ease-out !important}
 
+.hero .hero-guide,.hero .mascot-wrap .asmaa{touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;-webkit-user-drag:none;cursor:grab}
+.hero .hero-guide.fx-follow,.hero .mascot-wrap .asmaa.fx-follow{animation:none !important}
+.hero .hero-guide.fx-follow.fx-jump,.hero .mascot-wrap .asmaa.fx-follow.fx-jump{animation:fx-spin .8s ease-out !important}
+
 /* hover / press feedback */
 .card,.stage,.node,.lesson,.cta,.chip,.pill,.back{transition:translate .18s,scale .18s,rotate .18s,box-shadow .18s}
 @media(hover:hover){
