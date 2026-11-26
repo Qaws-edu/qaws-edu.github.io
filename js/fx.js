@@ -46,12 +46,12 @@ requestAnimationFrame(frame);
 
 /* ---- mascot click: jump + speech bubble ---- */
 var LINES=['أهلاً! يلا نتعلم 🌈','برافو عليك!','كمّل، إنت شاطر','حرف جديد النهاردة؟','يلا نلعب!'];
-function say(m,txt,dx){
+function say(m,txt,dx,ms){
   var host=m.parentElement; if(getComputedStyle(host).position==='static') host.style.position='relative';
   var old=host.querySelector('.fx-tip'); if(old) old.remove();
   var tip=document.createElement('div'); tip.className='fx-tip'; tip.textContent=txt||LINES[Math.random()*LINES.length|0];
   tip.style.top='0'; tip.style.left='50%'; tip.style.translate='calc(-50% + '+(dx||0)+'px) 0'; host.appendChild(tip);
-  setTimeout(function(){tip.remove()},2200);
+  setTimeout(function(){tip.remove()},ms||2200);
 }
 document.addEventListener('click',function(e){
   var m=e.target.closest&&e.target.closest('.asmaa'); if(!m) return;
@@ -79,7 +79,7 @@ function walker(){ return document.querySelector('.hero .hero-guide')||document.
 function adopt(el){
   var cs=(getComputedStyle(el).translate||'0 0').split(' '), x0=parseFloat(cs[0])||0, y0=parseFloat(cs[1])||0;
   var b=el.getBoundingClientRect(); D.el=el; D.base=b.left+b.width/2-x0; D.x=x0; D.y=0; D.mode='walk'; D.lim=Math.min(innerWidth*.42,170);
-  D.nextSay=performance.now()+6000; el.classList.add('fx-follow'); el.draggable=false; el.style.translate=x0+'px 0px';
+  D.nextSay=performance.now()+9000; if(!D.greeted){D.greeted=true; setTimeout(function(){ if(document.contains(el)) say(el,'ازيك أنا مس أسماء',D.x,4500); },700);} el.classList.add('fx-follow'); el.draggable=false; el.style.translate=x0+'px 0px';
 }
 function seen(e){ D.ptrX=e.clientX; D.ptrT=performance.now(); }
 document.addEventListener('pointermove',seen); 
