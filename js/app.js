@@ -36,17 +36,17 @@ const Store = {
 
 /* ---------------- shared bits ---------------- */
 const ICONS = {
-  video:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="#fff" stroke="#141414" stroke-width="2"/><path d="M10 9.5 L15 12 L10 14.5 z" fill="#FF6F5E" stroke="#141414" stroke-width="1.5"/></svg>',
-  activity:'<svg viewBox="0 0 24 24"><path d="M4 19 L8 5 L12 19 M6 14 L10 14 M15 8 L20 19 M20 8 L15 19" fill="none" stroke="#141414" stroke-width="2.2" stroke-linecap="round"/></svg>',
-  exercise:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="#fff" stroke="#141414" stroke-width="2"/><path d="M7 10h10M7 14h6" stroke="#141414" stroke-width="2" stroke-linecap="round"/></svg>',
-  lock:'<svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="9" rx="2" fill="none" stroke="#9b978c" stroke-width="2.2"/><path d="M9 10 V7 a3 3 0 0 1 6 0 v3" fill="none" stroke="#9b978c" stroke-width="2.2"/></svg>',
-  star:'<svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="#FFD500" stroke="#141414" stroke-width="2" stroke-linejoin="round"/></svg>',
-  starGrey:'<svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="#C9C6BC" stroke="#9b978c" stroke-width="2" stroke-linejoin="round"/></svg>'
+  video:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="#4A3B6E" stroke-width="2"/><path d="M10 9.5 L15 12 L10 14.5 z" fill="#F29682" stroke="#4A3B6E" stroke-width="1.5"/></svg>',
+  activity:'<svg viewBox="0 0 24 24"><path d="M4 19 L8 5 L12 19 M6 14 L10 14 M15 8 L20 19 M20 8 L15 19" fill="none" stroke="#4A3B6E" stroke-width="2.2" stroke-linecap="round"/></svg>',
+  exercise:'<svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="3" fill="none" stroke="#4A3B6E" stroke-width="2"/><path d="M7 10h10M7 14h6" stroke="#4A3B6E" stroke-width="2" stroke-linecap="round"/></svg>',
+  lock:'<svg viewBox="0 0 24 24"><rect x="6" y="10" width="12" height="9" rx="2" fill="none" stroke="#A79FB8" stroke-width="2.2"/><path d="M9 10 V7 a3 3 0 0 1 6 0 v3" fill="none" stroke="#A79FB8" stroke-width="2.2"/></svg>',
+  star:'<svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="#F2E394" stroke="#4A3B6E" stroke-width="2" stroke-linejoin="round"/></svg>',
+  starGrey:'<svg width="22" height="22" viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="none" stroke="#A79FB8" stroke-width="2" stroke-linejoin="round"/></svg>'
 };
-const LOGO = '<a class="logo" href="#/"><svg width="40" height="26" viewBox="0 0 40 26"><path d="M3 23 A17 17 0 0 1 37 23" fill="none" stroke="#FF6F5E" stroke-width="5" stroke-linecap="round"/><path d="M8 23 A12 12 0 0 1 32 23" fill="none" stroke="#FFD500" stroke-width="5" stroke-linecap="round"/><path d="M13 23 A7 7 0 0 1 27 23" fill="none" stroke="#2B5BE4" stroke-width="5" stroke-linecap="round"/></svg><div class="word">قَوْس</div></a>';
+const LOGO = '<a class="logo" href="#/"><svg width="40" height="26" viewBox="0 0 40 26"><path d="M3 23 A17 17 0 0 1 37 23" fill="none" stroke="#F29682" stroke-width="5" stroke-linecap="round"/><path d="M8 23 A12 12 0 0 1 32 23" fill="none" stroke="#F2E394" stroke-width="5" stroke-linecap="round"/><path d="M13 23 A7 7 0 0 1 27 23" fill="none" stroke="#AEC6F0" stroke-width="5" stroke-linecap="round"/></svg><div class="word">قَوْس</div></a>';
 const HUD = '<div class="hud">'
-  +'<div class="pill"><svg viewBox="0 0 24 24"><path d="M12 2 C14 6 18 8 18 13 a6 6 0 0 1-12 0 c0-5 4-7 6-11z" fill="#FF6F5E" stroke="#141414" stroke-width="2"/></svg> ٥</div>'
-  +'<div class="pill"><svg viewBox="0 0 24 24"><path d="M12 20 C4 14 3 8 7.5 6.5 C10 5.7 12 8 12 9 c0-1 2-3.3 4.5-2.5 C21 8 20 14 12 20z" fill="#FF9FC0" stroke="#141414" stroke-width="2"/></svg> ٣</div>'
+  +'<div class="pill"><svg viewBox="0 0 24 24"><path d="M12 2 C14 6 18 8 18 13 a6 6 0 0 1-12 0 c0-5 4-7 6-11z" fill="#F29682" stroke="#4A3B6E" stroke-width="2"/></svg> ٥</div>'
+  +'<div class="pill"><svg viewBox="0 0 24 24"><path d="M12 20 C4 14 3 8 7.5 6.5 C10 5.7 12 8 12 9 c0-1 2-3.3 4.5-2.5 C21 8 20 14 12 20z" fill="#F0B8D0" stroke="#4A3B6E" stroke-width="2"/></svg> ٣</div>'
   +'</div>';
 const FOOTER = '<footer><div class="mini">قَوْس</div>اتعلّم العربي باللعب — للأطفال</footer>';
 
@@ -77,12 +77,13 @@ function vHome(){
   +'<p>مغامرة الحروف والكلمات خطوة بخطوة</p>'
   +'<a class="cta" href="#/stages">يلّا نبدأ!</a>'
   +'<div class="mascot-wrap">'
+  +  '<div class="grassband"></div>'
   +  '<svg class="rainbow sketch" viewBox="0 0 320 210" fill="none">'
-  +   '<path d="M30 190 A130 130 0 0 1 290 190" stroke="#F07B5F" stroke-width="16" stroke-linecap="round"/>'
-  +   '<path d="M46 190 A114 114 0 0 1 274 190" stroke="#F5D349" stroke-width="16" stroke-linecap="round"/>'
-  +   '<path d="M62 190 A98 98 0 0 1 258 190" stroke="#7D9BE8" stroke-width="16" stroke-linecap="round"/>'
-  +   '<path d="M40 60 l4 10 10 4 -10 4 -4 10 -4-10 -10-4 10-4z" fill="#fff" stroke="#413C9C" stroke-width="3" stroke-linejoin="round"/>'
-  +   '<circle cx="296" cy="110" r="6" fill="#F0A6C2" stroke="#413C9C" stroke-width="3"/>'
+  +   '<path d="M30 190 A130 130 0 0 1 290 190" stroke="#F29682" stroke-width="16" stroke-linecap="round"/>'
+  +   '<path d="M46 190 A114 114 0 0 1 274 190" stroke="#F2E394" stroke-width="16" stroke-linecap="round"/>'
+  +   '<path d="M62 190 A98 98 0 0 1 258 190" stroke="#AEC6F0" stroke-width="16" stroke-linecap="round"/>'
+  +   '<path d="M40 60 l4 10 10 4 -10 4 -4 10 -4-10 -10-4 10-4z" fill="none" stroke="#4A3B6E" stroke-width="3" stroke-linejoin="round"/>'
+  +   '<circle cx="296" cy="110" r="6" fill="none" stroke="#F0B8D0" stroke-width="3"/>'
   +  '</svg>'
   +  window.Asmaa.get('wave')
   + '</div>'
@@ -103,7 +104,7 @@ function vStages(){
   let cards = STAGES.map((st,i)=>{
     const open = Store.stageOpen(i);
     const pct = Store.stagePct(i);
-    if(!open) return '<div class="stage locked"><div class="locktag">🔒</div><div class="num">'+st.badge+'</div><h3>'+st.name+'</h3><div class="sub">'+(i? 'تتفتح بعد '+STAGES[i-1].name : '')+'</div></div>';
+    if(!open) return '<div class="stage locked"><div class="locktag">'+ICONS.lock+'</div><div class="num">'+st.badge+'</div><h3>'+st.name+'</h3><div class="sub">'+(i? 'تتفتح بعد '+STAGES[i-1].name : '')+'</div></div>';
     return '<a class="stage" href="#/stage/'+i+'"><div class="num '+st.color+'">'+st.badge+'</div><h3>'+st.name+'</h3>'
       +(st.sub?'<div class="sub">'+st.sub+'</div>':'')
       +'<div class="bar"><i style="width:'+pct+'%"></i></div><div class="pct">'+(pct? pct+'٪':'لسه')+'</div></a>';
@@ -124,7 +125,7 @@ function vStage(si){
       const done = Store.lessonDone(si,u,l);
       const open = Store.lessonOpen(si,u,l);
       const cls = done?'done':(open?'now':'lock');
-      const go = done?'✓':(open?'▶':'🔒');
+      const go = done?'✓':(open?'▶':ICONS.lock);
       return '<a class="lesson '+cls+'" href="#/lesson/'+si+'/'+u+'/'+l+'"><div class="ic">'+(ICONS[ls.type]||ICONS.video)+'</div><div><h4>'+ls.title+'</h4><div class="ty">'+ls.ty+'</div></div><div class="go">'+go+'</div></a>';
     }).join('');
     const tOpen = Store.testOpen(si,u), tDone = Store.testDone(si,u);
@@ -143,7 +144,7 @@ function vLesson(si,u,l){
   const st=STAGES[si], un=st.units[u], ls=un.lessons[l];
   let body='';
   if(ls.type==='video'){
-    body = '<div class="video-slot"><div class="play"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M8 6 L18 12 L8 18 z" fill="#fff" stroke="#141414" stroke-width="2"/></svg></div><div class="cap">مكان فيديو الشرح</div></div>'
+    body = '<div class="video-slot"><div class="play"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M8 6 L18 12 L8 18 z" fill="none" stroke="#4A3B6E" stroke-width="2.4" stroke-linejoin="round"/></svg></div><div class="cap">مكان فيديو الشرح</div></div>'
       +'<div class="note">هنا هيتحط فيديو مس أسماء بيشرح الدرس</div>';
   } else if(ls.type==='activity'){
     body = '<div class="video-slot"><div style="font-size:44px">🧩</div><div class="cap">مكان النشاط التفاعلي</div></div>'
