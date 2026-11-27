@@ -60,11 +60,12 @@ function initialPose(){
   try{localStorage.setItem('qaws-asmaa-pose',p);}catch(e){}
   return p;
 }
-var el,imgA,imgB,bub,talkT,stepT,cur=null,front='A',visits=0,curStep=null,curX=0,side=null;
+var curScreen='home',el,imgA,imgB,bub,talkT,stepT,cur=null,front='A',visits=0,curStep=null,curX=0,side=null;
 
 function build(){
   el=document.createElement('div'); el.className='companion';
   el.innerHTML='<div class="c-bubble" role="status"></div><div class="c-body"><img class="c-img a on" alt="الأستاذة أسماء"><img class="c-img b" alt="" aria-hidden="true"></div>';
+  var st=document.createElement('style'); st.textContent='.companion.hero-mode .c-bubble{left:auto;right:-14px;top:auto;bottom:100%;margin-bottom:12px;transform:translateY(8px);max-width:210px}\n.companion.hero-mode .c-bubble::after{top:100%;left:auto;right:60px;border-left:9px solid transparent;border-right:9px solid transparent;border-top:12px solid #fff;border-bottom:0}\n.companion.talk.hero-mode .c-bubble{transform:none}'; document.head.appendChild(st);
   document.body.appendChild(el);
   bub=el.querySelector('.c-bubble'); imgA=el.querySelector('.a'); imgB=el.querySelector('.b');
   imgA.removeAttribute('src');
@@ -82,14 +83,18 @@ function setPose(p){
   imgA.src=DIR+FILE+'.png'+V; imgA.classList.add('on'); cur=g;
 }
 function goTo(step,instant){
-  var n=document.querySelector('.aband'); if(!n) return;
+  var hero=(curScreen==='home'&&window.innerWidth>=900)?document.querySelector('.hero'):null;
+  var n=hero||document.querySelector('.aband'); if(!n) return;
   var r=n.getBoundingClientRect(), L=r.left+scrollX, T=r.top+scrollY;
-  side = step.side || (side==='r'?'l':'r');
-  var x = side==='r' ? L+r.width-W-6 : L+6;
-  var y = T+r.height-H+4;
+  var S=hero?1.4:1;
+  side = hero ? 'r' : (step.side || (side==='r'?'l':'r'));
+  var x = side==='r' ? L+r.width-(hero?150*S+24:W+6) : L+6;
+  var y = T+r.height-H*S+(hero?10:4);
+  el.classList.toggle('hero-mode',!!hero);
+  el.style.transformOrigin=hero?'0 0':'';
   if(instant||REDUCED) el.classList.add('jump'); else el.classList.remove('jump');
   el.classList.toggle('side-r',side==='r'); el.classList.toggle('side-l',side==='l');
-  el.style.transform='translate('+Math.round(x)+'px,'+Math.round(y)+'px)';
+  el.style.transform='translate('+Math.round(x)+'px,'+Math.round(y)+'px)'+(hero?' scale('+S+')':'');
   curStep={say:step.say,side:side}; curX=x;
 }
 window.Asmaa={
@@ -99,7 +104,7 @@ window.Asmaa={
     if(!el) build();
     el.style.display='';
     clearTimeout(stepT); clearTimeout(talkT);
-    var steps=SCREENS[screen]||SCREENS.home;
+    curScreen=screen; var steps=SCREENS[screen]||SCREENS.home;
     side=null; var wasSide=null;
     var first=visits===0; visits++;
     if(first) setPose(initialPose());
@@ -126,3 +131,4 @@ window.Asmaa={
   }
 };
 })();
+
