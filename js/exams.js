@@ -158,17 +158,23 @@ function mountAdmin(){
     const fbReady = window.QawsChat && QawsChat.fbConfigured && QawsChat.fbConfigured();
     if(fbReady){
       appEl().innerHTML=U().header({back:'#/exams', title:'دخول المعلّمة'})
+        +'<section class="banner"><h1>دخول المعلّمة</h1><p>جارٍ التحقق من تسجيل الدخول…</p></section>'
+        +U().GROUND+U().nav('exams');
+      QawsChat.fbOwnerSession().then(has=>{
+        if(has){ sessionStorage.setItem('qaws-admin','1'); mountAdmin(); return; }
+        appEl().innerHTML=U().header({back:'#/exams', title:'دخول المعلّمة'})
         +'<section class="banner"><h1>دخول المعلّمة</h1><p>بنفس بريد وكلمة سر الشات</p></section>'
         +'<div class="content editbox"><input class="namein" id="admail" type="email" maxlength="60" placeholder="البريد الإلكتروني">'
         +'<input class="namein" id="adpass" type="password" maxlength="60" placeholder="كلمة السر">'
         +'<button class="cta green" id="adenter">دخول</button>'
         +'<div class="aderr" id="aderr"></div></div>'
         +U().GROUND+U().nav('exams');
-      document.querySelector('#adenter').onclick=async ()=>{
-        const r=await QawsChat.fbOwnerSignIn(document.querySelector('#admail').value, document.querySelector('#adpass').value);
-        if(r.ok){ sessionStorage.setItem('qaws-admin','1'); mountAdmin(); }
-        else document.querySelector('#aderr').textContent=r.err||'بيانات الدخول غير صحيحة';
-      };
+        document.querySelector('#adenter').onclick=async ()=>{
+          const r=await QawsChat.fbOwnerSignIn(document.querySelector('#admail').value, document.querySelector('#adpass').value);
+          if(r.ok){ sessionStorage.setItem('qaws-admin','1'); mountAdmin(); }
+          else document.querySelector('#aderr').textContent=r.err||'بيانات الدخول غير صحيحة';
+        };
+      });
       return;
     }
     appEl().innerHTML=U().header({back:'#/exams', title:'دخول المعلّمة'})
