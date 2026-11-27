@@ -637,14 +637,16 @@ function bindHistory(){
 
 /* ---------- الواجهة المبسّطة: الرئيسية + الأقسام الكبيرة ---------- */
 var TITLES={home:'الرئيسية',videos:'فيديوهات الدروس',explain:'شروحات الدروس',exams:'الأسئلة والاختبارات',stages:'المراحل والدروس',content:'محتوى الموقع',texts:'النصوص',look:'الواجهة والألوان',imgs:'الصور',pools:'عبارات مس أسماء',students:'الطلاب والإعلانات',history:'السجل والتراجع'};
+var ICO={"video": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"3\"/><path d=\"M10 9.5v5l4.5-2.5z\"/>", "q": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7\"/><path d=\"M12 17h.01\"/>", "book": "<path d=\"M3 5.5C5 4.5 8 4.5 12 6.5c4-2 7-2 9-1v13c-2-1-5-1-9 1-4-2-7-2-9-1z\"/><path d=\"M12 6.5v13\"/>", "layers": "<path d=\"M12 3l9 5-9 5-9-5z\"/><path d=\"M3 12.5l9 5 9-5\"/><path d=\"M3 16.5l9 5 9-5\"/>", "file": "<path d=\"M6 3h9l4 4v14H6z\"/><path d=\"M14 3v5h5\"/><path d=\"M9 13h7M9 17h7\"/>", "users": "<circle cx=\"9\" cy=\"8\" r=\"3.2\"/><path d=\"M3 20c0-3.3 2.7-5.5 6-5.5s6 2.2 6 5.5\"/><circle cx=\"17\" cy=\"9\" r=\"2.4\"/><path d=\"M17 14.5c2.4 0 4 1.7 4 4\"/>", "undo": "<path d=\"M9 7L4 12l5 5\"/><path d=\"M4 12h10a6 6 0 0 1 0 12\" transform=\"translate(0 -4)\"/>", "text": "<path d=\"M5 6h14M12 6v13M9 19h6\"/>", "image": "<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"3\"/><circle cx=\"9\" cy=\"10\" r=\"1.8\"/><path d=\"M4 18l5-5 4 4 3-3 4 4\"/>", "sliders": "<path d=\"M4 7h10M18 7h2M4 17h2M10 17h10\"/><circle cx=\"16\" cy=\"7\" r=\"2\"/><circle cx=\"8\" cy=\"17\" r=\"2\"/>", "chat": "<path d=\"M4 5h16v11H9l-5 4z\"/>", "home": "<path d=\"M4 11l8-7 8 7v9H4z\"/><path d=\"M10 20v-6h4v6\"/>", "moon": "<path d=\"M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z\"/>"};
+function ico(k){return '<svg class="adm-ico" viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(ICO[k]||'')+'</svg>';}
 var TILES=[
-  ['videos','🎬','فيديوهات','ألصقي رابط يوتيوب لأي درس'],
-  ['exams','❓','أسئلة','إضافة وتعديل أسئلة الاختبارات'],
-  ['explain','📖','شروحات','اكتبي شرح كل درس'],
-  ['stages','🧩','المراحل والدروس','إضافة وحذف وترتيب'],
-  ['content','📝','المحتوى','نصوص وصور وألوان الموقع'],
-  ['students','👥','الطلاب والإعلانات','من دخل، وأرسلي إعلانًا للجميع'],
-  ['history','↩️','السجل والتراجع','ارجعي لنسخة سابقة']
+  ['videos','video','فيديوهات','ألصقي رابط يوتيوب لأي درس'],
+  ['exams','q','أسئلة','إضافة وتعديل أسئلة الاختبارات'],
+  ['explain','book','شروحات','اكتبي شرح كل درس'],
+  ['stages','layers','المراحل والدروس','إضافة وحذف وترتيب'],
+  ['content','file','المحتوى','نصوص وصور وألوان الموقع'],
+  ['students','users','الطلاب والإعلانات','من دخل، وأرسلي إعلانًا للجميع'],
+  ['history','undo','السجل والتراجع','ارجعي لنسخة سابقة']
 ];
 function allLessons(){
   var out=[];
@@ -681,8 +683,8 @@ function lessonList(kind){
 }
 var NEWV={
   home:{v:function(){
-    return '<div class="adm-hello">أهلًا مس أسماء 👋<small>اختاري ما تريدين تعديله. بعد التعديل اضغطي «نشر» ليظهر للطلاب.</small></div>'
-      +'<div class="adm-tiles">'+TILES.map(function(t){return '<button class="adm-tile" data-tab="'+t[0]+'"><span class="ic">'+t[1]+'</span><b>'+t[2]+'</b><small>'+t[3]+'</small></button>';}).join('')+'<a class="adm-tile link" href="admin/molzama.html"><span class="ic">📚</span><b>ملازم وأغلفة</b><small>صمّمي ملزمة أو غلاف</small></a></div>'
+    return '<div class="adm-hello">أهلًا مس أسماء<small>اختاري ما تريدين تعديله. بعد التعديل اضغطي «نشر» ليظهر للطلاب.</small></div>'
+      +'<div class="adm-tiles">'+TILES.map(function(t){return '<button class="adm-tile" data-tab="'+t[0]+'"><span class="ic">'+ico(t[1])+'</span><b>'+t[2]+'</b><small>'+t[3]+'</small></button>';}).join('')+'<a class="adm-tile link" href="admin/molzama.html"><span class="ic">'+ico('book')+'</span><b>ملازم وأغلفة</b><small>صمّمي ملزمة أو غلاف</small></a></div>'
       +'<div class="adm-actions"><button class="adm-btn green" id="pub">نشر التعديلات</button><button class="adm-btn blue" id="prev">معاينة</button><button class="adm-btn gray" id="out">خروج</button></div>';
   },b:function(){}},
   videos:{v:function(){return '<div class="adm-card"><h2>فيديوهات الدروس</h2><div class="adm-hint">افتحي يوتيوب، انسخي رابط الفيديو، والصقيه أمام الدرس. يظهر الفيديو داخل الدرس تلقائيًا بعد النشر.</div>'+lessonList('videos')+'</div>';},
@@ -697,7 +699,7 @@ var NEWV={
       document.querySelectorAll('[data-exp]').forEach(function(t){t.onchange=function(){lessonPatch(L[+t.dataset.exp]).body=t.value;dirty=true;msg('تم. اضغطي نشر ليظهر');};});
     }},
   content:{v:function(){
-    return '<div class="adm-tiles">'+['texts','imgs','look','pools'].map(function(k){var d={texts:['✏️','النصوص','غيّري أي كلمة في الموقع'],imgs:['🖼️','الصور','بدّلي الصور'],look:['🎨','الواجهة والألوان','إخفاء أقسام وألوان'],pools:['💬','عبارات مس أسماء','جمل الشخصية المتحركة']}[k];return '<button class="adm-tile" data-tab="'+k+'"><span class="ic">'+d[0]+'</span><b>'+d[1]+'</b><small>'+d[2]+'</small></button>';}).join('')+'</div>';
+    return '<div class="adm-tiles">'+['texts','imgs','look','pools'].map(function(k){var d={texts:['text','النصوص','غيّري أي كلمة في الموقع'],imgs:['image','الصور','بدّلي الصور'],look:['sliders','الواجهة والألوان','إخفاء أقسام وألوان'],pools:['chat','عبارات مس أسماء','جمل الشخصية المتحركة']}[k];return '<button class="adm-tile" data-tab="'+k+'"><span class="ic">'+ico(d[0])+'</span><b>'+d[1]+'</b><small>'+d[2]+'</small></button>';}).join('')+'</div>';
   },b:function(){}},
   students:{v:function(){
     return '<div class="adm-card"><h2>إعلان لكل الطلاب</h2><div class="adm-hint">يصل كإشعار في جرس الموقع فورًا (بدون الحاجة لنشر).</div>'
@@ -722,7 +724,7 @@ var NEWV={
 var CONTENT_TABS=['texts','imgs','look','pools'];
 function navBar(){
   if(tab==='home')return '';
-  var h='<div class="adm-nav"><button class="adm-btn blue" data-tab="home">⬅ الرئيسية</button><span class="adm-title">'+esc(TITLES[tab]||'')+'</span><button class="adm-btn sm gray" id="thm" type="button">🌙 / ☀️</button></div>';
+  var h='<div class="adm-nav"><button class="adm-btn blue" data-tab="home">'+ico('home').replace(/36/g,'18')+' الرئيسية</button><span class="adm-title">'+esc(TITLES[tab]||'')+'</span><button class="adm-btn sm gray" id="thm" type="button">'+ico('moon').replace(/36/g,'16')+' ليلي / نهاري</button></div>';
   if(CONTENT_TABS.indexOf(tab)>=0)h+='<div class="adm-tabs">'+CONTENT_TABS.map(function(k){return '<button data-tab="'+k+'" class="'+(tab===k?'on':'')+'">'+TITLES[k]+'</button>';}).join('')+'</div>';
   return h;
 }
