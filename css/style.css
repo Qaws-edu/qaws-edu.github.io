@@ -650,3 +650,75 @@ body.prep .banner .bnum{background:linear-gradient(180deg,#E3967A,#D97E5F);color
 .lvl-prep p{color:#C9D4C9}
 .lvl-prep .lvlgo{background:linear-gradient(180deg,#D97E5F,#C0684A);color:#FFF7EA}
 @media (min-width:768px){.lvlpick{flex-direction:row}.lvlcard{flex:1}}
+
+/* ======== إعدادي بنَفَس أنضج: زوايا أصغر، ظلال أهدأ، بطاقات مسطّحة ======== */
+body.prep .wrap{box-shadow:none}
+body.prep .card,body.prep .q,body.prep .prow,body.prep .infocard,body.prep .stat{border-radius:12px;box-shadow:0 1px 2px rgba(27,42,58,.10)}
+body.prep .unit{border-radius:14px;box-shadow:0 1px 3px rgba(27,42,58,.10)}
+body.prep .stage{border-radius:14px;box-shadow:0 1px 3px rgba(27,42,58,.10)}
+body.prep .stage .num{box-shadow:0 1px 2px rgba(27,42,58,.16)}
+body.prep .acard{border-radius:14px;border-width:1.5px;box-shadow:0 1px 3px rgba(27,42,58,.10)}
+body.prep .acard .abub{border-radius:10px 10px 3px 10px;box-shadow:0 1px 2px rgba(27,42,58,.10);font-weight:700}
+body.prep .urow{border-radius:10px;border-width:1.5px;box-shadow:0 1px 2px rgba(27,42,58,.08)}
+body.prep .urow .un2{box-shadow:0 1px 2px rgba(27,42,58,.14)}
+body.prep .tile3{border-radius:12px;border-width:1.5px;box-shadow:0 1px 2px rgba(27,42,58,.10)}
+body.prep .tplay{border-radius:8px;box-shadow:0 1px 0 rgba(34,54,79,.14);font-weight:700}
+body.prep .pcard{border-radius:14px;border-width:1.5px;box-shadow:0 1px 2px rgba(27,42,58,.08)}
+body.prep .strip{border-radius:12px;box-shadow:0 1px 2px rgba(27,42,58,.08)}
+body.prep .video-slot{border-radius:14px;box-shadow:0 1px 3px rgba(27,42,58,.12)}
+body.prep .celebrate{border-radius:16px;box-shadow:0 6px 22px rgba(10,20,32,.30)}
+body.prep .tabbar{border-radius:12px 12px 0 0;box-shadow:0 -2px 8px rgba(27,42,58,.14)}
+body.prep .tab.on svg{filter:none}
+body.prep .ground{border-radius:18px 18px 0 0}
+body.prep .cta{border-radius:10px;background:#C9755A;box-shadow:0 1px 2px rgba(27,42,58,.24);font-weight:700;font-size:18px;padding:12px 32px;color:#FFF7EA}
+body.prep .cta.blue,body.prep .cta.green{background:#3E8E87;color:#F0F7F5}
+body.prep .cta:active{transform:translateY(1px)}
+body.prep .opt{border-radius:10px;box-shadow:0 1px 0 rgba(34,54,79,.12);font-weight:700}
+body.prep .opt.sel{background:#C9755A;color:#FFF7EA}
+body.prep .opt.right{background:#3E8E87;color:#fff}
+body.prep .opt.wrong{background:#C0684A;color:#fff}
+body.prep .pbar .rail,body.prep .steps .rail{height:10px;border-radius:5px;box-shadow:none}
+body.prep .pbar .rail i,body.prep .steps .rail i{border-radius:5px}
+body.prep .stage .bar,body.prep .prow .rail{height:8px;border-radius:4px}
+body.prep .stage .bar i,body.prep .prow .rail i{border-radius:4px}
+body.prep .stage .locktag{border-radius:8px;box-shadow:0 1px 2px rgba(27,42,58,.12)}
+body.prep .pick,body.prep .pickme{border-radius:8px;box-shadow:0 1px 2px rgba(27,42,58,.12);font-weight:700}
+body.prep .pickme{background:#3E8E87;color:#fff}
+body.prep .lesson .ic,body.prep .lesson .go{box-shadow:none}
+body.prep .lesson .go:active{transform:translateY(1px)}
+body.prep .qn{border-radius:9px;background:#C9755A;box-shadow:0 1px 2px rgba(27,42,58,.18)}
+body.prep .note{border-width:1.5px;border-radius:10px}
+body.prep .banner .bnum{border-radius:16px;box-shadow:0 1px 2px rgba(27,42,58,.18);background:#D97E5F}
+body.prep .stgbadge{border-radius:8px;background:#3E8E87;font-weight:700}
+body.prep .test-row{border-radius:12px;box-shadow:0 1px 2px rgba(27,42,58,.14)}
+body.prep .test-row .ic{border-radius:10px}
+body.prep .exbest,body.prep .exnew{border-radius:8px}
+body.prep .askfab{box-shadow:0 1px 3px rgba(27,42,58,.24)}
+body.prep .chsend{border-radius:10px;background:#3E8E87;font-weight:700}
+body.prep .adbtn{border-radius:10px;background:#3E8E87;font-weight:700}
+body.prep .adbtn.del{background:#C9755A}
+body.prep .back{box-shadow:0 1px 2px rgba(27,42,58,.14)}
+body.prep .pill{border-radius:10px;box-shadow:0 1px 2px rgba(27,42,58,.10)}
+body.prep .gbubble{border-radius:14px;box-shadow:0 1px 2px rgba(27,42,58,.10)}
+body.prep .havatar{box-shadow:0 1px 2px rgba(27,42,58,.14)}
+
+/* الصفحة الرئيسية الإعدادية: أهدأ وأنظف */
+.prephero{border-radius:16px;border-width:1.5px;box-shadow:0 1px 3px rgba(27,42,58,.10);padding:26px 20px}
+.prephero .phcta{border-radius:10px;box-shadow:0 1px 2px rgba(27,42,58,.24);font-weight:700}
+.prephero .phcta:active{transform:translateY(1px)}
+.prepcard{border-radius:14px;border-width:1.5px;box-shadow:0 1px 2px rgba(27,42,58,.08)}
+.prepcard .rail{height:8px;border-radius:4px}
+.prepcard .rail i{border-radius:4px}
+.gcard{border-radius:14px;box-shadow:0 1px 3px rgba(27,42,58,.16);padding:16px 8px 14px}
+.gcard:active{transform:translateY(1px)}
+.gcard .ggo{border-radius:8px;font-weight:700}
+.gcard .gnum{border-radius:12px}
+.g-navy{background:#22364F}
+.g-teal{background:#2F6F6A}
+.g-terra{background:#C9755A}
+.quickrow{border-radius:14px;border-width:1.5px;box-shadow:0 1px 2px rgba(27,42,58,.08)}
+.quickrow a:active{transform:translateY(1px)}
+.quickrow .qic{border-radius:10px}
+.lvl-prep{border-radius:16px;box-shadow:0 1px 3px rgba(27,42,58,.16)}
+.lvl-prep .lvlgo{border-radius:10px;font-weight:700}
+.prepwelcome{border-top-width:3px}
