@@ -12,17 +12,18 @@ window.QAWS_CONFIG = {
      اتركه فارغًا '' لإخفاء زر الواتساب */
   whatsapp: '',
 
-  /* بريد مس أسماء الذي تدخل به لوحة الشات (بعد تفعيل فايربيس) */
-  ownerEmail: '',
+  /* بريد مس أسماء الذي تدخل به لوحة الشات — يُملأ بعد إنشاء حسابها في فايربيس.
+     الشات لا يتفعّل للطلاب إلا بعد ملء هذا الحقل (حماية حتى تجهز القواعد والحساب). */
+  ownerEmail: 'asmaaboelftooh@gmail.com',
 
-  /* إعدادات فايربيس — خطوات الإنشاء في ملف FIREBASE-SETUP.md
-     بعد الإنشاء ضع الإعدادات هنا بدل null مثل:
-     firebase: {
-       apiKey: 'AIza...',
-       authDomain: 'qaws-xxxxx.firebaseapp.com',
-       projectId: 'qaws-xxxxx',
-       appId: '1:1234:web:abcd'
-     }
-  */
-  firebase: null
+  /* إعدادات فايربيس — مشروع qaws-a9d34 (أُنشئ للمنصة، المفاتيح عامة بطبيعتها
+     والحماية في قواعد firestore.rules). الخطوات في FIREBASE-SETUP.md */
+  firebase: {
+    apiKey: 'AIzaSyCF8Pptak45zB5Qef-20TaHrU2YtkoASVw',
+    authDomain: 'qaws-a9d34.firebaseapp.com',
+    projectId: 'qaws-a9d34',
+    storageBucket: 'qaws-a9d34.firebasestorage.app',
+    messagingSenderId: '236260934457',
+    appId: '1:236260934457:web:09055413524dd30d331ee8'
+  }
 };
