@@ -47,6 +47,7 @@ async function ensureFb(){
     await loadScript('https://www.gstatic.com/firebasejs/'+FBV+'/firebase-firestore-compat.js');
     app=firebase.initializeApp(cfg().firebase);
     auth=firebase.auth(); db=firebase.firestore();
+    try{ auth.getRedirectResult().catch(function(e){ try{ window.__qawsRedirectErr=(e&&e.code)||''; }catch(x){} }); }catch(e){}
     return true;
   }catch(e){ return false; }
 }
@@ -382,6 +383,13 @@ window.QawsChat={
         catch(e2){ return {ok:false, err:'تعذّر الدخول بحساب Google. حاول تاني.'}; }
       }
       if(code==='auth/popup-closed-by-user'||code==='auth/cancelled-popup-request') return {ok:false, cancelled:true};
+      if(code==='auth/popup-blocked'||code==='auth/operation-not-supported-in-this-environment'||code==='auth/web-storage-unsupported'){
+        try{
+          if(u && u.isAnonymous){ await u.linkWithRedirect(provider); } else { await auth.signInWithRedirect(provider); }
+          return {ok:false, redirecting:true};
+        }catch(e3){ return {ok:false, err:'المتصفح منع نافذة الدخول. افتح الموقع في Chrome أو Safari وجرّب.'}; }
+      }
+      if(code==='auth/network-request-failed') return {ok:false, err:'النت ضعيف. جرّب تاني.'};
       if(code==='auth/unauthorized-domain') return {ok:false, err:'الدخول بحساب Google غير متاح على هذا الموقع حاليًا.'};
       if(code==='auth/account-exists-with-different-credential') return {ok:false, err:'البريد ده مسجّل بطريقة دخول تانية.'};
       if(code==='auth/operation-not-allowed') return {ok:false, err:'الدخول بحساب Google غير مفعّل حاليًا.'};
