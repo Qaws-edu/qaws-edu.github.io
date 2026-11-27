@@ -352,7 +352,7 @@ function accSheet(title, inner){
   var w=document.createElement('div');
   w.id='accsheet';
   w.style.cssText='position:fixed;inset:0;background:rgba(24,18,45,.45);z-index:9999;display:flex;align-items:flex-end;justify-content:center';
-  w.innerHTML='<div style="background:#FFFBF2;width:100%;max-width:430px;border-radius:22px 22px 0 0;padding:14px 16px 22px;box-shadow:0 -10px 30px rgba(0,0,0,.25)">'
+  w.innerHTML='<div style="background:#FFFBF2;width:100%;max-width:430px;border-radius:22px 22px 0 0;padding:14px 16px 96px;box-shadow:0 -10px 30px rgba(0,0,0,.25)">'
     +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'
     +'<b style="font-size:17px">'+escA(title)+'</b>'
     +'<button id="accx" type="button" style="border:0;background:#EFE7D6;border-radius:50%;width:32px;height:32px;font-size:18px;line-height:1;color:#5B4B7A">×</button></div>'
