@@ -47,14 +47,14 @@ const Store = {
   testOpen(si,u){ return true; },
   unitOpen(si,u){ return true; },
   stageOpen(si){ return true; },
-  unitPct(p,si,u){ const un=STAGES[si].units[u]; let done=0,total=un.lessons.length+1;
-    un.lessons.forEach((_,l)=>{ if(p.lessons[this.lkey(si,u,l)]) done++; });
-    if(p.tests[si+'/'+u]) done++;
-    return Math.round(done/total*100); },
+  unitPct(p,si,u){ const un=STAGES[si].units[u]; let done=0,total=0;
+    un.lessons.forEach((ls,l)=>{ if(ls&&ls._cmsh)return; total++; if(p.lessons[this.lkey(si,u,l)]) done++; });
+    if(!un._testHidden){ total++; if(p.tests[si+'/'+u]) done++; }
+    return total? Math.round(done/total*100):0; },
   stagePct(si){ return this.stagePctFor(this.cur(),si); },
   stagePctFor(p,si){ const st=STAGES[si]; let done=0,total=0;
-    st.units.forEach((un,u)=>{ un.lessons.forEach((_,l)=>{ total++; if(p.lessons[this.lkey(si,u,l)]) done++; });
-      total++; if(p.tests[si+'/'+u]) done++; });
+    st.units.forEach((un,u)=>{ if(un._cmsh)return; un.lessons.forEach((ls,l)=>{ if(ls&&ls._cmsh)return; total++; if(p.lessons[this.lkey(si,u,l)]) done++; });
+      if(!un._testHidden){ total++; if(p.tests[si+'/'+u]) done++; } });
     return total? Math.round(done/total*100):0; }
 };
 
@@ -134,6 +134,7 @@ function vHome(){
 function vStages(){
   const my = Store.getMyStage();
   const cards = STAGES.map((st,i)=>{
+    if(st._cmsh) return '';
     const pct = Store.stagePct(i);
     const pick = (my===i) ? '<span class="pickme">مرحلتك ✓</span>' : '<button class="pick" data-pick="'+i+'">مرحلتي</button>';
     return '<a class="stage" href="#/stage/'+i+'">'+pick+'<div class="num '+st.color+'">'+st.badge+'</div><h3>'+st.name+'</h3>'
@@ -178,14 +179,16 @@ function vStage(si){
   const st = STAGES[si];
   const pct = Store.stagePct(si);
   const units = st.units.map((un,u)=>{
+    if(un._cmsh) return '';
     const rows = un.lessons.map((ls,l)=>{
+      if(ls._cmsh) return '';
       const done = Store.lessonDone(si,u,l);
       const cls = done?'done':'now';
       const go = done?'✓':'▶';
       return '<a class="lesson '+cls+'" href="#/lesson/'+si+'/'+u+'/'+l+'"><div class="ic">'+(ICONS[ls.type]||ICONS.video)+'</div><div><h4>'+ls.title+'</h4><div class="ty">'+ls.ty+'</div></div><div class="go">'+go+'</div></a>';
     }).join('');
     const tDone = Store.testDone(si,u);
-    const test = '<a class="test-row" href="#/test/'+si+'/'+u+'"><div class="ic">'+ICONS.star+'</div><div><h4>'+un.test.title+'</h4><div class="ty">'+(tDone?'تم الإنجاز ✓':'متاح الآن')+'</div></div></a>';
+    const test = un._testHidden ? '' : '<a class="test-row" href="#/test/'+si+'/'+u+'"><div class="ic">'+ICONS.star+'</div><div><h4>'+un.test.title+'</h4><div class="ty">'+(tDone?'تم الإنجاز ✓':'متاح الآن')+'</div></div></a>';
     return '<div class="unit"><div class="unit-head"><div class="un '+un.color+'">'+un.num+'</div><div><h2>'+un.name+'</h2><div class="st">دروس واختبار</div></div></div>'+rows+test+'</div>';
   }).join('');
   return header({back:'#/stages', title:st.name})
@@ -198,21 +201,28 @@ function vStage(si){
 
 function stepper(si,u,cur,isTest){
   const un=STAGES[si].units[u];
-  let d=un.lessons.map((_,l)=>'<i class="'+(Store.lessonDone(si,u,l)?'done':(!isTest&&l===cur?'cur':''))+'"></i>').join('');
+  let d=un.lessons.map((ls,l)=>ls&&ls._cmsh?'':'<i class="'+(Store.lessonDone(si,u,l)?'done':(!isTest&&l===cur?'cur':''))+'"></i>').join('');
   d+='<i class="t '+(Store.testDone(si,u)?'done':(isTest?'cur':''))+'"></i>';
   return d;
 }
 
+function videoEmbed(url){
+  const m = String(url).match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([\w-]{6,20})/);
+  if(m) return '<div class="video-slot real"><iframe src="https://www.youtube-nocookie.com/embed/'+m[1]+'" title="فيديو الدرس" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>';
+  return '<div class="video-slot real"><video controls src="'+url+'"></video></div>';
+}
 function vLesson(si,u,l){
   const st=STAGES[si], un=st.units[u], ls=un.lessons[l];
-  let media;
-  if(ls.type==='video'){
+  let media='';
+  if(ls.videoUrl) media += videoEmbed(ls.videoUrl);
+  else if(ls.type==='video'){
     media = '<div class="video-slot"><div class="play"><svg width="30" height="30" viewBox="0 0 24 24"><path d="M8 6 L18 12 L8 18 z" fill="none" stroke="#4A3B6E" stroke-width="2.4" stroke-linejoin="round"/></svg></div><div class="cap">مكان فيديو الشرح</div></div>';
   } else if(ls.type==='activity'){
-    media = '<div class="video-slot"><div class="play">'+ICONS.activity+'</div><div class="cap">مكان النشاط التفاعلي</div></div>';
+    media += '<div class="video-slot"><div class="play">'+ICONS.activity+'</div><div class="cap">مكان النشاط التفاعلي</div></div>';
   } else {
-    media = '<div class="q"><h3>سؤال تجريبي — شكل التمرين</h3><button class="opt">الاختيار الأول</button><button class="opt">الاختيار الثاني</button><button class="opt">الاختيار الثالث</button></div>';
+    media += '<div class="q"><h3>سؤال تجريبي — شكل التمرين</h3><button class="opt">الاختيار الأول</button><button class="opt">الاختيار الثاني</button><button class="opt">الاختيار الثالث</button></div>';
   }
+  if(ls.body) media += '<section class="infocard"><div class="cmsbody">'+ls.body+'</div></section>';
   const sk = '<section class="infocard"><h3>ملخص الدرس</h3><div class="skl"><i></i><i></i><i class="s"></i></div></section>'
     +'<section class="infocard"><h3>الكلمات الجديدة</h3><div class="tiles"><i></i><i></i><i></i><i></i></div></section>';
   return header({back:'#/stage/'+si, title:st.name})
@@ -227,15 +237,19 @@ function vLesson(si,u,l){
 
 function vTest(si,u){
   const st=STAGES[si], un=st.units[u];
-  const qs = [1,2,3].map(i=>'<div class="q"><div class="qn">'+N[i-1]+'</div><h3>سؤال تجريبي '+N[i-1]+'</h3>'
-    +'<button class="opt" data-c="'+(i===1?1:0)+'">الاختيار الأول</button>'
-    +'<button class="opt" data-c="'+(i===1?0:1)+'">الاختيار الثاني</button>'
-    +'<button class="opt" data-c="0">الاختيار الثالث</button></div>').join('');
+  const real = un.test && Array.isArray(un.test.questions) && un.test.questions.length ? un.test.questions : null;
+  const qs = real
+    ? real.map((q,i)=>'<div class="q"><div class="qn">'+N[i]+'</div><h3>'+q.q+'</h3>'
+      +q.opts.map((o,oi)=>'<button class="opt" data-c="'+(oi===q.c?1:0)+'">'+o+'</button>').join('')+'</div>').join('')
+    : [1,2,3].map(i=>'<div class="q"><div class="qn">'+N[i-1]+'</div><h3>سؤال تجريبي '+N[i-1]+'</h3>'
+      +'<button class="opt" data-c="'+(i===1?1:0)+'">الاختيار الأول</button>'
+      +'<button class="opt" data-c="'+(i===1?0:1)+'">الاختيار الثاني</button>'
+      +'<button class="opt" data-c="0">الاختيار الثالث</button></div>').join('');
   return header({back:'#/stage/'+si, title:un.test.title})
-  +'<section class="strip"><div class="stl"><b>'+un.name+'</b><span id="qcount">٠ من ٣ أسئلة</span></div><div class="steps wide"><div class="rail" id="qrail"><i style="width:0%"></i></div></div></section>'
+  +'<section class="strip"><div class="stl"><b>'+un.name+'</b><span id="qcount">٠ من '+AR(real?real.length:3)+' أسئلة</span></div><div class="steps wide"><div class="rail" id="qrail"><i style="width:0%"></i></div></div></section>'
   +BAND
   +'<div class="lesson-body">'+qs
-  +'<div class="note">نموذج لشكل الاختبار — ستُوضع الأسئلة الحقيقية من محتوى الوحدة</div>'
+  +(real?'':'<div class="note">نموذج لشكل الاختبار — ستُوضع الأسئلة الحقيقية من محتوى الوحدة</div>')
   +'<button class="cta" id="submit">سلّم الإجابات</button>'
   +'<a class="link" href="#/stage/'+si+'">العودة إلى '+un.name+'</a></div>'
   +GROUND+nav('stages');
