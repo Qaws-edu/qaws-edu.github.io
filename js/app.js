@@ -82,11 +82,14 @@ const NAV_ICONS = {
   home:'<svg viewBox="0 0 24 24"><path d="M4 11 L12 4 L20 11 V19 a1 1 0 0 1-1 1 H5 a1 1 0 0 1-1-1z M10 20 V14 H14 V20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/></svg>',
   stages:'<svg viewBox="0 0 24 24"><rect x="4" y="4" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><rect x="13" y="4" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><rect x="4" y="13" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><rect x="13" y="13" width="7" height="7" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>',
   progress:'<svg viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/></svg>',
-  parent:'<svg viewBox="0 0 24 24"><path d="M2 12 C6 6 18 6 22 12 C18 18 6 18 2 12 z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>'
+  parent:'<svg viewBox="0 0 24 24"><path d="M2 12 C6 6 18 6 22 12 C18 18 6 18 2 12 z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>',
+  exams:'<svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M9 8 h6 M9 12 h6 M9 16 h4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>'
 };
+const ASK_ICON='<svg viewBox="0 0 24 24"><path d="M12 3 C6.5 3 3 6.6 3 10.7 C3 14.8 6.5 18.4 12 18.4 C13 18.4 14 18.3 14.9 18 L19 20 L18.2 16.2 C20 14.9 21 12.9 21 10.7 C21 6.6 17.5 3 12 3 z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/></svg>';
 function nav(active){
-  const t=[['home','#/','الرئيسية'],['stages','#/stages','المراحل'],['progress','#/progress','تقدّمي'],['parent','#/parent','متابعة']];
-  return '<nav class="tabbar">'+t.map(x=>'<a class="tab'+(x[0]===active?' on':'')+'" href="'+x[1]+'">'+NAV_ICONS[x[0]]+'<span>'+x[2]+'</span></a>').join('')+'</nav>';
+  const t=[['home','#/','الرئيسية'],['stages','#/stages','المراحل'],['exams','#/exams','الاختبارات'],['progress','#/progress','تقدّمي'],['parent','#/parent','متابعة']];
+  const fab = active==='ask' ? '' : '<a class="askfab" href="#/ask" title="اسأل مس أسماء">'+ASK_ICON+'</a>';
+  return fab+'<nav class="tabbar">'+t.map(x=>'<a class="tab'+(x[0]===active?' on':'')+'" href="'+x[1]+'">'+NAV_ICONS[x[0]]+'<span>'+x[2]+'</span></a>').join('')+'</nav>';
 }
 const BAND = '<section class="aband"></section>';
 function acard(txt){ return '<section class="acard"><div class="abub">'+txt+'</div><img class="aimg" src="assets/asmaa/asmaa-exact.png?v=20261127-9" alt="الأستاذة أسماء"></section>'; }
@@ -365,11 +368,19 @@ function route(){
   if(h==='#/profiles'){ app.innerHTML=vProfiles(); Asmaa.hide(); return; }
   if(h==='#/profile-edit'){ app.innerHTML=vProfileEdit(); bindProfileEdit(); Asmaa.hide(); return; }
   if(h==='#/parent'){ app.innerHTML=vParent(); Asmaa.hide(); return; }
+  if(h==='#/exams'){ QawsExams.mountList(); Asmaa.hide(); return; }
+  if(m=h.match(/^#\/exam\/([\w-]+)$/)){ QawsExams.mountExam(m[1]); Asmaa.hide(); return; }
+  if(h==='#/exams-admin'){ QawsExams.mountAdmin(); Asmaa.hide(); return; }
+  if(h==='#/ask'){ QawsChat.mountAsk(); Asmaa.hide(); return; }
+  if(h==='#/ask-owner'){ QawsChat.mountAskOwner(); Asmaa.hide(); return; }
   if(m=h.match(/^#\/stage\/(\d+)$/)){ app.innerHTML=vStage(+m[1]); Asmaa.enter('stage'); return; }
   if(m=h.match(/^#\/lesson\/(\d+)\/(\d+)\/(\d+)$/)){ app.innerHTML=vLesson(+m[1],+m[2],+m[3]); bindLesson(+m[1],+m[2],+m[3]); Asmaa.enter('lesson'); return; }
   if(m=h.match(/^#\/test\/(\d+)\/(\d+)$/)){ app.innerHTML=vTest(+m[1],+m[2]); bindTest(+m[1],+m[2]); Asmaa.enter('test'); return; }
   app.innerHTML=vHome(); Asmaa.enter('home');
 }
+/* ---------------- exports for exams/chat modules ---------------- */
+window.QawsUI={header:header, GROUND:GROUND, nav:nav, acard:acard, Store:Store, AR:AR, N:N, ICONS:ICONS, celebrate:celebrate, rail:rail, AVIMG:AVIMG};
+
 window.addEventListener('hashchange', route);
 route();
 })();
