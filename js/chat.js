@@ -63,15 +63,17 @@ function mountStudent(){
     +'<a class="ownerlink" href="#/ask-owner">دخول '+esc(cfg().ownerName)+'</a></div>'
     +U().GROUND+U().nav('ask');
   const box=document.querySelector('#chbox');
-  ensureFb().then(ok=>{
+  ensureFb().then(async ok=>{
     if(!ok){ box.innerHTML='<div class="chatload">تعذّر الاتصال. تأكد من الإنترنت وحاول مجددًا.</div>'; return; }
-    auth.signInAnonymously().then(cr=>{
-      me=cr.user;
+    if(auth.currentUser && auth.currentUser.email===cfg().ownerEmail){ ownerMode=true; mountOwnerThreads(); return; }
+    try{
+      if(!auth.currentUser) await auth.signInAnonymously();
+      me=auth.currentUser;
       const nm=(document.querySelector('#chname').value||'').trim()||'طالب';
       db.collection('students').doc(me.uid).set({name:nm, lastActive:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
       unsub=db.collection('students').doc(me.uid).collection('messages').orderBy('t','asc').limit(200)
         .onSnapshot(snap=>renderMsgs(box, snap.docs.map(d=>d.data())));
-    }).catch(()=>{ box.innerHTML='<div class="chatload">تعذّر الدخول. حاول مجددًا.</div>'; });
+    }catch(e){ box.innerHTML='<div class="chatload">تعذّر الدخول. حاول مجددًا.</div>'; }
   });
   document.querySelector('#chname').onchange=e=>{
     const n=e.target.value.trim(); saveName(n);
@@ -173,8 +175,8 @@ function mountAskOwner(){
       +U().GROUND+U().nav('ask');
     return;
   }
-  ensureFb().then(ok=>{
-    if(ok && auth.currentUser){ ownerMode=true; mountOwnerThreads(); } else mountOwner();
+  ensureFb().then(async ok=>{
+    if(ok && auth.currentUser && auth.currentUser.email===cfg().ownerEmail){ ownerMode=true; mountOwnerThreads(); } else mountOwner();
   });
 }
 
