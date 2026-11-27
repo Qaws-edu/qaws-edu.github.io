@@ -387,13 +387,13 @@ window.QawsChat={
         try{
           if(u && u.isAnonymous){ await u.linkWithRedirect(provider); } else { await auth.signInWithRedirect(provider); }
           return {ok:false, redirecting:true};
-        }catch(e3){ return {ok:false, err:'المتصفح منع نافذة الدخول. افتح الموقع في Chrome أو Safari وجرّب.'}; }
+        }catch(e3){ return {ok:false, err:'الدخول بحساب Google مش متاح على المتصفح ده. استخدم «إنشاء حساب جديد» أو «الدخول بحساب موجود» بالبريد وكلمة السر.'}; }
       }
       if(code==='auth/network-request-failed') return {ok:false, err:'النت ضعيف. جرّب تاني.'};
       if(code==='auth/unauthorized-domain') return {ok:false, err:'الدخول بحساب Google غير متاح على هذا الموقع حاليًا.'};
       if(code==='auth/account-exists-with-different-credential') return {ok:false, err:'البريد ده مسجّل بطريقة دخول تانية.'};
       if(code==='auth/operation-not-allowed') return {ok:false, err:'الدخول بحساب Google غير مفعّل حاليًا.'};
-      return {ok:false, err:'تعذّر الدخول بحساب Google. حاول تاني.'};
+      return {ok:false, err:'الدخول بحساب Google مش متاح على المتصفح ده. استخدم «إنشاء حساب جديد» أو «الدخول بحساب موجود» بالبريد وكلمة السر.'};
     }
   },
   fbOwnerSession: async function(){
