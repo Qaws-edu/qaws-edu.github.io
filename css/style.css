@@ -754,3 +754,17 @@ body.prep .ground{border-radius:0}
 body.prep .acard{background:repeating-linear-gradient(135deg, rgba(34,54,79,.03) 0 2px, transparent 2px 16px),linear-gradient(180deg,#EDF4F1,#DCE9E6)}
 body.prep .acard::after{background:#3E8E87;box-shadow:none;height:6px;border-radius:0}
 body.prep .tab svg{opacity:.9}
+
+/* ======== وسائط الشات: صورة وصوت ======== */
+.chmedia{flex:none;border:0;border-radius:14px;background:#E3F3F5;color:var(--ink);width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:var(--shadow-s)}
+.chmedia:active{transform:translateY(2px)}
+.bub.media{padding:6px}
+.chimg{max-width:190px;max-height:240px;border-radius:12px;display:block;cursor:pointer}
+.chaud{width:210px;max-width:100%;display:block}
+.chrec{display:flex;align-items:center;gap:10px;margin-top:8px;background:#FFF0EC;border:2px solid rgba(245,128,106,.5);border-radius:16px;padding:8px 12px;font-family:'Almarai',sans-serif;font-weight:800;font-size:14px;color:#B3402A}
+.chrec[hidden]{display:none}
+.chrec span{flex:1}
+.chsend.sm,.adbtn.sm{padding:6px 14px;font-size:12.5px}
+body.prep .chmedia{border-radius:10px;box-shadow:0 1px 2px rgba(27,42,58,.12)}
+body.prep .chimg{border-radius:8px}
+body.prep .chrec{border-radius:10px}
