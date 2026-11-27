@@ -8,19 +8,6 @@ service cloud.firestore {
         && request.auth.token.email == 'asmaaboelftooh@gmail.com';
     }
 
-    // محتوى لوحة التحكم: المنشور يقرأه الجميع، ولا يكتب أحد إلا مس أسماء
-    match /cmsLive/{docId} {
-      allow read: if true;
-      allow create, update, delete: if isOwner();
-    }
-    match /cmsDraft/{docId} {
-      allow read, create, update, delete: if isOwner();
-    }
-    match /cmsHistory/{docId} {
-      allow read, create, delete: if isOwner();
-      allow update: if false;
-    }
-
     // كل طالب له وثيقة بمعرّف دخوله المجهول: يقرأ ويكتب وثيقته فقط
     match /students/{studentId} {
       allow read: if isOwner()
@@ -44,6 +31,20 @@ service cloud.firestore {
         allow update, delete: if false;
       }
     }
+    // الإشعارات: الطالب يقرأ إشعاراته والعامة فقط، والمعلّمة تقرأ إشعارات النشاط
+    match /notifications/{notifId} {
+      allow read: if isOwner()
+        || (request.auth != null && resource.data.to in ['all', request.auth.uid]);
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasOnly(['to', 'kind', 'text', 't'])
+        && request.resource.data.to is string
+        && request.resource.data.kind in ['chat', 'reply', 'exam', 'signup', 'content']
+        && request.resource.data.text is string
+        && request.resource.data.text.size() <= 200
+        && request.resource.data.t == request.time
+        && (request.resource.data.to in ['owner', request.auth.uid] || isOwner());
+      allow update, delete: if false;
+    }
+
   }
 }
-
