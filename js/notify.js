@@ -69,6 +69,8 @@ async function init(){
   const ok=await ensureFb(); if(!ok){ failed=true; return; }
   try{ auth.onAuthStateChanged(()=>{ setupListener(); }); }catch(e){ failed=true; }
   setupListener();
+  /* تحديث العدّاد دوريًا وعند العودة للتبويب حتى لا يبقى قديمًا */
+  try{ setInterval(paint, 30000); document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) paint(); }); }catch(e){}
 }
 
 /* ---------- العدّاد ---------- */
