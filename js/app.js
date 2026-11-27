@@ -369,7 +369,7 @@ function mountAccount(){
     }
     box.innerHTML='<section class="content"><h3 style="text-align:center;margin-top:6px">حسابك</h3>'
       +'<div class="note" style="margin-bottom:10px">الدخول بحساب Google اختياري. من غيره تقدّمك محفوظ على الجهاز ده بس.</div>'
-      +'<button class="cta" id="gin" type="button" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#1F2937;border:2px solid #E7DFCB">'
+      +'<button class="cta" id="gin" type="button" style="display:flex;align-items:center;justify-content:center;gap:8px;flex-direction:row-reverse;background:#fff;color:#1F2937;border:2px solid #E7DFCB">'
       +GICON+'<span style="white-space:nowrap">الدخول بحساب Google</span></button>'
       +'<div class="aderr" id="gerr"></div></section>';
     var b=document.getElementById('gin');
@@ -379,6 +379,7 @@ function mountAccount(){
       var settled=false;
       function unlock(){ b.disabled=false; }
       window.addEventListener('focus',function(){ setTimeout(function(){ if(!settled) unlock(); },2500); });
+      setTimeout(function(){ if(!settled) unlock(); },25000);
       QawsChat.fbGoogleSignIn().then(function(r){
         settled=true; unlock();
         if(r&&r.ok){ try{ if(r.moved) sessionStorage.setItem('qawsGoogleMoved','1'); }catch(e){} location.reload(); return; }
