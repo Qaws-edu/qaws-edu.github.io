@@ -82,7 +82,9 @@ function mountStudent(){
       if(!u) await auth.signInAnonymously();
       me=auth.currentUser;
       const nm=(document.querySelector('#chname').value||'').trim()||'طالب';
-      db.collection('students').doc(me.uid).set({name:nm, lastActive:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+      const sref=db.collection('students').doc(me.uid);
+      sref.get().then(s=>{ if(!s.exists && window.QawsNotify) QawsNotify.toOwner('signup','طالب جديد انضم: '+nm); }).catch(()=>{});
+      sref.set({name:nm, lastActive:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
       unsub=db.collection('students').doc(me.uid).collection('messages').orderBy('t','asc').limit(200)
         .onSnapshot(snap=>renderMsgs(box, snap.docs.map(d=>d.data())));
     }catch(e){ box.innerHTML='<div class="chatload">تعذّر الدخول. حاول مجددًا.</div>'; }
@@ -99,6 +101,7 @@ function mountStudent(){
     saveName(nm);
     db.collection('students').doc(me.uid).set({name:nm, lastActive:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
     db.collection('students').doc(me.uid).collection('messages').add({from:'student', text:t, t:firebase.firestore.FieldValue.serverTimestamp()});
+    if(window.QawsNotify) QawsNotify.toOwner('chat','رسالة جديدة من '+nm+' في المحادثة');
   };
   document.querySelector('#chsend').onclick=send;
   document.querySelector('#chtext').addEventListener('keydown',e=>{ if(e.key==='Enter') send(); });
@@ -167,6 +170,7 @@ function mountOwnerThread(sid, name){
     const t=(inp.value||'').trim(); if(!t) return;
     inp.value='';
     db.collection('students').doc(sid).collection('messages').add({from:'owner', text:t, t:firebase.firestore.FieldValue.serverTimestamp()});
+    if(window.QawsNotify) QawsNotify.toStudent(sid,'reply','ردّت '+(cfg().ownerName||'المعلّمة')+' على رسالتك في المحادثة');
     db.collection('students').doc(sid).set({lastActive:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
   };
   document.querySelector('#chsend').onclick=send;
