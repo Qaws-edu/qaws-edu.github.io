@@ -6,7 +6,8 @@ let app=null, auth=null, db=null, unsub=null, me=null, ownerMode=false, openThre
 const LS='qaws-chat-v1';
 
 function cfg(){ return window.QAWS_CONFIG||{}; }
-function configured(){ const f=cfg().firebase; return !!(f && f.apiKey && f.projectId); }
+/* الشات يتفعّل فقط بعد اكتمال إعدادات فايربيس + بريد المعلّمة (أي بعد إنشاء حسابها ونشر القواعد) */
+function configured(){ const f=cfg().firebase; return !!(f && f.apiKey && f.projectId && cfg().ownerEmail); }
 const U=()=>window.QawsUI;
 const AR=n=>U().AR(n);
 function appEl(){ return document.querySelector('#app'); }
@@ -112,7 +113,10 @@ function mountOwner(){
     const ok=await ensureFb();
     if(!ok){ err.textContent='تعذّر الاتصال بالخدمة.'; return; }
     auth.signInWithEmailAndPassword(document.querySelector('#owmail').value.trim(), document.querySelector('#owpass').value)
-      .then(()=>{ ownerMode=true; mountOwnerThreads(); })
+      .then(async ()=>{
+        if((auth.currentUser||{}).email===cfg().ownerEmail){ ownerMode=true; mountOwnerThreads(); }
+        else { await auth.signOut(); err.textContent='هذا الحساب ليس حساب المعلّمة.'; }
+      })
       .catch(()=>{ err.textContent='بيانات الدخول غير صحيحة.'; });
   };
 }
@@ -174,5 +178,21 @@ function mountAskOwner(){
   });
 }
 
-window.QawsChat={mountAsk:mountAsk, mountAskOwner:mountAskOwner};
+window.QawsChat={
+  mountAsk:mountAsk,
+  mountAskOwner:mountAskOwner,
+  fbConfigured:configured,
+  /* دخول المعلّمة بحساب فايربيس — يستخدمه قسم الاختبارات أيضًا */
+  fbOwnerSignIn: async function(email, pass){
+    const ok=await ensureFb();
+    if(!ok) return {ok:false, err:'تعذّر الاتصال بالخدمة.'};
+    try{
+      await auth.signInWithEmailAndPassword((email||'').trim(), pass||'');
+      if((auth.currentUser||{}).email===cfg().ownerEmail) return {ok:true};
+      await auth.signOut();
+      return {ok:false, err:'هذا الحساب ليس حساب المعلّمة.'};
+    }catch(e){ return {ok:false, err:'بيانات الدخول غير صحيحة.'}; }
+  },
+  fbOwnerSignedIn: function(){ return !!(auth && auth.currentUser && auth.currentUser.email===cfg().ownerEmail); }
+};
 })();
