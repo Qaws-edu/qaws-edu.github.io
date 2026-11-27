@@ -264,7 +264,7 @@ function vStage(si){
   +'<section class="banner"><div class="bnum '+st.color+'">'+st.badge+'</div><h1>'+st.name+'</h1>'
     +'<div class="pbar"><div class="lbl"><span>تقدّمك في المرحلة</span><span>'+AR(pct)+'٪</span></div>'+rail(pct)+'</div></section>'
   +BAND
-  +'<div class="content">'+units+'</div>'
+  +'<div class="content units">'+units+'</div>'
   +GROUND+nav('stages');
 }
 
