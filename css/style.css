@@ -729,3 +729,18 @@ body.prep .c-green{background:#2F6F6A;color:#F0F7F5}
 body.prep .c-coral{background:#C9755A;color:#FFF7EA}
 body.prep .c-yellow{background:#E3D5B5;color:#22364F}
 body.prep .c-blue{background:#5E7A96;color:#F5F0E4}
+
+/* ======== جرس الإشعارات وصفحة الإشعارات ======== */
+.hbell{position:relative;width:42px;height:42px;flex:none;border-radius:50%;background:linear-gradient(180deg,#fff,#D9F1F3);box-shadow:var(--shadow-s);display:flex;align-items:center;justify-content:center;color:var(--ink);margin-inline-start:8px}
+.nbadge{position:absolute;top:-5px;inset-inline-start:-5px;min-width:19px;height:19px;border-radius:99px;background:#E5484D;color:#fff;font-family:'Almarai',sans-serif;font-weight:800;font-size:11px;display:flex;align-items:center;justify-content:center;padding:0 5px;box-shadow:var(--shadow-s)}
+.nrow{display:flex;align-items:center;gap:12px;background:linear-gradient(180deg,#fff,var(--cream));border-radius:18px;box-shadow:var(--shadow-s);padding:12px 14px;margin-bottom:10px;color:var(--ink)}
+.nrow .nic{width:40px;height:40px;flex:none;border-radius:50%;background:#E3F3F5;display:flex;align-items:center;justify-content:center;font-size:19px}
+.nrow .ntx{flex:1;font-family:'Tajawal',sans-serif;font-size:14.5px;line-height:1.7}
+.nrow .ntm{font-family:'Tajawal',sans-serif;font-size:12px;color:var(--ink-soft);white-space:nowrap}
+.nrow.new{background:linear-gradient(180deg,#FFF7DC,#FFEFC0)}
+.nempty{text-align:center;font-family:'Tajawal',sans-serif;color:var(--ink-soft);padding:30px 10px}
+body.prep .hbell{background:linear-gradient(180deg,#FBF8EF,#EFE7D3);box-shadow:0 1px 2px rgba(27,42,58,.14)}
+body.prep .nbadge{border-radius:7px}
+body.prep .nrow{border-radius:10px;box-shadow:0 1px 2px rgba(27,42,58,.10)}
+body.prep .nrow .nic{border-radius:10px}
+body.prep .nrow.new{background:#F3E9D2}
