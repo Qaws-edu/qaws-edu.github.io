@@ -179,17 +179,29 @@ function vHome(){
 }
 
 function vStages(){
+  const ARC='<svg width="72" height="46" viewBox="0 0 40 26"><path d="M3 23 A17 17 0 0 1 37 23" fill="none" stroke="#F29682" stroke-width="5" stroke-linecap="round"/><path d="M8 23 A12 12 0 0 1 32 23" fill="none" stroke="#F2E394" stroke-width="5" stroke-linecap="round"/><path d="M13 23 A7 7 0 0 1 27 23" fill="none" stroke="#AEC6F0" stroke-width="5" stroke-linecap="round"/></svg>';
+  return header({})
+  +'<section class="banner"><h1>اختر مرحلتك</h1><p>ابتدائي أم إعدادي؟</p></section>'
+  +acard('أهلًا بك، أي مرحلة تريد؟')
+  +'<div class="lvlpick">'
+  +'<a class="lvlcard lvl-pri" href="#/stages/pri"><span class="lvl-arc">'+ARC+'</span><h3>ابتدائي</h3><p>من Pre-Kg إلى السادس الابتدائي</p><span class="lvlgo">هيا نلعب ونتعلّم ←</span></a>'
+  +'<a class="lvlcard lvl-prep" href="#/stages/prep"><span class="lvl-arc">'+ARC+'</span><h3>إعدادي</h3><p>من الأول إلى الثالث الإعدادي</p><span class="lvlgo">نكبر معك، ونتعلم معاً ←</span></a>'
+  +'</div>'
+  +GROUND+nav('stages');
+}
+function vStageGrades(prep){
   const my = Store.getMyStage();
   const cards = STAGES.map((st,i)=>{
     if(st._cmsh) return '';
+    if(prep ? i<8 : i>=8) return '';
     const pct = Store.stagePct(i);
     const pick = (my===i) ? '<span class="pickme">مرحلتك ✓</span>' : '<button class="pick" data-pick="'+i+'">مرحلتي</button>';
     return '<a class="stage" href="#/stage/'+i+'">'+pick+'<div class="num '+st.color+'">'+st.badge+'</div><h3>'+st.name+'</h3>'
       +'<div class="bar"><i style="width:'+pct+'%"></i></div><div class="pct">'+(pct? AR(pct)+'٪ مكتمل':'لم تبدأ بعد')+'</div></a>';
   }).join('');
-  return header({})
-  +'<section class="banner"><h1>اختر مرحلتك</h1><p>من Pre-Kg إلى الثالث الإعدادي</p></section>'
-  +acard('أهلًا بك، أي مرحلة تريد؟')
+  return header({back:'#/stages', title:prep?'إعدادي':'ابتدائي'})
+  +'<section class="banner"><h1>'+(prep?'المرحلة الإعدادية':'المرحلة الابتدائية')+'</h1><p>'+(prep?'اختر صفك من الأول إلى الثالث الإعدادي':'اختر صفك من Pre-Kg إلى السادس الابتدائي')+'</p></section>'
+  +acard(prep?'اختر صفك، وأنا معك':'أهلًا بك، أي مرحلة تريد؟')
   +'<div class="grid">'+cards+'</div>'
   +GROUND+nav('stages');
 }
@@ -247,7 +259,7 @@ function vStage(si){
     const test = un._testHidden ? '' : '<a class="test-row" href="#/test/'+si+'/'+u+'"><div class="ic">'+ICONS.star+'</div><div><h4>'+un.test.title+'</h4><div class="ty">'+(tDone?'تم الإنجاز ✓':'متاح الآن')+'</div></div></a>';
     return '<div class="unit"><div class="unit-head"><div class="un '+un.color+'">'+un.num+'</div><div><h2>'+un.name+'</h2><div class="st">دروس واختبار</div></div></div>'+rows+test+'</div>';
   }).join('');
-  return header({back:'#/stages', title:st.name})
+  return header({back:isPrep(si)?'#/stages/prep':'#/stages', title:st.name})
   +'<section class="banner"><div class="bnum '+st.color+'">'+st.badge+'</div><h1>'+st.name+'</h1>'
     +'<div class="pbar"><div class="lbl"><span>تقدّمك في المرحلة</span><span>'+AR(pct)+'٪</span></div>'+rail(pct)+'</div></section>'
   +BAND
@@ -437,7 +449,9 @@ function route(){
   applyTheme(rsi);
   const prepMode=document.body.classList.contains('prep');
   if(h==='#/'||h==='#'){ app.innerHTML=vHome(); if(prepMode) Asmaa.hide(); else Asmaa.enter('home'); return; }
-  if(h==='#/stages'){ app.innerHTML=vStages(); bindStages(); Asmaa.hide(); return; }
+  if(h==='#/stages'){ document.body.classList.remove('prep'); app.innerHTML=vStages(); Asmaa.hide(); return; }
+  if(h==='#/stages/pri'){ document.body.classList.remove('prep'); app.innerHTML=vStageGrades(false); bindStages(); Asmaa.hide(); return; }
+  if(h==='#/stages/prep'){ document.body.classList.add('prep'); app.innerHTML=vStageGrades(true); bindStages(); Asmaa.hide(); return; }
   if(h==='#/progress'){ app.innerHTML=vProgress(); Asmaa.hide(); return; }
   if(h==='#/profiles'){ app.innerHTML=vProfiles(); Asmaa.hide(); return; }
   if(h==='#/profile-edit'){ app.innerHTML=vProfileEdit(); bindProfileEdit(); Asmaa.hide(); return; }
