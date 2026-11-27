@@ -744,3 +744,13 @@ body.prep .nbadge{border-radius:7px}
 body.prep .nrow{border-radius:10px;box-shadow:0 1px 2px rgba(27,42,58,.10)}
 body.prep .nrow .nic{border-radius:10px}
 body.prep .nrow.new{background:#F3E9D2}
+
+/* ======== رسوم الإعدادي: إخفاء المشاهد الكرتونية وخلفيات هندسية هادئة ======== */
+.nbadge[hidden]{display:none}
+body.prep .aband,body.prep .aband.scene{display:none}
+body.prep .wrap{background:repeating-linear-gradient(135deg, rgba(34,54,79,.022) 0 2px, transparent 2px 16px),linear-gradient(180deg,#F5F0E4,#F1EADA 45%,#EAE1CC)}
+body.prep .banner{background:repeating-linear-gradient(135deg, rgba(255,255,255,.05) 0 2px, transparent 2px 18px),linear-gradient(180deg,#3E8E87,#2F6F6A)}
+body.prep .ground{border-radius:0}
+body.prep .acard{background:repeating-linear-gradient(135deg, rgba(34,54,79,.03) 0 2px, transparent 2px 16px),linear-gradient(180deg,#EDF4F1,#DCE9E6)}
+body.prep .acard::after{background:#3E8E87;box-shadow:none;height:6px;border-radius:0}
+body.prep .tab svg{opacity:.9}
