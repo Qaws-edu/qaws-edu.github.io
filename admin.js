@@ -685,7 +685,7 @@ var NEWV={
   home:{v:function(){
     return '<div class="adm-hello">أهلًا مس أسماء<small>اختاري ما تريدين تعديله. بعد التعديل اضغطي «نشر» ليظهر للطلاب.</small></div>'
       +'<div class="adm-tiles">'+TILES.map(function(t){return '<button class="adm-tile" data-tab="'+t[0]+'"><span class="ic">'+ico(t[1])+'</span><b>'+t[2]+'</b><small>'+t[3]+'</small></button>';}).join('')+'<a class="adm-tile link" href="admin/molzama.html"><span class="ic">'+ico('book')+'</span><b>ملازم وأغلفة</b><small>صمّمي ملزمة أو غلاف</small></a></div>'
-      +'<div class="adm-actions"><button class="adm-btn green" id="pub">نشر التعديلات</button><button class="adm-btn blue" id="prev">معاينة</button><button class="adm-btn gray" id="out">خروج</button></div>';
+      +'<div class="adm-actions"><button class="adm-btn green" id="pub">نشر التعديلات</button><button class="adm-btn blue" id="prev">معاينة</button><button class="adm-btn gray" id="out">تسجيل الخروج</button></div>';
   },b:function(){}},
   videos:{v:function(){return '<div class="adm-card"><h2>فيديوهات الدروس</h2><div class="adm-hint">افتحي يوتيوب، انسخي رابط الفيديو، والصقيه أمام الدرس. يظهر الفيديو داخل الدرس تلقائيًا بعد النشر.</div>'+lessonList('videos')+'</div>';},
     b:function(){
@@ -743,14 +743,14 @@ function render(){
   else if(tab==='pools')body=vPools();
   else if(tab==='history')body=vHistory();
   else if(NEWV[tab])body=NEWV[tab].v();
-  root.innerHTML='<div class="adm-head"><h1>لوحة تحكم قَوْس</h1><span class="who">'+esc(user.email)+'</span></div>'
+  root.innerHTML='<div class="adm-head"><h1>لوحة تحكم قَوْس</h1><span class="who">'+esc(user.email)+'</span><button class="adm-btn sm gray" id="out2" type="button">تسجيل الخروج</button></div>'
     +navBar()
     +body
     +(tab==='home'?'':'<div class="adm-actions">'
     +'<button class="adm-btn green" id="pub">نشر التعديلات</button>'
     +'<button class="adm-btn" id="draft">حفظ مسودة</button>'
     +'<button class="adm-btn blue" id="prev">معاينة المسودة</button>'
-    +'<button class="adm-btn gray" id="out">خروج</button>'
+    +'<button class="adm-btn gray" id="out">تسجيل الخروج</button>'
     +'</div>');
   document.querySelectorAll('[data-tab]').forEach(function(b){b.onclick=function(){tab=b.dataset.tab;selStage=null;selUnit=null;render();};});
   var dr=document.getElementById('draft');if(dr)dr.onclick=function(){save(false);};
@@ -760,6 +760,7 @@ function render(){
   };
   document.getElementById('prev').onclick=function(){window.open('index.html?cmspreview=1','_blank');};
   document.getElementById('out').onclick=function(){firebase.auth().signOut();};
+  var o2=document.getElementById('out2');if(o2)o2.onclick=function(){firebase.auth().signOut();};
   if(tab==='texts')bindTexts();
   else if(tab==='look')bindLook();
   else if(tab==='imgs')bindImgs();
