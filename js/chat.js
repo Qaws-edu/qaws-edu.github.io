@@ -308,6 +308,41 @@ window.QawsChat={
   fbOwnerSignedIn: function(){ return !!(auth && auth.currentUser && auth.currentUser.email===cfg().ownerEmail); },
   /* هل لدى الزائر جلسة معلّمة محفوظة؟ ينتظر استعادة الجلسة — يستخدمه قسم الاختبارات */
   fbSignOut: async function(){ try{ const ok=await ensureFb(); if(ok&&auth) await auth.signOut(); }catch(e){} },
+  /* ---- دخول اختياري بحساب Google (للطلاب) ---- */
+  fbAccountState: async function(){
+    var ok=await ensureFb();
+    if(!ok) return {ok:false};
+    var u=await waitAuth();
+    var owner=!!(u && u.email===cfg().ownerEmail);
+    var g=null, pd=(u&&u.providerData)||[];
+    for(var i=0;i<pd.length;i++){ if(pd[i].providerId==='google.com') g=pd[i]; }
+    var google=(u && !u.isAnonymous && g) ? {name:u.displayName||g.displayName||'', email:u.email||g.email||'', photo:u.photoURL||g.photoURL||''} : null;
+    return {ok:true, owner:owner, google:google, anon:!!(u&&u.isAnonymous)};
+  },
+  /* يربط جلسة الزائر المجهولة بحساب Google على نفس المعرّف حتى لا يضيع تقدّمه */
+  fbGoogleSignIn: async function(){
+    var ok=await ensureFb();
+    if(!ok) return {ok:false, err:'تعذّر الاتصال بالخدمة.'};
+    var provider=new firebase.auth.GoogleAuthProvider();
+    try{ provider.setCustomParameters({prompt:'select_account'}); }catch(e){}
+    var u=auth.currentUser;
+    try{
+      if(u && u.isAnonymous){ await u.linkWithPopup(provider); return {ok:true, linked:true}; }
+      await auth.signInWithPopup(provider);
+      return {ok:true, linked:false};
+    }catch(e){
+      var code=(e&&e.code)||'';
+      if(code==='auth/credential-already-in-use' && e.credential){
+        try{ await auth.signInWithCredential(e.credential); return {ok:true, linked:false, moved:true}; }
+        catch(e2){ return {ok:false, err:'تعذّر الدخول بحساب Google. حاول تاني.'}; }
+      }
+      if(code==='auth/popup-closed-by-user'||code==='auth/cancelled-popup-request') return {ok:false, cancelled:true};
+      if(code==='auth/unauthorized-domain') return {ok:false, err:'الدخول بحساب Google غير متاح على هذا الموقع حاليًا.'};
+      if(code==='auth/account-exists-with-different-credential') return {ok:false, err:'البريد ده مسجّل بطريقة دخول تانية.'};
+      if(code==='auth/operation-not-allowed') return {ok:false, err:'الدخول بحساب Google غير مفعّل حاليًا.'};
+      return {ok:false, err:'تعذّر الدخول بحساب Google. حاول تاني.'};
+    }
+  },
   fbOwnerSession: async function(){
     const ok=await ensureFb();
     if(!ok) return false;
