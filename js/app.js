@@ -370,18 +370,21 @@ function mountAccount(){
     box.innerHTML='<section class="content"><h3 style="text-align:center;margin-top:6px">حسابك</h3>'
       +'<div class="note" style="margin-bottom:10px">الدخول بحساب Google اختياري. من غيره تقدّمك محفوظ على الجهاز ده بس.</div>'
       +'<button class="cta" id="gin" type="button" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#1F2937;border:2px solid #E7DFCB">'
-      +GICON+'<span>الدخول بحساب Google</span></button>'
+      +GICON+'<span style="white-space:nowrap">الدخول بحساب Google</span></button>'
       +'<div class="aderr" id="gerr"></div></section>';
     var b=document.getElementById('gin');
     if(b) b.onclick=function(){
       var err=document.getElementById('gerr'); if(err) err.textContent='';
       b.disabled=true;
+      var settled=false;
+      function unlock(){ b.disabled=false; }
+      window.addEventListener('focus',function(){ setTimeout(function(){ if(!settled) unlock(); },2500); });
       QawsChat.fbGoogleSignIn().then(function(r){
-        b.disabled=false;
+        settled=true; unlock();
         if(r&&r.ok){ try{ if(r.moved) sessionStorage.setItem('qawsGoogleMoved','1'); }catch(e){} location.reload(); return; }
         if(r&&r.cancelled) return;
         if(err) err.textContent=(r&&r.err)||'تعذّر الدخول. حاول تاني.';
-      });
+      }).catch(function(){ settled=true; unlock(); if(err) err.textContent='تعذّر الدخول. حاول تاني.'; });
     };
   }).catch(function(){});
 }
