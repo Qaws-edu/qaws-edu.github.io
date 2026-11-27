@@ -51,6 +51,17 @@ async function ensureFb(){
   }catch(e){ return false; }
 }
 
+/* جلسة فايربيس تُستعاد بشكل غير متزامن — ننتظر أول حالة دخول قبل الحكم عليها */
+function waitAuth(){
+  return new Promise(res=>{
+    if(!auth) return res(null);
+    let done=false;
+    const t=setTimeout(()=>{ if(!done){ done=true; res(auth.currentUser); } },2500);
+    try{ auth.onAuthStateChanged(u=>{ if(!done){ done=true; clearTimeout(t); res(u); } }); }
+    catch(e){ if(!done){ done=true; clearTimeout(t); res(auth.currentUser); } }
+  });
+}
+
 /* ---------- عرض الطالب ---------- */
 function mountStudent(){
   const name=chatName();
@@ -65,9 +76,10 @@ function mountStudent(){
   const box=document.querySelector('#chbox');
   ensureFb().then(async ok=>{
     if(!ok){ box.innerHTML='<div class="chatload">تعذّر الاتصال. تأكد من الإنترنت وحاول مجددًا.</div>'; return; }
-    if(auth.currentUser && auth.currentUser.email===cfg().ownerEmail){ ownerMode=true; mountOwnerThreads(); return; }
+    const u=await waitAuth();
+    if(u && u.email===cfg().ownerEmail){ ownerMode=true; mountOwnerThreads(); return; }
     try{
-      if(!auth.currentUser) await auth.signInAnonymously();
+      if(!u) await auth.signInAnonymously();
       me=auth.currentUser;
       const nm=(document.querySelector('#chname').value||'').trim()||'طالب';
       db.collection('students').doc(me.uid).set({name:nm, lastActive:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
@@ -176,7 +188,8 @@ function mountAskOwner(){
     return;
   }
   ensureFb().then(async ok=>{
-    if(ok && auth.currentUser && auth.currentUser.email===cfg().ownerEmail){ ownerMode=true; mountOwnerThreads(); } else mountOwner();
+    const u = ok ? await waitAuth() : null;
+    if(u && u.email===cfg().ownerEmail){ ownerMode=true; mountOwnerThreads(); } else mountOwner();
   });
 }
 
@@ -195,6 +208,13 @@ window.QawsChat={
       return {ok:false, err:'هذا الحساب ليس حساب المعلّمة.'};
     }catch(e){ return {ok:false, err:'بيانات الدخول غير صحيحة.'}; }
   },
-  fbOwnerSignedIn: function(){ return !!(auth && auth.currentUser && auth.currentUser.email===cfg().ownerEmail); }
+  fbOwnerSignedIn: function(){ return !!(auth && auth.currentUser && auth.currentUser.email===cfg().ownerEmail); },
+  /* هل لدى الزائر جلسة معلّمة محفوظة؟ ينتظر استعادة الجلسة — يستخدمه قسم الاختبارات */
+  fbOwnerSession: async function(){
+    const ok=await ensureFb();
+    if(!ok) return false;
+    const u=await waitAuth();
+    return !!(u && u.email===cfg().ownerEmail);
+  }
 };
 })();
