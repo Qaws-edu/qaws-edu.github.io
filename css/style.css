@@ -784,3 +784,74 @@ body.prep .chrec{border-radius:10px}
 @media (prefers-reduced-motion:reduce){
   .hero .c1,.hero::before,.aband.scene::before{animation:none!important}
 }
+
+
+/* ======== شاشات اللابتوب والكمبيوتر: الصفحة تملأ الشاشة ======== */
+@media (min-width:900px){
+  .wrap{max-width:1080px}
+  .tabbar{width:min(100%,1080px)}
+  header{padding:14px 28px}
+  .logo .word{font-size:34px}
+  .headtitle{font-size:21px}
+  .hero{padding:36px 40px 26px}
+  .hero h1{font-size:44px;line-height:1.45;margin-top:14px}
+  .hero p{font-size:19px}
+  .hero .cta{max-width:440px;font-size:25px;margin-top:20px}
+  .hero .sun{width:64px;height:64px}
+  .hero .c1{width:96px;height:32px}
+  .aband{margin:18px 32px 6px;height:300px}
+  .aband.scene{height:300px;margin:0}
+  .aband.scene .rainbow{width:430px;bottom:40px}
+  .aband.scene::after{height:60px}
+  .section-title{font-size:30px;margin-bottom:24px}
+  .path{padding:32px 40px 26px}
+  .node{width:96px;height:96px;font-size:40px}
+  .node.current{width:112px;height:112px;font-size:50px}
+  .node-col{gap:24px}
+  .cards{padding:30px 32px 34px}
+  .tiles3{gap:18px}
+  .tile3{padding:20px 14px 18px}
+  .tile3 .tic{width:80px;height:80px}
+  .tile3 h3{font-size:18px}
+  .tile3 p{font-size:13px}
+  .banner{padding:30px 32px 28px}
+  .banner h1{font-size:38px}
+  .banner p{font-size:17px}
+  .banner .pbar{max-width:560px}
+  .banner .bnum{width:76px;height:76px;font-size:36px}
+  .grid{grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;padding:24px 32px 34px}
+  .stage{padding:20px 16px 16px}
+  .stage h3{font-size:19px}
+  .content{padding:24px 32px 30px}
+  .content:not(.units){max-width:860px;margin-left:auto;margin-right:auto;width:100%}
+  .content.units{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;align-items:start}
+  .content.units .unit{margin-bottom:0}
+  .unit-head h2{font-size:20px}
+  .lesson{padding:14px 18px}
+  .lesson h4{font-size:17px}
+  .chatbox{height:min(58vh,460px)}
+  .bub{max-width:min(82%,560px)}
+  .ground{padding:30px 32px 28px}
+  .prephero{margin:22px 32px 0;padding:34px 28px}
+  .prephero h1{font-size:32px}
+  .prephero .pht{font-size:17px}
+  .prepcard{margin:18px 32px 0;padding:20px 24px}
+  .prepsec{margin:26px 32px 0}
+  .prepsec h2{font-size:24px}
+  .gcards{gap:18px}
+  .gcard{padding:22px 14px 18px}
+  .gcard h3{font-size:19px}
+  .gcard p{font-size:13px}
+  .gcard .gnum{width:46px;height:46px;font-size:22px}
+  .quickrow{margin:20px 32px 0;padding:18px 14px;gap:12px}
+  .quickrow a{font-size:13px}
+  .quickrow .qic{width:52px;height:52px;border-radius:16px}
+  .cta{max-width:440px}
+  .emptybox p{max-width:420px}
+  .lvlpick{padding:24px 32px 10px}
+  .lvlcard{padding:28px 24px}
+}
+@media (min-width:1280px){
+  .wrap{max-width:1200px}
+  .tabbar{width:min(100%,1200px)}
+}
