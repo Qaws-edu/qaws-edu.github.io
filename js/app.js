@@ -112,8 +112,55 @@ function celebrate(title, msg, then){
 }
 function rail(pct){ return '<div class="rail"><i style="width:'+pct+'%"></i></div>'; }
 
+/* ---------------- نمط المرحلة الإعدادية ---------------- */
+const isPrep = i => typeof i==='number' && i>=8 && !!STAGES[i];
+const PREP_WELCOME_KEY='qaws-prep-welcome-v1';
+function applyTheme(routeSi){
+  const s = isPrep(routeSi) ? routeSi : Store.getMyStage();
+  document.body.classList.toggle('prep', isPrep(s));
+}
+function prepWelcome(then){
+  const ov = document.createElement('div');
+  ov.className='overlay';
+  ov.innerHTML = '<div class="celebrate prepwelcome"><img class="asmaa" src="assets/asmaa/asmaa-exact.png?v=20261127-9" alt="مس أسماء">'
+    +'<h2>أهلًا بيك من جديد في قوس!</h2><p>كبرت، وكبرت معاك أحلامك وطموحاتك .. وحان وقت رحلة جديدة من المعرفة والإنجاز.</p>'
+    +'<button class="cta green">نكبر معك، ونتعلم معاً</button></div>';
+  document.body.appendChild(ov);
+  ov.querySelector('button').onclick = ()=>{ ov.remove(); then(); };
+}
+function vPrepHome(my){
+  const st=STAGES[my], pct=Store.stagePct(my);
+  let curU=-1;
+  st.units.forEach((un,u)=>{ if(curU<0 && !un._cmsh && Store.unitPct(Store.cur(),my,u)<100) curU=u; });
+  const unitLine = pct>=100 ? 'أنهيت كل وحدات مرحلتك — إنجاز يستحق الفخر!' : (curU>=0 ? 'أنت الآن في '+st.units[curU].name : 'رحلتك تبدأ الآن');
+  const GRADES=[[8,'g-navy','بداية قوية لمستقبل مشرق'],[9,'g-teal','تحديات أكبر.. وثقة أعلى'],[10,'g-terra','خطوتك الأخيرة نحو المستقبل']];
+  const gcards=GRADES.map(g=>{
+    const s=STAGES[g[0]]; if(!s || s._cmsh) return '';
+    return '<a class="gcard '+g[1]+'" href="#/stage/'+g[0]+'"><span class="gnum">'+s.badge+'</span><h3>'+s.name+'</h3><p>'+g[2]+'</p><span class="ggo">ابدأ التعلم ←</span></a>';
+  }).join('');
+  const QLESSON='<svg viewBox="0 0 24 24"><path d="M4 5 C7 3.5 10 3.5 12 5 C14 3.5 17 3.5 20 5 L20 18 C17 16.5 14 16.5 12 18 C10 16.5 7 16.5 4 18 z M12 5 L12 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+  const QTRAIN='<svg viewBox="0 0 24 24"><path d="M5 12 l4 4 L19 6" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  const quick='<div class="quickrow">'
+    +'<a href="#/stage/'+my+'"><span class="qic">'+QLESSON+'</span>شرح الدروس</a>'
+    +'<a href="#/stage/'+my+'"><span class="qic">'+QTRAIN+'</span>التدريبات</a>'
+    +'<a href="#/exams"><span class="qic">'+NAV_ICONS.exams+'</span>الاختبارات</a>'
+    +'<a href="#/progress"><span class="qic">'+NAV_ICONS.progress+'</span>مستواي الدراسي</a></div>';
+  return header({})
+  +'<section class="prephero"><h1>أهلًا بيك من جديد في قوس!</h1>'
+  +'<p class="pht">كبرت، وكبرت معاك أحلامك وطموحاتك ..<br>وحان وقت رحلة جديدة من المعرفة والإنجاز.</p>'
+  +'<a class="phcta" href="#/stage/'+my+'">نكبر معك، ونتعلم معاً</a></section>'
+  +'<section class="prepcard"><h2>تابع تقدمك الدراسي</h2><div class="pc-sub">'+unitLine+'</div>'
+  +'<div class="rail"><i style="width:'+pct+'%"></i></div>'
+  +'<div class="pc-row"><span class="pc-note">أحلامك تستحق المحاولة</span><span class="pc-pct">'+AR(pct)+'٪</span></div></section>'
+  +'<section class="prepsec"><h2>اختر صفك الدراسي</h2><div class="psub">ابدأ رحلتك في المرحلة الإعدادية</div><div class="gcards">'+gcards+'</div></section>'
+  +quick
+  +GROUND+nav('home');
+}
+
 /* ---------------- views ---------------- */
 function vHome(){
+  const myS=Store.getMyStage();
+  if(isPrep(myS)) return vPrepHome(myS);
   const nodes=[['done off1','١'],['done off2','٢'],['current','٣'],['lock off3','٤'],['lock off4','٥']];
   const nh = nodes.map((n,i)=>'<div class="node '+n[0]+'">'+(n[0]==='current'?'<div class="start-tag">ابدأ من هنا</div>':'')+n[1]+'</div>').join('');
   return header({})
@@ -149,7 +196,16 @@ function vStages(){
 function bindStages(){
   document.querySelectorAll('.pick').forEach(b=>b.onclick=e=>{
     e.preventDefault(); e.stopPropagation();
-    Store.setMyStage(+b.dataset.pick); Asmaa.event('done'); route();
+    const i=+b.dataset.pick;
+    Store.setMyStage(i); Asmaa.event('done');
+    if(isPrep(i)){
+      let seen=null; try{ seen=localStorage.getItem(PREP_WELCOME_KEY); }catch(err){}
+      if(!seen){
+        try{ localStorage.setItem(PREP_WELCOME_KEY,'1'); }catch(err){}
+        prepWelcome(()=>route()); return;
+      }
+    }
+    route();
   });
 }
 
@@ -375,8 +431,12 @@ function route(){
   const h = location.hash || '#/';
   const app = $('#app');
   window.scrollTo(0,0);
-  let m;
-  if(h==='#/'||h==='#'){ app.innerHTML=vHome(); Asmaa.enter('home'); return; }
+  let m, mm, rsi=null;
+  if(mm=h.match(/^#\/stage\/(\d+)$/)) rsi=+mm[1];
+  else if(mm=h.match(/^#\/(?:lesson|test)\/(\d+)\//)) rsi=+mm[1];
+  applyTheme(rsi);
+  const prepMode=document.body.classList.contains('prep');
+  if(h==='#/'||h==='#'){ app.innerHTML=vHome(); if(prepMode) Asmaa.hide(); else Asmaa.enter('home'); return; }
   if(h==='#/stages'){ app.innerHTML=vStages(); bindStages(); Asmaa.hide(); return; }
   if(h==='#/progress'){ app.innerHTML=vProgress(); Asmaa.hide(); return; }
   if(h==='#/profiles'){ app.innerHTML=vProfiles(); Asmaa.hide(); return; }
@@ -387,9 +447,9 @@ function route(){
   if(h==='#/exams-admin'){ QawsExams.mountAdmin(); Asmaa.hide(); return; }
   if(h==='#/ask'){ QawsChat.mountAsk(); Asmaa.hide(); return; }
   if(h==='#/ask-owner'){ QawsChat.mountAskOwner(); Asmaa.hide(); return; }
-  if(m=h.match(/^#\/stage\/(\d+)$/)){ app.innerHTML=vStage(+m[1]); Asmaa.enter('stage'); return; }
-  if(m=h.match(/^#\/lesson\/(\d+)\/(\d+)\/(\d+)$/)){ app.innerHTML=vLesson(+m[1],+m[2],+m[3]); bindLesson(+m[1],+m[2],+m[3]); Asmaa.enter('lesson'); return; }
-  if(m=h.match(/^#\/test\/(\d+)\/(\d+)$/)){ app.innerHTML=vTest(+m[1],+m[2]); bindTest(+m[1],+m[2]); Asmaa.enter('test'); return; }
+  if(m=h.match(/^#\/stage\/(\d+)$/)){ app.innerHTML=vStage(+m[1]); if(prepMode) Asmaa.hide(); else Asmaa.enter('stage'); return; }
+  if(m=h.match(/^#\/lesson\/(\d+)\/(\d+)\/(\d+)$/)){ app.innerHTML=vLesson(+m[1],+m[2],+m[3]); bindLesson(+m[1],+m[2],+m[3]); if(prepMode) Asmaa.hide(); else Asmaa.enter('lesson'); return; }
+  if(m=h.match(/^#\/test\/(\d+)\/(\d+)$/)){ app.innerHTML=vTest(+m[1],+m[2]); bindTest(+m[1],+m[2]); if(prepMode) Asmaa.hide(); else Asmaa.enter('test'); return; }
   app.innerHTML=vHome(); Asmaa.enter('home');
 }
 /* ---------------- exports for exams/chat modules ---------------- */
