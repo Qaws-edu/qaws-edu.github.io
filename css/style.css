@@ -896,3 +896,8 @@ body.prep .chrec{border-radius:10px}
   .prephero,.prepcard,.prepsec,.quickrow{margin-left:clamp(20px,2.4vw,48px);margin-right:clamp(20px,2.4vw,48px)}
   .prephero{max-width:none}
 }
+
+
+/* ======== توزيع بطاقات المراحل على عرض الشاشة ======== */
+@media (min-width:900px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (min-width:1200px){ .grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
