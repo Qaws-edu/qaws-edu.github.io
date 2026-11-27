@@ -99,7 +99,8 @@ function header(opts){
   const side = opts.back
     ? '<a class="back" href="'+opts.back+'">→</a><div class="headtitle">'+opts.title+'</div>'
     : LOGO;
-  return '<header><div class="side">'+side+'</div><a class="havatar" href="#/profiles" title="الملفات الشخصية">'+AVIMG(Store.cur())+'</a></header>';
+  const bell = '<a class="hbell" href="#/notifications" title="الإشعارات"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg><span class="nbadge" id="nbadge" hidden></span></a>';
+  return '<header><div class="side">'+side+'</div><div class="side">'+bell+'<a class="havatar" href="#/profiles" title="الملفات الشخصية">'+AVIMG(Store.cur())+'</a></div></header>';
 }
 
 function celebrate(title, msg, then){
@@ -456,6 +457,7 @@ function route(){
   if(h==='#/profiles'){ app.innerHTML=vProfiles(); Asmaa.hide(); return; }
   if(h==='#/profile-edit'){ app.innerHTML=vProfileEdit(); bindProfileEdit(); Asmaa.hide(); return; }
   if(h==='#/parent'){ app.innerHTML=vParent(); Asmaa.hide(); return; }
+  if(h==='#/notifications'){ if(window.QawsNotify) QawsNotify.mount(); Asmaa.hide(); return; }
   if(h==='#/exams'){ QawsExams.mountList(); Asmaa.hide(); return; }
   if(m=h.match(/^#\/exam\/([\w-]+)$/)){ QawsExams.mountExam(m[1]); Asmaa.hide(); return; }
   if(h==='#/exams-admin'){ QawsExams.mountAdmin(); Asmaa.hide(); return; }
@@ -470,5 +472,6 @@ function route(){
 window.QawsUI={header:header, GROUND:GROUND, nav:nav, acard:acard, Store:Store, AR:AR, N:N, ICONS:ICONS, celebrate:celebrate, rail:rail, AVIMG:AVIMG};
 
 window.addEventListener('hashchange', route);
+if(window.QawsNotify){ try{ QawsNotify.init(); }catch(e){} }
 route();
 })();
