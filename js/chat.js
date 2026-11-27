@@ -307,6 +307,7 @@ window.QawsChat={
   },
   fbOwnerSignedIn: function(){ return !!(auth && auth.currentUser && auth.currentUser.email===cfg().ownerEmail); },
   /* هل لدى الزائر جلسة معلّمة محفوظة؟ ينتظر استعادة الجلسة — يستخدمه قسم الاختبارات */
+  fbSignOut: async function(){ try{ const ok=await ensureFb(); if(ok&&auth) await auth.signOut(); }catch(e){} },
   fbOwnerSession: async function(){
     const ok=await ensureFb();
     if(!ok) return false;
