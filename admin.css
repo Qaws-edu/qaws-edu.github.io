@@ -87,3 +87,10 @@ html[data-theme=dark] .adm-thumb,html[data-theme=dark] .adm-imgprev{border-color
 
 .adm-item{border:2px solid #EAE4D6;border-radius:14px;padding:10px 12px;margin-bottom:8px;background:#FDFCF8}
 html[data-theme=dark] .adm-item{background:#0F1D31;border-color:#2A4163}
+
+.adm-tile .ic{color:#146F86;display:flex}
+.adm-tile .ic svg{width:40px;height:40px}
+.adm-nav .adm-btn svg{vertical-align:-3px}
+html[data-theme=dark] .adm-tile .ic{color:#7CC4DA}
+.adm-tile.link .ic{color:#8A5A00}
+html[data-theme=dark] .adm-tile.link .ic{color:#FFE48A}
