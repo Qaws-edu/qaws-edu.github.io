@@ -349,7 +349,8 @@ function mountOwnerPanel(){
     QawsChat.fbOwnerSession().then(function(ok){
       var box=document.getElementById('ownerpanel');
       if(!ok||!box) return;
-      box.innerHTML='<a class="cta green ownerbtn" href="admin.html">لوحة التحكم — تعديل الموقع</a>';
+      box.innerHTML='<a class="cta green ownerbtn" href="admin.html">لوحة التحكم — تعديل الموقع</a><button class="cta blue ownerlogout" id="ownerlogout" type="button">تسجيل الخروج</button>';
+      document.getElementById('ownerlogout').onclick=function(){QawsChat.fbSignOut().then(function(){try{localStorage.removeItem('qawsCmsToken');}catch(e){} location.reload();});};
     }).catch(function(){});
   }catch(e){}
 }
