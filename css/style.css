@@ -901,3 +901,52 @@ body.prep .chrec{border-radius:10px}
 /* ======== توزيع بطاقات المراحل على عرض الشاشة ======== */
 @media (min-width:900px){ .grid{grid-template-columns:repeat(3,minmax(0,1fr))} }
 @media (min-width:1200px){ .grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
+
+
+/* ======== تحسينات سطح المكتب: كثافة، أحجام، تفاعل ======== */
+@media (min-width:900px){
+  .aband{max-width:none;width:100%}
+  .tabbar{justify-content:center}
+  .tab{flex:0 1 190px;max-width:190px}
+}
+@media (hover:hover) and (min-width:900px){
+  .stage,.gcard,.tile3,.lvlcard,.quickrow a,.prow,.urow,.card{transition:transform .16s ease,box-shadow .16s ease}
+  .stage:hover,.gcard:hover,.tile3:hover,.lvlcard:hover,.quickrow a:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .lesson{transition:background .16s ease}
+  .lesson:hover{background:rgba(74,59,110,.05)}
+  .cta{transition:transform .12s ease,filter .12s ease}
+  .cta:hover{transform:translateY(-2px);filter:brightness(1.04)}
+  .tab{transition:color .16s ease}
+  .tab:hover{color:var(--ink)}
+  .quickrow .qic{transition:transform .16s ease}
+  .quickrow a:hover .qic{transform:translateY(-2px)}
+}
+@media (min-width:1440px){
+  .hero h1{font-size:52px}
+  .hero p{font-size:21px}
+  .hero .cta{font-size:27px;padding:16px 56px;max-width:520px}
+  .section-title{font-size:34px}
+  .banner h1{font-size:44px}
+  .banner p{font-size:19px}
+  .banner .bnum{width:88px;height:88px;font-size:42px}
+  .stage{padding:24px 18px 20px}
+  .stage .num{width:78px;height:78px;font-size:34px}
+  .stage h3{font-size:21px}
+  .stage .sub,.stage .pct{font-size:13.5px}
+  .lesson{padding:16px 20px}
+  .lesson h4{font-size:18px}
+  .lesson .ic{width:50px;height:50px}
+  .tile3 h3{font-size:20px}
+  .tile3 p{font-size:14px}
+  .tile3 .tic{width:92px;height:92px}
+  .gcard h3{font-size:21px}
+  .gcard p{font-size:14px}
+  .prephero h1{font-size:36px}
+  .prephero .pht{font-size:18px}
+  .prepsec h2{font-size:27px}
+  .quickrow a{font-size:14px}
+  .quickrow .qic{width:58px;height:58px}
+  .node{width:104px;height:104px;font-size:44px}
+  .node.current{width:122px;height:122px;font-size:54px}
+  .bub{font-size:15.5px}
+}
