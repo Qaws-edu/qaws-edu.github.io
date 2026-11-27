@@ -65,7 +65,7 @@ var curScreen='home',el,imgA,imgB,bub,talkT,stepT,cur=null,front='A',visits=0,cu
 function build(){
   el=document.createElement('div'); el.className='companion';
   el.innerHTML='<div class="c-bubble" role="status"></div><div class="c-body"><img class="c-img a on" alt="الأستاذة أسماء"><img class="c-img b" alt="" aria-hidden="true"></div>';
-  var st=document.createElement('style'); st.textContent='.companion.hero-mode .c-bubble{left:auto;right:-14px;top:auto;bottom:100%;margin-bottom:12px;transform:translateY(8px);max-width:210px}\n.companion.hero-mode .c-bubble::after{top:100%;left:auto;right:60px;border-left:9px solid transparent;border-right:9px solid transparent;border-top:12px solid #fff;border-bottom:0}\n.companion.talk.hero-mode .c-bubble{transform:none}'; document.head.appendChild(st);
+  var st=document.createElement('style'); st.textContent='.companion.hero-mode .c-bubble{left:auto;right:-14px;top:auto;bottom:100%;margin-bottom:12px;transform:translateY(8px);max-width:210px}\n.companion.hero-mode .c-bubble::after{top:100%;left:auto;right:60px;border-left:9px solid transparent;border-right:9px solid transparent;border-top:12px solid #fff;border-bottom:0}\n.companion.talk.hero-mode .c-bubble{transform:none}\n@media(max-width:1250px){.companion.hero-mode .c-bubble{max-width:160px;font-size:14px}}'; document.head.appendChild(st);
   document.body.appendChild(el);
   bub=el.querySelector('.c-bubble'); imgA=el.querySelector('.a'); imgB=el.querySelector('.b');
   imgA.removeAttribute('src');
