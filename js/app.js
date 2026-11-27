@@ -332,10 +332,17 @@ function vProfiles(){
   +'<section class="banner"><h1>الملف الشخصي</h1><p>اسمك وصورتك ومرحلتك</p></section>'
   +acard('تقدّمك يسعدني كثيرًا!')
   +'<section class="content"><div class="phead"><div class="bigav">'+AVIMG(p)+'</div><h2 class="pname">'+(p.name||'بلا اسم')+'</h2>'+sub+'</div>'
-  +'<a class="cta blue" href="#/profile-edit">تعديل الملف</a><div id="ownerpanel"></div></section>'
+  +'<a class="cta blue" href="#/profile-edit">تعديل الملف</a><div id="ownerpanel"></div></section>'+contactBox()
   +GROUND+nav('');
 }
 /* زر لوحة التحكم: يظهر فقط لو الجلسة الحالية هي حساب مس أسماء (والحماية الفعلية في قواعد فايربيس) */
+function contactBox(){
+  var C=window.QAWS_CONFIG||{},ph=String(C.phone||'').replace(/[^0-9]/g,''),wa=String(C.whatsapp||'').replace(/[^0-9]/g,'');
+  if(!ph&&!wa) return '';
+  return '<section class="content contactbox"><h3 style="text-align:center;margin-top:6px">تواصل مع '+(C.ownerName||'مس أسماء')+'</h3>'
+    +(ph?'<a class="cta blue" href="tel:+2'+ph+'">اتصال: '+ph+'</a>':'')
+    +(wa?'<a class="cta green" target="_blank" rel="noopener" href="https://wa.me/'+wa+'">واتساب</a>':'')+'</section>';
+}
 function mountOwnerPanel(){
   try{
     if(!(window.QawsChat&&QawsChat.fbConfigured&&QawsChat.fbConfigured())) return;
