@@ -722,3 +722,10 @@ body.prep .havatar{box-shadow:0 1px 2px rgba(27,42,58,.14)}
 .lvl-prep{border-radius:16px;box-shadow:0 1px 3px rgba(27,42,58,.16)}
 .lvl-prep .lvlgo{border-radius:10px;font-weight:700}
 .prepwelcome{border-top-width:3px}
+
+/* شارات الأرقام داخل الإعدادي بألوان هادئة بدل الباستيل */
+body.prep .c-pink{background:#22364F;color:#F5F0E4}
+body.prep .c-green{background:#2F6F6A;color:#F0F7F5}
+body.prep .c-coral{background:#C9755A;color:#FFF7EA}
+body.prep .c-yellow{background:#E3D5B5;color:#22364F}
+body.prep .c-blue{background:#5E7A96;color:#F5F0E4}
