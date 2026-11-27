@@ -332,7 +332,7 @@ function vProfiles(){
   +'<section class="banner"><h1>الملف الشخصي</h1><p>اسمك وصورتك ومرحلتك</p></section>'
   +acard('تقدّمك يسعدني كثيرًا!')
   +'<section class="content"><div class="phead"><div class="bigav">'+AVIMG(p)+'</div><h2 class="pname">'+(p.name||'بلا اسم')+'</h2>'+sub+'</div>'
-  +'<a class="cta blue" href="#/profile-edit">تعديل الملف</a><div id="ownerpanel"></div></section>'+contactBox()
+  +'<a class="cta blue" href="#/profile-edit">تعديل الملف</a><div id="ownerpanel"></div><div id="accbox"></div></section>'+contactBox()
   +GROUND+nav('');
 }
 /* زر لوحة التحكم: يظهر فقط لو الجلسة الحالية هي حساب مس أسماء (والحماية الفعلية في قواعد فايربيس) */
@@ -342,6 +342,48 @@ function contactBox(){
   return '<section class="content contactbox"><h3 style="text-align:center;margin-top:6px">تواصل مع '+(C.ownerName||'مس أسماء')+'</h3>'
     +(ph?'<a class="cta blue" href="tel:+2'+ph+'">اتصال: '+ph+'</a>':'')
     +(wa?'<a class="cta green" target="_blank" rel="noopener" href="https://wa.me/'+wa+'">واتساب</a>':'')+'</section>';
+}
+var GICON='<svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>';
+function escA(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+/* بطاقة الحساب في صفحة الملف: دخول Google اختياري للطالب، وخروج لمن دخل به */
+function mountAccount(){
+  var box=document.getElementById('accbox');
+  if(!box) return;
+  if(!(window.QawsChat&&QawsChat.fbAccountState)) return;
+  QawsChat.fbAccountState().then(function(st){
+    if(!st||!st.ok||st.owner){ box.innerHTML=''; return; }
+    if(st.google){
+      var g=st.google, moved='';
+      try{ if(sessionStorage.getItem('qawsGoogleMoved')){ moved='<div class="note" style="margin-bottom:8px">تقدّمك القديم على الجهاز ده قبل الدخول فضل في الحساب المجهول.</div>'; sessionStorage.removeItem('qawsGoogleMoved'); } }catch(e){}
+      box.innerHTML='<section class="content"><h3 style="text-align:center;margin-top:6px">حسابك</h3>'
+        +'<div style="display:flex;align-items:center;gap:10px;justify-content:center;margin:6px 0 10px">'
+        +(g.photo?'<img src="'+escA(g.photo)+'" alt="" referrerpolicy="no-referrer" style="width:50px;height:50px;border-radius:50%;object-fit:cover;border:2px solid #E7DFCB">':'')
+        +'<div><div style="font-weight:700">'+escA(g.name||'طالب')+'</div>'
+        +(g.email?'<div style="font-size:13px;opacity:.75;direction:ltr;text-align:left">'+escA(g.email)+'</div>':'')+'</div></div>'
+        +moved
+        +'<div class="note" style="margin-bottom:10px">تقدّمك مربوط بحساب Google. لو غيّرت الجهاز، سجّل الدخول بنفس الحساب.</div>'
+        +'<button class="cta blue" id="gout" type="button">تسجيل الخروج</button></section>';
+      var bo=document.getElementById('gout');
+      if(bo) bo.onclick=function(){ QawsChat.fbSignOut().then(function(){ try{localStorage.removeItem('qawsCmsToken');}catch(e){} location.reload(); }); };
+      return;
+    }
+    box.innerHTML='<section class="content"><h3 style="text-align:center;margin-top:6px">حسابك</h3>'
+      +'<div class="note" style="margin-bottom:10px">الدخول بحساب Google اختياري. من غيره تقدّمك محفوظ على الجهاز ده بس.</div>'
+      +'<button class="cta" id="gin" type="button" style="display:flex;align-items:center;justify-content:center;gap:8px;background:#fff;color:#1F2937;border:2px solid #E7DFCB">'
+      +GICON+'<span>الدخول بحساب Google</span></button>'
+      +'<div class="aderr" id="gerr"></div></section>';
+    var b=document.getElementById('gin');
+    if(b) b.onclick=function(){
+      var err=document.getElementById('gerr'); if(err) err.textContent='';
+      b.disabled=true;
+      QawsChat.fbGoogleSignIn().then(function(r){
+        b.disabled=false;
+        if(r&&r.ok){ try{ if(r.moved) sessionStorage.setItem('qawsGoogleMoved','1'); }catch(e){} location.reload(); return; }
+        if(r&&r.cancelled) return;
+        if(err) err.textContent=(r&&r.err)||'تعذّر الدخول. حاول تاني.';
+      });
+    };
+  }).catch(function(){});
 }
 function mountOwnerPanel(){
   try{
@@ -473,7 +515,7 @@ function route(){
   if(h==='#/stages/pri'){ document.body.classList.remove('prep'); app.innerHTML=vStageGrades(false); bindStages(); Asmaa.hide(); return; }
   if(h==='#/stages/prep'){ document.body.classList.add('prep'); app.innerHTML=vStageGrades(true); bindStages(); Asmaa.hide(); return; }
   if(h==='#/progress'){ app.innerHTML=vProgress(); Asmaa.hide(); return; }
-  if(h==='#/profiles'){ app.innerHTML=vProfiles(); Asmaa.hide(); mountOwnerPanel(); return; }
+  if(h==='#/profiles'){ app.innerHTML=vProfiles(); Asmaa.hide(); mountOwnerPanel(); mountAccount(); return; }
   if(h==='#/profile-edit'){ app.innerHTML=vProfileEdit(); bindProfileEdit(); Asmaa.hide(); return; }
   if(h==='#/parent'){ app.innerHTML=vParent(); Asmaa.hide(); return; }
   if(h==='#/notifications'){ if(window.QawsNotify) QawsNotify.mount(); Asmaa.hide(); return; }
