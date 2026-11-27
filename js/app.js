@@ -332,8 +332,19 @@ function vProfiles(){
   +'<section class="banner"><h1>الملف الشخصي</h1><p>اسمك وصورتك ومرحلتك</p></section>'
   +acard('تقدّمك يسعدني كثيرًا!')
   +'<section class="content"><div class="phead"><div class="bigav">'+AVIMG(p)+'</div><h2 class="pname">'+(p.name||'بلا اسم')+'</h2>'+sub+'</div>'
-  +'<a class="cta blue" href="#/profile-edit">تعديل الملف</a></section>'
+  +'<a class="cta blue" href="#/profile-edit">تعديل الملف</a><div id="ownerpanel"></div></section>'
   +GROUND+nav('');
+}
+/* زر لوحة التحكم: يظهر فقط لو الجلسة الحالية هي حساب مس أسماء (والحماية الفعلية في قواعد فايربيس) */
+function mountOwnerPanel(){
+  try{
+    if(!(window.QawsChat&&QawsChat.fbConfigured&&QawsChat.fbConfigured())) return;
+    QawsChat.fbOwnerSession().then(function(ok){
+      var box=document.getElementById('ownerpanel');
+      if(!ok||!box) return;
+      box.innerHTML='<a class="cta green ownerbtn" href="admin.html">لوحة التحكم — تعديل الموقع</a>';
+    }).catch(function(){});
+  }catch(e){}
 }
 let editTmp=null;
 function vProfileEdit(){
@@ -454,7 +465,7 @@ function route(){
   if(h==='#/stages/pri'){ document.body.classList.remove('prep'); app.innerHTML=vStageGrades(false); bindStages(); Asmaa.hide(); return; }
   if(h==='#/stages/prep'){ document.body.classList.add('prep'); app.innerHTML=vStageGrades(true); bindStages(); Asmaa.hide(); return; }
   if(h==='#/progress'){ app.innerHTML=vProgress(); Asmaa.hide(); return; }
-  if(h==='#/profiles'){ app.innerHTML=vProfiles(); Asmaa.hide(); return; }
+  if(h==='#/profiles'){ app.innerHTML=vProfiles(); Asmaa.hide(); mountOwnerPanel(); return; }
   if(h==='#/profile-edit'){ app.innerHTML=vProfileEdit(); bindProfileEdit(); Asmaa.hide(); return; }
   if(h==='#/parent'){ app.innerHTML=vParent(); Asmaa.hide(); return; }
   if(h==='#/notifications'){ if(window.QawsNotify) QawsNotify.mount(); Asmaa.hide(); return; }
