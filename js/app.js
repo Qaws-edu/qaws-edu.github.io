@@ -345,15 +345,69 @@ function contactBox(){
 }
 var GICON='<svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>';
 function escA(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-/* بطاقة الحساب في صفحة الملف: دخول Google اختياري للطالب، وخروج لمن دخل به */
+/* نافذة الحساب: دخول Google أو بريد وكلمة سر، أو إنشاء حساب جديد */
+function closeAccSheet(){ var w=document.getElementById('accsheet'); if(w) w.remove(); }
+function accSheet(title, inner){
+  closeAccSheet();
+  var w=document.createElement('div');
+  w.id='accsheet';
+  w.style.cssText='position:fixed;inset:0;background:rgba(24,18,45,.45);z-index:9999;display:flex;align-items:flex-end;justify-content:center';
+  w.innerHTML='<div style="background:#FFFBF2;width:100%;max-width:430px;border-radius:22px 22px 0 0;padding:14px 16px 22px;box-shadow:0 -10px 30px rgba(0,0,0,.25)">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">'
+    +'<b style="font-size:17px">'+escA(title)+'</b>'
+    +'<button id="accx" type="button" style="border:0;background:#EFE7D6;border-radius:50%;width:32px;height:32px;font-size:18px;line-height:1;color:#5B4B7A">×</button></div>'
+    +inner+'</div>';
+  document.body.appendChild(w);
+  w.addEventListener('click',function(e){ if(e.target===w) closeAccSheet(); });
+  document.getElementById('accx').onclick=closeAccSheet;
+}
+function accForm(mode){
+  var isNew=(mode==='new');
+  var inner=(isNew?'<input class="namein" id="accname" type="text" maxlength="20" placeholder="اسمك" style="margin-bottom:8px">':'')
+    +'<input class="namein" id="accemail" type="email" maxlength="60" placeholder="البريد الإلكتروني" style="margin-bottom:8px;direction:ltr;text-align:left">'
+    +'<input class="namein" id="accpass" type="password" maxlength="60" placeholder="كلمة السر" style="margin-bottom:10px;direction:ltr;text-align:left">'
+    +'<button class="cta green" id="accgo" type="button">'+(isNew?'إنشاء الحساب':'دخول')+'</button>'
+    +(isNew?'<div class="note" style="margin:10px 0 0">كلمة السر 6 حروف على الأقل.</div>':'<button id="accforgot" type="button" style="border:0;background:none;color:#6B5CA5;font-weight:700;margin-top:12px;width:100%;font-size:15px">نسيت كلمة السر؟</button>')
+    +'<div class="aderr" id="accerr"></div>';
+  accSheet(isNew?'إنشاء حساب جديد':'الدخول بحساب موجود', inner);
+  var go=document.getElementById('accgo'), err=document.getElementById('accerr');
+  function val(id){ var e=document.getElementById(id); return e?String(e.value||'').trim():''; }
+  go.onclick=function(){
+    var em=val('accemail'), ps=(document.getElementById('accpass')||{}).value||'', nm=isNew?val('accname'):'';
+    err.style.color=''; err.textContent='';
+    if(!em||!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)){ err.textContent='اكتب بريد إلكتروني صحيح.'; return; }
+    if(ps.length<6){ err.textContent='كلمة السر 6 حروف على الأقل.'; return; }
+    go.disabled=true;
+    var p=isNew?QawsChat.fbStudentSignUp(nm,em,ps):QawsChat.fbStudentSignInEmail(em,ps);
+    p.then(function(r){
+      go.disabled=false;
+      if(r&&r.ok){ try{ if(r.moved) sessionStorage.setItem('qawsGoogleMoved','1'); }catch(e){} closeAccSheet(); location.reload(); return; }
+      err.textContent=(r&&r.err)||'حاول تاني.';
+    }).catch(function(){ go.disabled=false; err.textContent='حاول تاني.'; });
+  };
+  var fg=document.getElementById('accforgot');
+  if(fg) fg.onclick=function(){
+    var em=val('accemail');
+    if(!em){ err.textContent='اكتب بريدك الأول.'; return; }
+    QawsChat.fbPasswordReset(em).then(function(r){
+      if(r&&r.ok){ err.style.color='#2E7D32'; err.textContent='بعتنالك لينك تغيير كلمة السر على بريدك.'; }
+      else { err.style.color=''; err.textContent=(r&&r.err)||'حاول تاني.'; }
+    });
+  };
+}
+function accGoogleBtn(){
+  return '<button class="cta" id="gin" type="button" style="display:flex;align-items:center;justify-content:center;gap:8px;flex-direction:row-reverse;background:#fff;color:#1F2937;border:2px solid #E7DFCB;margin-bottom:10px">'
+    +GICON+'<span style="white-space:nowrap">الدخول بحساب Google</span></button>';
+}
+/* بطاقة الحساب في صفحة الملف */
 function mountAccount(){
   var box=document.getElementById('accbox');
   if(!box) return;
   if(!(window.QawsChat&&QawsChat.fbAccountState)) return;
   QawsChat.fbAccountState().then(function(st){
     if(!st||!st.ok||st.owner){ box.innerHTML=''; return; }
-    if(st.google){
-      var g=st.google, moved='';
+    if(st.me){
+      var g=st.me, moved='';
       try{ if(sessionStorage.getItem('qawsGoogleMoved')){ moved='<div class="note" style="margin-bottom:8px">تقدّمك القديم على الجهاز ده قبل الدخول فضل في الحساب المجهول.</div>'; sessionStorage.removeItem('qawsGoogleMoved'); } }catch(e){}
       box.innerHTML='<section class="content"><h3 style="text-align:center;margin-top:6px">حسابك</h3>'
         +'<div style="display:flex;align-items:center;gap:10px;justify-content:center;margin:6px 0 10px">'
@@ -361,16 +415,17 @@ function mountAccount(){
         +'<div><div style="font-weight:700">'+escA(g.name||'طالب')+'</div>'
         +(g.email?'<div style="font-size:13px;opacity:.75;direction:ltr;text-align:left">'+escA(g.email)+'</div>':'')+'</div></div>'
         +moved
-        +'<div class="note" style="margin-bottom:10px">تقدّمك مربوط بحساب Google. لو غيّرت الجهاز، سجّل الدخول بنفس الحساب.</div>'
+        +'<div class="note" style="margin-bottom:10px">تقدّمك مربوط بحسابك. لو غيّرت الجهاز، سجّل الدخول بنفس البريد.</div>'
         +'<button class="cta blue" id="gout" type="button">تسجيل الخروج</button></section>';
       var bo=document.getElementById('gout');
       if(bo) bo.onclick=function(){ QawsChat.fbSignOut().then(function(){ try{localStorage.removeItem('qawsCmsToken');}catch(e){} location.reload(); }); };
       return;
     }
     box.innerHTML='<section class="content"><h3 style="text-align:center;margin-top:6px">حسابك</h3>'
-      +'<div class="note" style="margin-bottom:10px">الدخول بحساب Google اختياري. من غيره تقدّمك محفوظ على الجهاز ده بس.</div>'
-      +'<button class="cta" id="gin" type="button" style="display:flex;align-items:center;justify-content:center;gap:8px;flex-direction:row-reverse;background:#fff;color:#1F2937;border:2px solid #E7DFCB">'
-      +GICON+'<span style="white-space:nowrap">الدخول بحساب Google</span></button>'
+      +'<div class="note" style="margin-bottom:10px">الحساب اختياري. من غيره تقدّمك محفوظ على الجهاز ده بس.</div>'
+      +accGoogleBtn()
+      +'<button class="cta blue" id="gnew" type="button" style="margin-bottom:10px">إنشاء حساب جديد</button>'
+      +'<button class="cta" id="gsignin" type="button" style="background:#fff;color:#1F2937;border:2px solid #E7DFCB">الدخول بحساب موجود</button>'
       +'<div class="aderr" id="gerr"></div></section>';
     var b=document.getElementById('gin');
     if(b) b.onclick=function(){
@@ -387,6 +442,8 @@ function mountAccount(){
         if(err) err.textContent=(r&&r.err)||'تعذّر الدخول. حاول تاني.';
       }).catch(function(){ settled=true; unlock(); if(err) err.textContent='تعذّر الدخول. حاول تاني.'; });
     };
+    var bn=document.getElementById('gnew'); if(bn) bn.onclick=function(){ accForm('new'); };
+    var bs=document.getElementById('gsignin'); if(bs) bs.onclick=function(){ accForm('in'); };
   }).catch(function(){});
 }
 function mountOwnerPanel(){
