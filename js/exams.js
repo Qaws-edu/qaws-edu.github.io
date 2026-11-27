@@ -97,6 +97,11 @@ function renderExam(){
   const pct=Math.round(correct/total*100), pass=pct>=50;
   const b=best(e.id);
   if(!b||pct>b.pct){ storeLoad().best[e.id]={pct:pct, score:correct, total:total, t:Date.now()}; storeSave(); }
+  if(window.QawsNotify){
+    const nm=((U().Store.cur()||{}).name||'طالب');
+    QawsNotify.toOwner('exam', nm+' حل اختبار «'+e.title+'» وحصل على '+pct+'٪ ('+correct+'/'+total+')');
+    QawsNotify.toMe('exam', 'نتيجتك في اختبار «'+e.title+'»: '+pct+'٪ ('+correct+'/'+total+')');
+  }
   const review=e.questions.map((q,i)=>{
     const opts=q.opts.map((o,j)=>{
       let cls='opt';
