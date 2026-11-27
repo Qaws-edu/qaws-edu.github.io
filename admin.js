@@ -682,7 +682,7 @@ function lessonList(kind){
 var NEWV={
   home:{v:function(){
     return '<div class="adm-hello">أهلًا مس أسماء 👋<small>اختاري ما تريدين تعديله. بعد التعديل اضغطي «نشر» ليظهر للطلاب.</small></div>'
-      +'<div class="adm-tiles">'+TILES.map(function(t){return '<button class="adm-tile" data-tab="'+t[0]+'"><span class="ic">'+t[1]+'</span><b>'+t[2]+'</b><small>'+t[3]+'</small></button>';}).join('')+'</div>'
+      +'<div class="adm-tiles">'+TILES.map(function(t){return '<button class="adm-tile" data-tab="'+t[0]+'"><span class="ic">'+t[1]+'</span><b>'+t[2]+'</b><small>'+t[3]+'</small></button>';}).join('')+'<a class="adm-tile link" href="admin/molzama.html"><span class="ic">📚</span><b>ملازم وأغلفة</b><small>صمّمي ملزمة أو غلاف</small></a></div>'
       +'<div class="adm-actions"><button class="adm-btn green" id="pub">نشر التعديلات</button><button class="adm-btn blue" id="prev">معاينة</button><button class="adm-btn gray" id="out">خروج</button></div>';
   },b:function(){}},
   videos:{v:function(){return '<div class="adm-card"><h2>فيديوهات الدروس</h2><div class="adm-hint">افتحي يوتيوب، انسخي رابط الفيديو، والصقيه أمام الدرس. يظهر الفيديو داخل الدرس تلقائيًا بعد النشر.</div>'+lessonList('videos')+'</div>';},
@@ -715,7 +715,7 @@ var NEWV={
       var box=document.getElementById('stl');if(!box)return;
       var rows=s.docs.map(function(d){var x=d.data(),la=x.lastActive;var ms=la&&la.toMillis?la.toMillis():(typeof la==='number'?la:0);return {n:x.name||'بدون اسم',ms:ms};}).sort(function(a,b){return b.ms-a.ms;});
       if(!rows.length){box.textContent='لا يوجد طلاب مسجّلون بعد.';return;}
-      box.className='';box.innerHTML='<div class="adm-hint">عدد الطلاب: '+rows.length+'</div>'+rows.map(function(r){return '<div class="adm-item"><div class="t">'+esc(r.n)+'</div><div class="s">آخر نشاط: '+(r.ms?esc(new Date(r.ms).toLocaleString('ar-EG')):'غير معروف')+'</div></div>';}).join('');
+      box.className='adm-list';box.innerHTML='<div class="adm-hint">عدد الطلاب: '+rows.length+'</div>'+rows.map(function(r){return '<div class="adm-item"><div class="t">'+esc(r.n)+'</div><div class="s">آخر نشاط: '+(r.ms?esc(new Date(r.ms).toLocaleString('ar-EG')):'غير معروف')+'</div></div>';}).join('');
     }).catch(function(e){var box=document.getElementById('stl');if(box)box.textContent='تعذّر التحميل: '+(e.code||e.message);});
   }}
 };
