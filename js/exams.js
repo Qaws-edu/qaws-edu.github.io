@@ -146,6 +146,10 @@ function grade(timeout){
 
 /* ---------- إدارة المعلّمة ---------- */
 let draft=null;
+async function sha256(t){
+  const b=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(t));
+  return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
+}
 function unlocked(){ return sessionStorage.getItem('qaws-admin')==='1'; }
 function mountAdmin(){
   clearTimer();
@@ -156,9 +160,11 @@ function mountAdmin(){
       +'<button class="cta green" id="adenter">دخول</button>'
       +'<div class="aderr" id="aderr"></div></div>'
       +U().GROUND+U().nav('exams');
-    document.querySelector('#adenter').onclick=()=>{
+    document.querySelector('#adenter').onclick=async ()=>{
       const v=(document.querySelector('#adpass').value||'').trim();
-      if(v && v===(window.QAWS_CONFIG||{}).ownerPass){ sessionStorage.setItem('qaws-admin','1'); mountAdmin(); }
+      const cfgPass=(window.QAWS_CONFIG||{}).ownerPassHash||'';
+      const ok = v && cfgPass && (await sha256(v))===cfgPass;
+      if(ok){ sessionStorage.setItem('qaws-admin','1'); mountAdmin(); }
       else document.querySelector('#aderr').textContent='الكود غير صحيح';
     };
     return;
