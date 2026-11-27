@@ -9,7 +9,7 @@ var root=document.getElementById('root');
 var db=null,user=null;
 var site=null,data=null;      /* وثائق المسودة الجارية */
 var hist=[];
-var tab='texts';
+var tab='home';
 var selStage=null,selUnit=null;
 var dirty=false;
 
@@ -630,10 +630,104 @@ function bindHistory(){
       var x=hist.filter(function(h){return h.id===b.dataset.restore;})[0];if(!x)return;
       if(!confirm('استعادة نسخة '+new Date(x.at).toLocaleString('ar-EG')+' إلى المسودة؟'))return;
       site=clone(x.site||emptySite());data=clone(x.data||emptyData());
-      dirty=true;save(false);tab='texts';render();
+      dirty=true;save(false);tab='home';render();
     };
   });
 }
+
+/* ---------- الواجهة المبسّطة: الرئيسية + الأقسام الكبيرة ---------- */
+var TITLES={home:'الرئيسية',videos:'فيديوهات الدروس',explain:'شروحات الدروس',exams:'الأسئلة والاختبارات',stages:'المراحل والدروس',content:'محتوى الموقع',texts:'النصوص',look:'الواجهة والألوان',imgs:'الصور',pools:'عبارات مس أسماء',students:'الطلاب والإعلانات',history:'السجل والتراجع'};
+var TILES=[
+  ['videos','🎬','فيديوهات','ألصقي رابط يوتيوب لأي درس'],
+  ['exams','❓','أسئلة','إضافة وتعديل أسئلة الاختبارات'],
+  ['explain','📖','شروحات','اكتبي شرح كل درس'],
+  ['stages','🧩','المراحل والدروس','إضافة وحذف وترتيب'],
+  ['content','📝','المحتوى','نصوص وصور وألوان الموقع'],
+  ['students','👥','الطلاب والإعلانات','من دخل، وأرسلي إعلانًا للجميع'],
+  ['history','↩️','السجل والتراجع','ارجعي لنسخة سابقة']
+];
+function allLessons(){
+  var out=[];
+  effStages().forEach(function(se){
+    effUnits(se.st).forEach(function(ue){
+      effLessons(ue.un,ue.p).forEach(function(le){out.push({st:se.st,sp:se.p,ue:ue,le:le});});
+    });
+  });
+  return out;
+}
+function lessonPatch(x){return x.le.added?x.le.p:(x.ue.added?x.le.ls:lPatch(x.st,x.ue.ui,x.le.li));}
+function lessonVal(x,f){return x.le.p[f]!=null?x.le.p[f]:(x.le.ls[f]||'');}
+function ytId(u){var m=String(u||'').match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{6,20})/);return m?m[1]:'';}
+function lessonList(kind){
+  var L=allLessons(),h='',lastU='',idx=0;
+  L.forEach(function(x,i){
+    var sn=x.sp.name!=null?x.sp.name:x.st.name,un=x.ue.p.name!=null?x.ue.p.name:x.ue.un.name;
+    var key=sn+'|'+un;
+    if(key!==lastU){lastU=key;h+='<h3 class="adm-grp">'+esc(sn)+' ← '+esc(un)+'</h3>';}
+    var t=lessonVal(x,'title');
+    if(kind==='videos'){
+      var v=lessonVal(x,'videoUrl'),id=ytId(v);
+      h+='<div class="adm-item"><div class="t">'+esc(t)+(v?'<span class="adm-tag add">فيه فيديو</span>':'<span class="adm-tag">بدون فيديو</span>')+'</div>'
+        +'<div class="adm-row"><input class="adm-in" dir="ltr" data-vid="'+i+'" placeholder="الصقي رابط يوتيوب هنا" value="'+esc(v)+'">'
+        +(v?'<button class="adm-btn sm gray" data-vidclear="'+i+'">حذف الفيديو</button>':'')+'</div>'
+        +(id?'<img class="adm-thumb" src="https://img.youtube.com/vi/'+id+'/mqdefault.jpg" alt="">':'')+'</div>';
+    } else {
+      var b=lessonVal(x,'body');
+      h+='<div class="adm-item"><div class="t">'+esc(t)+(b?'<span class="adm-tag add">فيه شرح</span>':'<span class="adm-tag">بدون شرح</span>')+'</div>'
+        +'<textarea class="adm-in" data-exp="'+i+'" placeholder="اكتبي شرح الدرس هنا">'+esc(b)+'</textarea></div>';
+    }
+  });
+  return h||'<div class="adm-hint">لا توجد دروس.</div>';
+}
+var NEWV={
+  home:{v:function(){
+    return '<div class="adm-hello">أهلًا مس أسماء 👋<small>اختاري ما تريدين تعديله. بعد التعديل اضغطي «نشر» ليظهر للطلاب.</small></div>'
+      +'<div class="adm-tiles">'+TILES.map(function(t){return '<button class="adm-tile" data-tab="'+t[0]+'"><span class="ic">'+t[1]+'</span><b>'+t[2]+'</b><small>'+t[3]+'</small></button>';}).join('')+'</div>'
+      +'<div class="adm-actions"><button class="adm-btn green" id="pub">نشر التعديلات</button><button class="adm-btn blue" id="prev">معاينة</button><button class="adm-btn gray" id="out">خروج</button></div>';
+  },b:function(){}},
+  videos:{v:function(){return '<div class="adm-card"><h2>فيديوهات الدروس</h2><div class="adm-hint">افتحي يوتيوب، انسخي رابط الفيديو، والصقيه أمام الدرس. يظهر الفيديو داخل الدرس تلقائيًا بعد النشر.</div>'+lessonList('videos')+'</div>';},
+    b:function(){
+      var L=allLessons();
+      document.querySelectorAll('[data-vid]').forEach(function(i){i.onchange=function(){var u=i.value.trim();if(u&&!ytId(u)&&!/\.mp4(\?|$)/i.test(u)){msg('الرابط غير صحيح، انسخي رابط يوتيوب كاملًا',true);return;}lessonPatch(L[+i.dataset.vid]).videoUrl=u;dirty=true;msg('تم. اضغطي نشر ليظهر');render();};});
+      document.querySelectorAll('[data-vidclear]').forEach(function(b){b.onclick=function(){if(!confirm('حذف الفيديو من هذا الدرس؟'))return;lessonPatch(L[+b.dataset.vidclear]).videoUrl='';dirty=true;render();};});
+    }},
+  explain:{v:function(){return '<div class="adm-card"><h2>شروحات الدروس</h2><div class="adm-hint">اكتبي الشرح بسطور عادية. يظهر تحت الفيديو في صفحة الدرس.</div>'+lessonList('explain')+'</div>';},
+    b:function(){
+      var L=allLessons();
+      document.querySelectorAll('[data-exp]').forEach(function(t){t.onchange=function(){lessonPatch(L[+t.dataset.exp]).body=t.value;dirty=true;msg('تم. اضغطي نشر ليظهر');};});
+    }},
+  content:{v:function(){
+    return '<div class="adm-tiles">'+['texts','imgs','look','pools'].map(function(k){var d={texts:['✏️','النصوص','غيّري أي كلمة في الموقع'],imgs:['🖼️','الصور','بدّلي الصور'],look:['🎨','الواجهة والألوان','إخفاء أقسام وألوان'],pools:['💬','عبارات مس أسماء','جمل الشخصية المتحركة']}[k];return '<button class="adm-tile" data-tab="'+k+'"><span class="ic">'+d[0]+'</span><b>'+d[1]+'</b><small>'+d[2]+'</small></button>';}).join('')+'</div>';
+  },b:function(){}},
+  students:{v:function(){
+    return '<div class="adm-card"><h2>إعلان لكل الطلاب</h2><div class="adm-hint">يصل كإشعار في جرس الموقع فورًا (بدون الحاجة لنشر).</div>'
+      +'<textarea class="adm-in" id="annt" maxlength="200" placeholder="اكتبي الإعلان (حتى ٢٠٠ حرف)"></textarea>'
+      +'<div class="adm-row" style="margin-top:8px"><button class="adm-btn green" id="annsend">إرسال الإعلان</button></div></div>'
+      +'<div class="adm-card"><h2>الطلاب</h2><div id="stl" class="adm-hint">جارٍ التحميل…</div></div>';
+  },b:function(){
+    document.getElementById('annsend').onclick=function(){
+      var t=document.getElementById('annt').value.trim();if(!t){msg('اكتبي نص الإعلان أولًا',true);return;}
+      if(!confirm('إرسال هذا الإعلان لكل الطلاب الآن؟'))return;
+      db.collection('notifications').add({to:'all',kind:'content',text:t,t:firebase.firestore.FieldValue.serverTimestamp()})
+        .then(function(){document.getElementById('annt').value='';msg('أُرسل الإعلان');}).catch(function(e){msg('فشل الإرسال: '+(e.code||e.message),true);});
+    };
+    db.collection('students').limit(200).get().then(function(s){
+      var box=document.getElementById('stl');if(!box)return;
+      var rows=s.docs.map(function(d){var x=d.data(),la=x.lastActive;var ms=la&&la.toMillis?la.toMillis():(typeof la==='number'?la:0);return {n:x.name||'بدون اسم',ms:ms};}).sort(function(a,b){return b.ms-a.ms;});
+      if(!rows.length){box.textContent='لا يوجد طلاب مسجّلون بعد.';return;}
+      box.className='';box.innerHTML='<div class="adm-hint">عدد الطلاب: '+rows.length+'</div>'+rows.map(function(r){return '<div class="adm-item"><div class="t">'+esc(r.n)+'</div><div class="s">آخر نشاط: '+(r.ms?esc(new Date(r.ms).toLocaleString('ar-EG')):'غير معروف')+'</div></div>';}).join('');
+    }).catch(function(e){var box=document.getElementById('stl');if(box)box.textContent='تعذّر التحميل: '+(e.code||e.message);});
+  }}
+};
+var CONTENT_TABS=['texts','imgs','look','pools'];
+function navBar(){
+  if(tab==='home')return '';
+  var h='<div class="adm-nav"><button class="adm-btn blue" data-tab="home">⬅ الرئيسية</button><span class="adm-title">'+esc(TITLES[tab]||'')+'</span><button class="adm-btn sm gray" id="thm" type="button">🌙 / ☀️</button></div>';
+  if(CONTENT_TABS.indexOf(tab)>=0)h+='<div class="adm-tabs">'+CONTENT_TABS.map(function(k){return '<button data-tab="'+k+'" class="'+(tab===k?'on':'')+'">'+TITLES[k]+'</button>';}).join('')+'</div>';
+  return h;
+}
+function applyTheme(m){document.documentElement.setAttribute('data-theme',m);try{localStorage.setItem('qaws-theme',m);}catch(e){}}
+(function(){var m='';try{m=localStorage.getItem('qaws-theme')||'';}catch(e){}if(!m)m=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';document.documentElement.setAttribute('data-theme',m);})();
 
 /* ---------- الهيكل العام ---------- */
 var TABS=[['texts','النصوص'],['look','الواجهة والألوان'],['imgs','الصور'],['stages','المراحل والدروس'],['exams','الاختبارات'],['pools','عبارات مس أسماء'],['history','سجل النشر']];
@@ -646,19 +740,21 @@ function render(){
   else if(tab==='exams')body=vExams();
   else if(tab==='pools')body=vPools();
   else if(tab==='history')body=vHistory();
+  else if(NEWV[tab])body=NEWV[tab].v();
   root.innerHTML='<div class="adm-head"><h1>لوحة تحكم قَوْس</h1><span class="who">'+esc(user.email)+'</span></div>'
-    +'<div class="adm-tabs">'+TABS.map(function(t){return '<button data-tab="'+t[0]+'" class="'+(tab===t[0]?'on':'')+'">'+t[1]+'</button>';}).join('')+'</div>'
+    +navBar()
     +body
-    +'<div class="adm-actions">'
+    +(tab==='home'?'':'<div class="adm-actions">'
     +'<button class="adm-btn green" id="pub">نشر التعديلات</button>'
     +'<button class="adm-btn" id="draft">حفظ مسودة</button>'
     +'<button class="adm-btn blue" id="prev">معاينة المسودة</button>'
     +'<button class="adm-btn gray" id="out">خروج</button>'
-    +'</div>';
+    +'</div>');
   document.querySelectorAll('[data-tab]').forEach(function(b){b.onclick=function(){tab=b.dataset.tab;selStage=null;selUnit=null;render();};});
-  document.getElementById('draft').onclick=function(){save(false);};
+  var dr=document.getElementById('draft');if(dr)dr.onclick=function(){save(false);};
+  var th=document.getElementById('thm');if(th)th.onclick=function(){applyTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');};
   document.getElementById('pub').onclick=function(){
-    if(confirm('نشر كل التعديلات على الموقع الآن؟'))save(true);
+    if(confirm('هل تريدين نشر كل التعديلات الآن؟ ستظهر فورًا للطلاب.'))save(true);
   };
   document.getElementById('prev').onclick=function(){window.open('index.html?cmspreview=1','_blank');};
   document.getElementById('out').onclick=function(){firebase.auth().signOut();};
@@ -669,6 +765,7 @@ function render(){
   else if(tab==='exams')bindExams();
   else if(tab==='pools')bindPools();
   else if(tab==='history')bindHistory();
+  else if(NEWV[tab])NEWV[tab].b();
 }
 
 /* ---------- الإقلاع ---------- */
