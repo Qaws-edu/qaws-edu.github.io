@@ -1,7 +1,7 @@
 /* تثبيت قَوْس كتطبيق + تسجيل الـ service worker */
 (function () {
   if (!('serviceWorker' in navigator)) return;
-  var base = (document.currentScript && document.currentScript.src) ? new URL('.', document.currentScript.src).href : './';
+  var base = (document.currentScript && document.currentScript.src) ? new URL('../', document.currentScript.src).href : './';
   var standalone = matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 
   window.addEventListener('load', function () {
