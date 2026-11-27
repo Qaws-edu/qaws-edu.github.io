@@ -5,7 +5,7 @@ service cloud.firestore {
     // بريد مس أسماء (نفس الذي أُنشئ في Authentication)
     function isOwner() {
       return request.auth != null
-        && request.auth.token.email == 'OWNER_EMAIL_HERE';
+        && request.auth.token.email == 'asmaaboelftooh@gmail.com';
     }
 
     // كل طالب له وثيقة بمعرّف دخوله المجهول: يقرأ ويكتب وثيقته فقط
@@ -33,3 +33,4 @@ service cloud.firestore {
     }
   }
 }
+
