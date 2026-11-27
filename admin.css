@@ -84,3 +84,6 @@ html[data-theme=dark] .adm-tag{background:#1E3A55;color:#9AD3F8}
 html[data-theme=dark] .adm-tag.add{background:#1F4A33;color:#A6E8BA}
 html[data-theme=dark] .adm-tag.off{background:#4A2323;color:#F2A7A7}
 html[data-theme=dark] .adm-thumb,html[data-theme=dark] .adm-imgprev{border-color:#2A4163}
+
+.adm-item{border:2px solid #EAE4D6;border-radius:14px;padding:10px 12px;margin-bottom:8px;background:#FDFCF8}
+html[data-theme=dark] .adm-item{background:#0F1D31;border-color:#2A4163}
