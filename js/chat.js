@@ -316,10 +316,55 @@ window.QawsChat={
     var owner=!!(u && u.email===cfg().ownerEmail);
     var g=null, pd=(u&&u.providerData)||[];
     for(var i=0;i<pd.length;i++){ if(pd[i].providerId==='google.com') g=pd[i]; }
-    var google=(u && !u.isAnonymous && g) ? {name:u.displayName||g.displayName||'', email:u.email||g.email||'', photo:u.photoURL||g.photoURL||''} : null;
-    return {ok:true, owner:owner, google:google, anon:!!(u&&u.isAnonymous)};
+    var me=(u && !u.isAnonymous && !owner) ? {name:u.displayName||(g&&g.displayName)||'', email:u.email||'', photo:u.photoURL||(g&&g.photoURL)||'', provider:(g?'google':'password')} : null;
+    return {ok:true, owner:owner, me:me, anon:!!(u&&u.isAnonymous)};
   },
   /* يربط جلسة الزائر المجهولة بحساب Google على نفس المعرّف حتى لا يضيع تقدّمه */
+  /* ---- حسابات الطلاب: بريد وكلمة سر (اختياري) ---- */
+  fbStudentSignUp: async function(name,email,pass){
+    var ok=await ensureFb(); if(!ok) return {ok:false, err:'تعذّر الاتصال بالخدمة.'};
+    var u=auth.currentUser, cred=firebase.auth.EmailAuthProvider.credential(email,pass);
+    try{
+      if(u && u.isAnonymous){ await u.linkWithCredential(cred); }
+      else if(!u){ await auth.createUserWithEmailAndPassword(email,pass); }
+      else { await u.linkWithCredential(cred); }
+      try{ if(name && auth.currentUser.updateProfile) await auth.currentUser.updateProfile({displayName:name}); }catch(e){}
+      try{ if(name && db) await db.collection('students').doc(auth.currentUser.uid).set({name:name, lastActive:firebase.firestore.FieldValue.serverTimestamp()},{merge:true}); }catch(e){}
+      return {ok:true};
+    }catch(e){
+      var c=(e&&e.code)||'';
+      if(c==='auth/credential-already-in-use' && e.credential){
+        try{ await auth.signInWithCredential(e.credential); return {ok:true, moved:true}; }
+        catch(e2){ return {ok:false, err:'البريد ده مستخدم بالفعل. جرّب تسجيل الدخول.'}; }
+      }
+      if(c==='auth/email-already-in-use') return {ok:false, err:'البريد ده مستخدم بالفعل. جرّب تسجيل الدخول.'};
+      if(c==='auth/weak-password') return {ok:false, err:'كلمة السر قصيرة. 6 حروف على الأقل.'};
+      if(c==='auth/invalid-email') return {ok:false, err:'البريد غير صحيح.'};
+      if(c==='auth/operation-not-allowed') return {ok:false, err:'تسجيل البريد غير مفعّل حاليًا.'};
+      return {ok:false, err:'تعذّر إنشاء الحساب. حاول تاني.'};
+    }
+  },
+  fbStudentSignInEmail: async function(email,pass){
+    var ok=await ensureFb(); if(!ok) return {ok:false, err:'تعذّر الاتصال بالخدمة.'};
+    try{ await auth.signInWithEmailAndPassword(email,pass); return {ok:true}; }
+    catch(e){
+      var c=(e&&e.code)||'';
+      if(c==='auth/wrong-password'||c==='auth/invalid-credential'||c==='auth/invalid-login-credentials') return {ok:false, err:'البريد أو كلمة السر غلط.'};
+      if(c==='auth/user-not-found') return {ok:false, err:'مفيش حساب بالبريد ده. اعمل حساب جديد.'};
+      if(c==='auth/invalid-email') return {ok:false, err:'البريد غير صحيح.'};
+      if(c==='auth/too-many-requests') return {ok:false, err:'محاولات كثيرة. جرّب بعد شوية.'};
+      return {ok:false, err:'تعذّر الدخول. حاول تاني.'};
+    }
+  },
+  fbPasswordReset: async function(email){
+    var ok=await ensureFb(); if(!ok) return {ok:false, err:'تعذّر الاتصال بالخدمة.'};
+    try{ await auth.sendPasswordResetEmail(email); return {ok:true}; }
+    catch(e){
+      var c=(e&&e.code)||'';
+      if(c==='auth/user-not-found') return {ok:false, err:'مفيش حساب بالبريد ده.'};
+      return {ok:false, err:'اكتب بريد صحيح الأول.'};
+    }
+  },
   fbGoogleSignIn: async function(){
     var ok=await ensureFb();
     if(!ok) return {ok:false, err:'تعذّر الاتصال بالخدمة.'};
