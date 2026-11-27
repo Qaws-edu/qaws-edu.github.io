@@ -5,8 +5,8 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <title>لعبة الحروف — قَوْس</title>
-<link rel="stylesheet" href="css/fonts.css?v=20261127-9">
-<link rel="stylesheet" href="css/style.css?v=20261127-9">
+<link rel="stylesheet" href="css/fonts.css?v=20261127-10">
+<link rel="stylesheet" href="css/style.css?v=20261127-10">
 <style>
 html,body{height:100%;overflow:hidden}
 #sky{position:fixed;inset:0;background:linear-gradient(180deg,#BEE3F5 0%,#DFF2F7 45%,var(--cream) 100%);touch-action:none;user-select:none;-webkit-user-select:none}
@@ -18,15 +18,22 @@ html,body{height:100%;overflow:hidden}
 .cl2{width:64px;height:20px;top:24%;inset-inline-end:10%}
 .cl2:before{width:26px;height:26px;top:-12px;inset-inline-start:12px}
 .cl2:after{width:18px;height:18px;top:-7px;inset-inline-start:34px}
-.sun{position:absolute;top:8%;inset-inline-end:14%;width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFE9A8,#FFD25E);box-shadow:0 0 24px rgba(255,210,94,.5)}
+.sun{position:absolute;top:9%;inset-inline-end:14%;width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#FFE9A8,#FFD25E);box-shadow:0 0 24px rgba(255,210,94,.5)}
 #hud{position:absolute;top:12px;inset-inline:12px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;z-index:5}
-#exitbtn{background:#fff;border:2.5px solid rgba(74,59,110,.16);border-radius:20px;box-shadow:0 4px 0 rgba(74,59,110,.12);padding:10px 15px;font-family:'Almarai';font-weight:800;font-size:15px;color:var(--ink);cursor:pointer}
-#exitbtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(74,59,110,.12)}
-#score{background:#fff;border:2.5px solid rgba(74,59,110,.16);border-radius:20px;box-shadow:0 4px 0 rgba(74,59,110,.12);padding:8px 14px;display:flex;align-items:center;gap:7px;font-family:'Almarai';font-weight:800;font-size:19px;color:var(--ink)}
-#score svg{width:22px;height:22px}
-#target{background:#fff;border:2.5px solid rgba(74,59,110,.16);border-radius:20px;box-shadow:0 4px 0 rgba(74,59,110,.12);padding:8px 20px;display:flex;align-items:center;gap:12px;font-family:'Almarai';font-weight:800;font-size:17px;color:var(--ink)}
-#target .tl{font-family:'Cairo';font-weight:800;font-size:34px;color:var(--coral);line-height:1;background:#FFF6E0;border-radius:12px;padding:4px 14px}
+.hbtn{background:#fff;border:2.5px solid rgba(74,59,110,.16);border-radius:20px;box-shadow:0 4px 0 rgba(74,59,110,.12);padding:9px 13px;font-family:'Almarai';font-weight:800;font-size:14px;color:var(--ink);cursor:pointer;display:flex;align-items:center;gap:6px}
+.hbtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(74,59,110,.12)}
+.hbtn svg{width:20px;height:20px;flex:none}
+#target{background:#fff;border:2.5px solid rgba(74,59,110,.16);border-radius:20px;box-shadow:0 4px 0 rgba(74,59,110,.12);padding:8px 16px;display:flex;flex-direction:column;align-items:center;gap:6px;font-family:'Almarai';font-weight:800;font-size:16px;color:var(--ink);cursor:pointer}
+#target .trow{display:flex;align-items:center;gap:10px}
+#target .tl{font-family:'Cairo';font-weight:800;font-size:32px;color:var(--coral);line-height:1;background:#FFF6E0;border-radius:12px;padding:4px 13px}
+#hearts{display:flex;gap:4px}
+#hearts svg{width:19px;height:19px}
+#goalbar{width:110px;height:8px;border-radius:6px;background:rgba(74,59,110,.14);overflow:hidden}
+#goalbar i{display:block;height:100%;background:linear-gradient(90deg,#FFD25E,#F29682);border-radius:6px;transition:width .3s}
+#score{background:#fff;border:2.5px solid rgba(74,59,110,.16);border-radius:20px;box-shadow:0 4px 0 rgba(74,59,110,.12);padding:8px 13px;display:flex;align-items:center;gap:6px;font-family:'Almarai';font-weight:800;font-size:18px;color:var(--ink)}
+#score svg{width:21px;height:21px}
 .lchip{position:absolute;left:0;top:0;width:54px;height:54px;border-radius:50%;background:linear-gradient(180deg,#fff,#F4EBD8);border:2.5px solid rgba(74,59,110,.25);box-shadow:0 4px 0 rgba(74,59,110,.14);display:flex;align-items:center;justify-content:center;font-family:'Cairo';font-weight:800;font-size:28px;color:var(--ink);will-change:transform;z-index:3}
+.lchip.goal{border-color:#F29682;box-shadow:0 4px 0 rgba(242,150,130,.4),0 0 14px rgba(242,150,130,.35)}
 .lchip.hit{transition:opacity .3s,scale .3s;opacity:0;scale:1.5}
 .lchip.nope{animation:wob .4s}
 @keyframes wob{25%{margin-inline-start:-7px}75%{margin-inline-start:7px}}
@@ -35,10 +42,15 @@ html,body{height:100%;overflow:hidden}
 #bubble.on{opacity:1}
 .spark{position:absolute;z-index:6;pointer-events:none;font-size:0}
 .spark i{position:absolute;width:8px;height:8px;border-radius:50%}
-#startov{position:fixed;inset:0;background:rgba(255,251,240,.82);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:10}
-#startov .panel{background:#fff;border:2.5px solid rgba(74,59,110,.18);border-radius:28px;box-shadow:var(--shadow);padding:26px 26px 22px;text-align:center;max-width:320px}
-#startov h1{font-size:24px;margin-bottom:8px}
-#startov p{font-family:'Tajawal';font-size:15px;color:#6f6392;margin-bottom:14px;line-height:1.7}
+.ov[hidden]{display:none}
+.ov{position:fixed;inset:0;background:rgba(255,251,240,.82);backdrop-filter:blur(3px);display:flex;align-items:center;justify-content:center;z-index:10}
+.ov .panel{background:#fff;border:2.5px solid rgba(74,59,110,.18);border-radius:28px;box-shadow:var(--shadow);padding:26px 26px 22px;text-align:center;max-width:330px;width:calc(100% - 48px)}
+.ov h1{font-size:24px;margin-bottom:8px}
+.ov p{font-family:'Tajawal';font-size:15px;color:#6f6392;margin-bottom:14px;line-height:1.7}
+.exitrow{margin-top:12px}
+.exitlink{background:none;border:0;font-family:'Almarai';font-weight:800;font-size:14.5px;color:#7D7592;cursor:pointer;text-decoration:underline}
+#starsrow{display:flex;justify-content:center;gap:8px;margin:6px 0 10px}
+#starsrow svg{width:44px;height:44px}
 #ground{position:absolute;bottom:0;inset-inline:0;height:26px;background:linear-gradient(180deg,#B7E3A0,#9AD084);border-top:3px solid rgba(74,59,110,.14);z-index:2}
 </style>
 </head>
@@ -47,73 +59,154 @@ html,body{height:100%;overflow:hidden}
   <div class="sun"></div>
   <div class="cloud cl1"></div>
   <div class="cloud cl2"></div>
-  <div id="hud"><button id="exitbtn" type="button">→ خروج</button><div id="target"><span>أمسك الحرف</span><span class="tl" id="tletter">ب</span></div><div id="score"><svg viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="#FFD25E" stroke="#4A3B6E" stroke-width="2" stroke-linejoin="round"/></svg><span id="scn">٠</span></div></div>
+  <div id="hud">
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:flex-start">
+      <button class="hbtn" id="exitbtn" type="button">→ خروج</button>
+      <button class="hbtn" id="pausebtn" type="button" hidden><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1.5" fill="#4A3B6E"/><rect x="14" y="5" width="4" height="14" rx="1.5" fill="#4A3B6E"/></svg>إيقاف</button>
+      <button class="hbtn" id="soundbtn" type="button" hidden></button>
+    </div>
+    <div id="target" title="اضغط لسماع اسم الحرف">
+      <div class="trow"><span>أمسك الحرف</span><span class="tl" id="tletter">ب</span></div>
+      <div id="hearts"></div>
+      <div id="goalbar"><i style="width:0%"></i></div>
+    </div>
+    <div id="score"><svg viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="#FFD25E" stroke="#4A3B6E" stroke-width="2" stroke-linejoin="round"/></svg><span id="scn">٠</span></div>
+  </div>
   <div id="bubble">أحسنت!</div>
   <img id="asmaa" src="assets/asmaa/asmaa-exact.png" alt="">
   <div id="ground"></div>
 </div>
-<div id="startov"><div class="panel">
+
+<div class="ov" id="startov"><div class="panel">
   <h1>لعبة الحروف</h1>
-  <p>حروف عربية تنزل من السماء. حرّك مس أسماء يمينًا ويسارًا بإصبعك لتمسك الحرف المطلوب.</p>
+  <p>حروف عربية تنزل من السماء. حرّك مس أسماء يمينًا ويسارًا بإصبعك لتمسك الحرف المطلوب قبل أن يلمس الأرض. اضغط على الحرف المطلوب لسماع اسمه.</p>
   <button class="cta green" id="startbtn">ابدأ اللعب</button>
-  <div style="margin-top:12px"><button id="exitbtn2" type="button" style="background:none;border:0;font-family:'Almarai';font-weight:800;font-size:14.5px;color:#7D7592;cursor:pointer;text-decoration:underline">→ خروج</button></div>
+  <div class="exitrow"><button class="exitlink" id="exitbtn2" type="button">→ خروج</button></div>
 </div></div>
+
+<div class="ov" id="pauseov" hidden><div class="panel">
+  <h1>إيقاف مؤقت</h1>
+  <p>خذ نفسًا، الحروف تنتظرك.</p>
+  <button class="cta green" id="resumebtn">أكمل اللعب</button>
+  <div class="exitrow"><button class="exitlink" id="exitbtn3" type="button">→ خروج</button></div>
+</div></div>
+
+<div class="ov" id="endov" hidden><div class="panel">
+  <h1 id="endtitle">أحسنت!</h1>
+  <div id="starsrow"></div>
+  <p id="endmsg"></p>
+  <button class="cta green" id="againbtn">العب مرة أخرى</button>
+  <div class="exitrow"><button class="exitlink" id="exitbtn4" type="button">→ خروج</button></div>
+</div></div>
+
 <script>
 (function(){
 var sky=document.getElementById('sky'), asmaa=document.getElementById('asmaa'),
-    bub=document.getElementById('bubble'), tletter=document.getElementById('tletter');
+    bub=document.getElementById('bubble'), tletter=document.getElementById('tletter'),
+    scn=document.getElementById('scn'), heartsEl=document.getElementById('hearts'),
+    goalbar=document.querySelector('#goalbar i');
 var LETTERS='ابتثجحخدذرزسشصضطظعغفقكلمنهوي'.split('');
-var W=0,H=0,ax=0,tx=0,chips=[],target='ب',running=false,last=0,spawnT=0,spawnN=0,bubT=null,score=0;
-var scn=document.getElementById('scn');
+var NAMES={'ا':'ألف','ب':'باء','ت':'تاء','ث':'ثاء','ج':'جيم','ح':'حاء','خ':'خاء','د':'دال','ذ':'ذال','ر':'راء','ز':'زاي','س':'سين','ش':'شين','ص':'صاد','ض':'ضاد','ط':'طاء','ظ':'ظاء','ع':'عين','غ':'غين','ف':'فاء','ق':'قاف','ك':'كاف','ل':'لام','م':'ميم','ن':'نون','ه':'هاء','و':'واو','ي':'ياء'};
+var GOAL=7, MAXHEARTS=3;
+var W=0,H=0,ax=0,tx=0,chips=[],target='ب',running=false,paused=false,last=0,spawnT=0,spawnN=0,bubT=null;
+var score=0,caught=0,hearts=MAXHEARTS,speed=55,spawnEvery=1.7,soundOn=true;
 function ar(n){return String(n).replace(/\d/g,function(d){return '٠١٢٣٤٥٦٧٨٩'[d];});}
-function goBack(){if(window.history.length>1){window.history.back();}else{location.href='index.html';}}
-document.getElementById('exitbtn').onclick=goBack;
-document.getElementById('exitbtn2').onclick=goBack;
+var HEART_ON='<svg viewBox="0 0 24 24"><path d="M12 20 C6 15 3 11.5 3 8.4 C3 5.9 5 4 7.4 4 C9 4 10.7 4.9 12 6.6 C13.3 4.9 15 4 16.6 4 C19 4 21 5.9 21 8.4 C21 11.5 18 15 12 20 z" fill="#F29682" stroke="#4A3B6E" stroke-width="1.8"/></svg>';
+var HEART_OFF='<svg viewBox="0 0 24 24"><path d="M12 20 C6 15 3 11.5 3 8.4 C3 5.9 5 4 7.4 4 C9 4 10.7 4.9 12 6.6 C13.3 4.9 15 4 16.6 4 C19 4 21 5.9 21 8.4 C21 11.5 18 15 12 20 z" fill="none" stroke="#A79FB8" stroke-width="1.8"/></svg>';
+var SPK_ON='<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="#4A3B6E"/><path d="M16 9c1.6 1.6 1.6 4.4 0 6M18.5 6.5c3 3 3 8 0 11" stroke="#4A3B6E" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
+var SPK_OFF='<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="#A79FB8"/><path d="M16 9l6 6M22 9l-6 6" stroke="#A79FB8" stroke-width="2" stroke-linecap="round"/></svg>';
+function drawHearts(){heartsEl.innerHTML='';for(var i=0;i<MAXHEARTS;i++)heartsEl.innerHTML+=i<hearts?HEART_ON:HEART_OFF;}
+function drawSound(){document.getElementById('soundbtn').innerHTML=(soundOn?SPK_ON:SPK_OFF)+(soundOn?'الصوت':'صامت');}
 function size(){W=sky.clientWidth;H=sky.clientHeight;ax=ax||W/2;asmaa.style.transform='translateX('+(ax-60)+'px)';}
 window.addEventListener('resize',size);size();
-function pop(){try{var ctx=pop.ctx||(pop.ctx=new (window.AudioContext||window.webkitAudioContext)());
+function tone(f1,f2,dur,vol){try{var ctx=tone.ctx||(tone.ctx=new (window.AudioContext||window.webkitAudioContext)());
 var o=ctx.createOscillator(),g=ctx.createGain();o.type='triangle';
-o.frequency.setValueAtTime(480,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(920,ctx.currentTime+.09);
-g.gain.setValueAtTime(.22,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.16);
-o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+.17);}catch(e){}}
+o.frequency.setValueAtTime(f1,ctx.currentTime);o.frequency.exponentialRampToValueAtTime(f2,ctx.currentTime+dur*.6);
+g.gain.setValueAtTime(vol,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+dur);
+o.connect(g);g.connect(ctx.destination);o.start();o.stop(ctx.currentTime+dur+.01);}catch(e){}}
+function pop(){if(soundOn)tone(480,920,.16,.22);}
+function thud(){if(soundOn)tone(220,140,.22,.18);}
+function winTune(){if(!soundOn)return;tone(520,660,.14,.2);setTimeout(function(){tone(660,780,.14,.2);},150);setTimeout(function(){tone(780,1040,.24,.22);},300);}
+function sayName(){if(!soundOn)return;try{var u=new SpeechSynthesisUtterance(NAMES[target]||target);u.lang='ar-SA';u.rate=.8;speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
 function say(t){bub.textContent=t;bub.classList.add('on');clearTimeout(bubT);bubT=setTimeout(function(){bub.classList.remove('on')},1100);
   bub.style.insetInlineStart=Math.min(Math.max(ax-50,8),W-120)+'px';}
-function newTarget(){var prev=target;while(target===prev)target=LETTERS[Math.floor(Math.random()*LETTERS.length)];tletter.textContent=target;}
-function spawn(){spawnN++;var isT=(spawnN%3===0)||!chips.some(function(c){return c.ch===target});
+function newTarget(first){var prev=target;while(target===prev)target=LETTERS[Math.floor(Math.random()*LETTERS.length)];tletter.textContent=target;if(!first)sayName();}
+function spawn(){spawnN++;var hasT=chips.some(function(c){return c.ch===target});
+  var isT=(spawnN%3===0)||!hasT;
   var ch=isT?target:LETTERS.filter(function(l){return l!==target})[Math.floor(Math.random()*(LETTERS.length-1))];
-  var el=document.createElement('div');el.className='lchip';el.textContent=ch;
+  var el=document.createElement('div');el.className='lchip'+(ch===target?' goal':'');el.textContent=ch;
   var x=30+Math.random()*(W-60);sky.appendChild(el);
-  chips.push({el:el,ch:ch,x:x,y:-60,vy:55+Math.random()*35,vx:(Math.random()-0.5)*14});}
+  chips.push({el:el,ch:ch,x:x,y:-60,vy:speed+Math.random()*30,vx:(Math.random()-0.5)*14});}
 function sparkle(x,y){var s=document.createElement('div');s.className='spark';s.style.left=x+'px';s.style.top=y+'px';
   var cols=['#FFD25E','#F29682','#5BB5F0','#A6E8BA'];
   for(var i=0;i<8;i++){var d=document.createElement('i');d.style.background=cols[i%4];
     var a=i/8*Math.PI*2;d.style.transition='transform .5s ease-out,opacity .5s';s.appendChild(d);
     requestAnimationFrame(function(dd,aa){return function(){dd.style.transform='translate('+Math.cos(aa)*34+'px,'+Math.sin(aa)*34+'px)';dd.style.opacity='0';};}(d,a));}
   sky.appendChild(s);setTimeout(function(){s.remove()},600);}
-function frame(t){if(!running)return;var dt=Math.min((t-last)/1000,.05);last=t;
+function loseHeart(){hearts--;drawHearts();thud();say('انتبه للحرف المطلوب');
+  if(hearts<=0)endGame(false);}
+function endGame(won){running=false;paused=false;
+  document.getElementById('pausebtn').hidden=true;document.getElementById('soundbtn').hidden=true;
+  var stars=won?Math.max(1,hearts):0;
+  var sr=document.getElementById('starsrow');sr.innerHTML='';
+  for(var i=0;i<3;i++)sr.innerHTML+=(i<stars)
+    ?'<svg viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="#FFD25E" stroke="#4A3B6E" stroke-width="1.6" stroke-linejoin="round"/></svg>'
+    :'<svg viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="none" stroke="#C9C2DA" stroke-width="1.6" stroke-linejoin="round"/></svg>';
+  document.getElementById('endtitle').textContent=won?'رائع! أمسكت كل الحروف':'انتهت المحاولة';
+  document.getElementById('endmsg').textContent=won?'نجومك: '+ar(stars)+'، تقدّم جميل، هيا لجولة جديدة':'لا بأس، كل محاولة تجعلك أقوى. جرّب مرة أخرى';
+  document.getElementById('endov').hidden=false;
+  if(won)winTune();}
+function frame(t){if(!running)return;
+  if(paused){last=t;requestAnimationFrame(frame);return;}
+  var dt=Math.min((t-last)/1000,.05);last=t;
   ax+=(tx-ax)*Math.min(1,dt*10);
   asmaa.style.transform='translateX('+(ax-60)+'px)';
-  spawnT+=dt;if(spawnT>1.7&&chips.length<6){spawnT=0;spawn();}
+  spawnT+=dt;if(spawnT>spawnEvery&&chips.length<6){spawnT=0;spawn();}
   for(var i=chips.length-1;i>=0;i--){var c=chips[i];c.y+=c.vy*dt;c.x+=c.vx*dt;
     if(c.x<28||c.x>W-28)c.vx*=-1;
     c.el.style.transform='translate('+(c.x-27)+'px,'+(c.y-27)+'px)';
     var ay=H-130;
     if(c.y>ay&&c.y<ay+85&&Math.abs(c.x-ax)<62){
-      if(c.ch===target){pop();sparkle(c.x,c.y);say('أحسنت!');score++;scn.textContent=ar(score);c.el.classList.add('hit');setTimeout(function(e){return function(){e.remove()};}(c.el),300);chips.splice(i,1);newTarget();}
+      if(c.ch===target){pop();sparkle(c.x,c.y);score++;caught++;scn.textContent=ar(score);
+        goalbar.style.width=Math.round(caught/GOAL*100)+'%';
+        speed=Math.min(115,speed+7);spawnEvery=Math.max(1.05,spawnEvery-.07);
+        c.el.classList.add('hit');setTimeout(function(e){return function(){e.remove()};}(c.el),300);chips.splice(i,1);
+        if(caught>=GOAL){endGame(true);return;}
+        say('أحسنت!');newTarget();}
       else{c.el.classList.remove('nope');void c.el.offsetWidth;c.el.classList.add('nope');c.vy=-70;c.vx=(c.x<ax?-1:1)*50;}
       continue;}
-    if(c.y>H+40){c.el.remove();chips.splice(i,1);}}
+    if(c.y>H+40){var wasT=(c.ch===target);c.el.remove();chips.splice(i,1);
+      if(wasT)loseHeart();
+      if(!running)return;}}
   requestAnimationFrame(frame);}
 function point(x){tx=Math.min(Math.max(x,60),W-60);}
 sky.addEventListener('pointermove',function(e){if(e.pressure>0||e.buttons>0||e.pointerType!=='mouse')point(e.clientX);});
 sky.addEventListener('pointerdown',function(e){point(e.clientX);});
 sky.addEventListener('touchmove',function(e){e.preventDefault();point(e.touches[0].clientX);},{passive:false});
-document.getElementById('startbtn').onclick=function(){document.getElementById('startov').remove();running=true;last=performance.now();spawn();requestAnimationFrame(frame);};
+document.getElementById('target').addEventListener('click',function(){sayName();});
+function goBack(){if(window.history.length>1){window.history.back();}else{location.href='index.html';}}
+['exitbtn','exitbtn2','exitbtn3','exitbtn4'].forEach(function(id){document.getElementById(id).onclick=goBack;});
+document.getElementById('soundbtn').onclick=function(){soundOn=!soundOn;drawSound();if(!soundOn){try{speechSynthesis.cancel();}catch(e){}}};
+document.getElementById('pausebtn').onclick=function(){paused=true;document.getElementById('pauseov').hidden=false;};
+document.getElementById('resumebtn').onclick=function(){document.getElementById('pauseov').hidden=true;paused=false;};
+function startGame(){
+  chips.forEach(function(c){c.el.remove();});chips=[];
+  score=0;caught=0;hearts=MAXHEARTS;speed=55;spawnEvery=1.7;spawnT=0;spawnN=0;
+  scn.textContent='٠';goalbar.style.width='0%';drawHearts();drawSound();
+  newTarget(true);
+  document.getElementById('pausebtn').hidden=false;document.getElementById('soundbtn').hidden=false;
+  running=true;paused=false;last=performance.now();spawn();requestAnimationFrame(frame);
+  setTimeout(sayName,400);}
+document.getElementById('startbtn').onclick=function(){document.getElementById('startov').remove();startGame();};
+document.getElementById('againbtn').onclick=function(){document.getElementById('endov').hidden=true;startGame();};
+drawHearts();drawSound();
 /* demo hook for screenshots/recording */
 window.G={setAx:function(x){tx=x;ax=x;asmaa.style.transform='translateX('+(ax-60)+'px)';},
   auto:function(){window._auto=true;},chips:function(){return chips;},target:function(){return target;},
-  start:function(){document.getElementById('startbtn').click();}};
-setInterval(function(){if(window._auto&&running){var c=chips.find(function(c){return c.ch===target});if(c)tx=c.x;}},80);
+  start:function(){document.getElementById('startbtn').click();},
+  nearWin:function(){caught=GOAL-1;goalbar.style.width=Math.round(caught/GOAL*100)+'%';},
+  nearLose:function(){hearts=1;drawHearts();}};
+setInterval(function(){if(window._auto&&running&&!paused){var c=chips.find(function(c){return c.ch===target});if(c)tx=c.x;}},80);
 })();
 </script>
 </body>
