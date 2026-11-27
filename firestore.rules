@@ -24,10 +24,16 @@ service cloud.firestore {
           || (request.auth != null && request.auth.uid == studentId);
         allow create: if request.auth != null
           && (request.auth.uid == studentId || isOwner())
-          && request.resource.data.keys().hasOnly(['from', 'text', 't'])
+          && request.resource.data.keys().hasOnly(['from', 'text', 't', 'mtype', 'mime', 'media'])
           && request.resource.data.from in ['student', 'owner']
           && request.resource.data.text is string
-          && request.resource.data.text.size() <= 500;
+          && request.resource.data.text.size() <= 500
+          && (!request.resource.data.keys().hasAny(['mtype', 'mime', 'media'])
+              || (request.resource.data.mtype in ['image', 'audio']
+                  && request.resource.data.mime is string
+                  && request.resource.data.mime.size() <= 40
+                  && request.resource.data.media is string
+                  && request.resource.data.media.size() <= 950000));
         allow update, delete: if false;
       }
     }
