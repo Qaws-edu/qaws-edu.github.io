@@ -879,3 +879,20 @@ body.prep .chrec{border-radius:10px}
   .aband.scene{width:auto;max-width:none;height:300px;margin:0}
   .gcards{width:100%;max-width:980px;margin-left:auto;margin-right:auto}
 }
+
+
+/* ======== الصفحة تملأ عرض الشاشة بالكامل على اللابتوب ======== */
+@media (min-width:900px){
+  .wrap{max-width:none;box-shadow:none}
+  .tabbar{width:100%}
+  .hero,.banner,.content,.grid,.cards,.path,.lvlpick{padding-left:clamp(20px,2.4vw,48px);padding-right:clamp(20px,2.4vw,48px)}
+  .content:not(.units){max-width:none}
+  .content.units{grid-template-columns:repeat(auto-fit,minmax(430px,1fr))}
+  .grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .acard{max-width:900px}
+  .aband{max-width:1100px}
+  .stats{max-width:1100px}
+  .gcards{max-width:none;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .prephero,.prepcard,.prepsec,.quickrow{margin-left:clamp(20px,2.4vw,48px);margin-right:clamp(20px,2.4vw,48px)}
+  .prephero{max-width:none}
+}
