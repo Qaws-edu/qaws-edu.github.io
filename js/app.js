@@ -438,6 +438,7 @@ function mountAccount(){
       QawsChat.fbGoogleSignIn().then(function(r){
         settled=true; unlock();
         if(r&&r.ok){ try{ if(r.moved) sessionStorage.setItem('qawsGoogleMoved','1'); }catch(e){} location.reload(); return; }
+        if(r&&r.redirecting){ if(err){ err.style.color='#2E7D32'; err.textContent='جارٍ تحويلك لتسجيل الدخول…'; } return; }
         if(r&&r.cancelled) return;
         if(err) err.textContent=(r&&r.err)||'تعذّر الدخول. حاول تاني.';
       }).catch(function(){ settled=true; unlock(); if(err) err.textContent='تعذّر الدخول. حاول تاني.'; });
