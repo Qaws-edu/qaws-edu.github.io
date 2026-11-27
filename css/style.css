@@ -634,3 +634,19 @@ body.prep .note{border-color:rgba(34,54,79,.30);color:#5E6E66}
 body.prep .aband{background:linear-gradient(180deg,#EDF4F1,#DCE9E6);box-shadow:inset 0 3px 0 rgba(255,255,255,.6),inset 0 -6px 14px rgba(34,54,79,.08)}
 body.prep .aband::after{background:linear-gradient(180deg,#5FA8A1,#3E8E87);box-shadow:inset 0 4px 0 rgba(255,255,255,.35)}
 body.prep .banner .bnum{background:linear-gradient(180deg,#E3967A,#D97E5F);color:#FFF7EA}
+
+/* ======== شاشة اختيار المستوى: ابتدائي / إعدادي ======== */
+.lvlpick{display:flex;flex-direction:column;gap:14px;padding:18px 18px 6px}
+.lvlcard{border-radius:26px;box-shadow:var(--shadow);padding:20px 18px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;border:2px solid rgba(74,59,110,.10)}
+.lvlcard:active{transform:translateY(3px)}
+.lvlcard h3{font-size:25px}
+.lvlcard p{font-family:'Tajawal',sans-serif;font-size:14px;margin:0}
+.lvlcard .lvlgo{margin-top:8px;border-radius:99px;padding:6px 20px;font-family:'Almarai',sans-serif;font-weight:800;font-size:14px;box-shadow:var(--shadow-s)}
+.lvl-pri{background:linear-gradient(180deg,#fff,var(--cream));color:var(--ink)}
+.lvl-pri p{color:var(--ink-soft)}
+.lvl-pri .lvlgo{background:linear-gradient(180deg,#FFE48A,var(--yellow));color:#6A3F00}
+.lvl-prep{background:linear-gradient(180deg,#2A4258,#22364F);color:#F5F0E4}
+.lvl-prep h3{color:#F5F0E4;text-shadow:none}
+.lvl-prep p{color:#C9D4C9}
+.lvl-prep .lvlgo{background:linear-gradient(180deg,#D97E5F,#C0684A);color:#FFF7EA}
+@media (min-width:768px){.lvlpick{flex-direction:row}.lvlcard{flex:1}}
