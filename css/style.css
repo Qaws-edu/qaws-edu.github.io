@@ -629,3 +629,8 @@ body.prep .note{border-color:rgba(34,54,79,.30);color:#5E6E66}
   .gcards{gap:14px}
   .gcard h3{font-size:16px}
 }
+
+/* تنعيم شريط الفاصل وشارة المرحلة في النمط الإعدادي */
+body.prep .aband{background:linear-gradient(180deg,#EDF4F1,#DCE9E6);box-shadow:inset 0 3px 0 rgba(255,255,255,.6),inset 0 -6px 14px rgba(34,54,79,.08)}
+body.prep .aband::after{background:linear-gradient(180deg,#5FA8A1,#3E8E87);box-shadow:inset 0 4px 0 rgba(255,255,255,.35)}
+body.prep .banner .bnum{background:linear-gradient(180deg,#E3967A,#D97E5F);color:#FFF7EA}
