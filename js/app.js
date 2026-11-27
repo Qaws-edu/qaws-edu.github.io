@@ -172,7 +172,7 @@ function vHome(){
   +'<section class="aband scene"><svg class="rainbow" viewBox="0 0 320 210" fill="none"><path d="M30 200 A130 130 0 0 1 290 200" stroke="#F5806A" stroke-width="16" stroke-linecap="round"/><path d="M46 200 A114 114 0 0 1 274 200" stroke="#FFD25E" stroke-width="16" stroke-linecap="round"/><path d="M62 200 A98 98 0 0 1 258 200" stroke="#5BB5F0" stroke-width="16" stroke-linecap="round"/></svg></section>'
   +'<section class="path"><h2 class="section-title">طريق المغامرة</h2><div class="node-col">'+nh+'</div></section>'
   +'<section class="cards"><h2 class="section-title sm">ماذا سنتعلّم؟</h2><div class="tiles3">'
-  +'<div class="tile3"><div class="tic">'+TILE_LETTER+'</div><h3>الحروف</h3><p>لكل حرف لعبة: شكله وصوته وطريقة كتابته</p><a class="tplay" href="letters-game.html">العب لعبة الحروف</a></div>'
+  +'<div class="tile3"><div class="tic">'+TILE_LETTER+'</div><h3>الحروف</h3><p>لكل حرف لعبة: شكله وصوته وطريقة كتابته</p><a class="tplay" href="letters-game.html">العب لعبة الحروف</a><a class="tplay" href="runner-game.html" style="margin-top:8px">عدّاء الحروف</a></div>'
   +'<div class="tile3"><div class="tic">'+TILE_WORD+'</div><h3>الكلمات</h3><p>كلمات من الحياة اليومية: البيت والمدرسة والطعام</p></div>'
   +'<div class="tile3"><div class="tic">'+TILE_BOOK+'</div><h3>قصص قصيرة</h3><p>حكايات بالحروف التي تعلّمتها، بالصوت والصورة</p></div>'
   +'</div></section>'
