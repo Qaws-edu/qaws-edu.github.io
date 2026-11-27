@@ -8,6 +8,19 @@ service cloud.firestore {
         && request.auth.token.email == 'asmaaboelftooh@gmail.com';
     }
 
+    // محتوى لوحة التحكم: المنشور يقرأه الجميع، ولا يكتب أحد إلا مس أسماء
+    match /cmsLive/{docId} {
+      allow read: if true;
+      allow create, update, delete: if isOwner();
+    }
+    match /cmsDraft/{docId} {
+      allow read, create, update, delete: if isOwner();
+    }
+    match /cmsHistory/{docId} {
+      allow read, create, delete: if isOwner();
+      allow update: if false;
+    }
+
     // كل طالب له وثيقة بمعرّف دخوله المجهول: يقرأ ويكتب وثيقته فقط
     match /students/{studentId} {
       allow read: if isOwner()
