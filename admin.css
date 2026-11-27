@@ -52,3 +52,35 @@ select.adm-sel{border:2px solid #D8D2C4;border-radius:12px;padding:8px 12px;font
 hr.adm{border:0;border-top:2px dashed #E0DACB;margin:14px 0}
 .adm-grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 @media (max-width:560px){.adm-grid2{grid-template-columns:1fr}.adm-row label{min-width:100%}}
+
+/* ===== v2: الرئيسية المبسطة + وضع ليلي ===== */
+.adm-hello{background:linear-gradient(135deg,#0F4C5C,#1F8FA6);color:#fff;border-radius:22px;padding:20px 18px;font-size:22px;font-weight:800;margin:6px 0 16px;box-shadow:0 6px 18px rgba(10,60,80,.2)}
+.adm-hello small{display:block;font-size:13.5px;font-weight:600;opacity:.9;margin-top:6px;line-height:1.7}
+.adm-tiles{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-bottom:90px}
+.adm-tile{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;min-height:132px;border:0;border-radius:22px;background:#fff;box-shadow:0 4px 0 #E3DCCB,0 8px 18px rgba(10,60,80,.10);font-family:inherit;color:#0F4C5C;padding:14px 10px;cursor:pointer;transition:transform .12s}
+.adm-tile:active{transform:translateY(2px)}
+.adm-tile .ic{font-size:38px;line-height:1}
+.adm-tile b{font-size:18px;font-weight:800}
+.adm-tile small{font-size:12px;color:#6D96A0;line-height:1.5}
+.adm-tile.link{text-decoration:none;background:linear-gradient(180deg,#FFF3C4,#FFE48A)}
+.adm-nav{display:flex;align-items:center;gap:10px;margin:6px 0 14px;flex-wrap:wrap}
+.adm-nav .adm-title{flex:1;font-size:19px;font-weight:800;min-width:120px}
+.adm-grp{font-size:14px;color:#146F86;margin:16px 0 8px;padding-bottom:4px;border-bottom:2px dashed #E0DACB}
+.adm-thumb{display:block;width:160px;max-width:100%;border-radius:12px;margin-top:6px;border:2px solid #EAE4D6}
+.adm-actions .adm-btn{min-width:96px}
+@media (min-width:700px){.adm-tiles{grid-template-columns:repeat(3,1fr)}}
+html[data-theme=dark] body{background:#0E1A2B;color:#E6EEF8}
+html[data-theme=dark] .adm-head .who,html[data-theme=dark] .adm-hint,html[data-theme=dark] .adm-item .s,html[data-theme=dark] .adm-tile small{color:#93A9C2}
+html[data-theme=dark] .adm-card,html[data-theme=dark] .adm-tile,html[data-theme=dark] .adm-login,html[data-theme=dark] .adm-q{background:#16263D;box-shadow:0 4px 14px rgba(0,0,0,.35);color:#E6EEF8}
+html[data-theme=dark] .adm-tile{color:#E6EEF8;box-shadow:0 4px 0 #0B1626,0 8px 18px rgba(0,0,0,.35)}
+html[data-theme=dark] .adm-tile.link{background:linear-gradient(180deg,#6B5A1E,#524413)}
+html[data-theme=dark] .adm-in,html[data-theme=dark] textarea.adm-in,html[data-theme=dark] select.adm-in,html[data-theme=dark] select.adm-sel{background:#0F1D31;border-color:#2A4163;color:#E6EEF8}
+html[data-theme=dark] .adm-list .adm-item,html[data-theme=dark] .adm-item{background:#0F1D31;border-color:#2A4163}
+html[data-theme=dark] .adm-card h3,html[data-theme=dark] .adm-row label,html[data-theme=dark] .adm-grp,html[data-theme=dark] .adm-crumbs{color:#7CC4DA}
+html[data-theme=dark] .adm-tabs button{background:#16263D;border-color:#2A4163;color:#9DB6D0}
+html[data-theme=dark] .adm-tabs button.on{background:#7CC4DA;color:#0E1A2B;border-color:#7CC4DA}
+html[data-theme=dark] .adm-actions{background:rgba(14,26,43,.96)}
+html[data-theme=dark] .adm-tag{background:#1E3A55;color:#9AD3F8}
+html[data-theme=dark] .adm-tag.add{background:#1F4A33;color:#A6E8BA}
+html[data-theme=dark] .adm-tag.off{background:#4A2323;color:#F2A7A7}
+html[data-theme=dark] .adm-thumb,html[data-theme=dark] .adm-imgprev{border-color:#2A4163}
