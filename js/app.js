@@ -92,7 +92,7 @@ function nav(active){
   return fab+'<nav class="tabbar">'+t.map(x=>'<a class="tab'+(x[0]===active?' on':'')+'" href="'+x[1]+'">'+NAV_ICONS[x[0]]+'<span>'+x[2]+'</span></a>').join('')+'</nav>';
 }
 const BAND = '<section class="aband"></section>';
-function acard(txt){ return '<section class="acard"><div class="abub">'+txt+'</div><img class="aimg" src="assets/asmaa/asmaa-full.png?v=20261128-3" alt="الأستاذة أسماء"></section>'; }
+function acard(txt){ return '<section class="acard"><div class="abub">'+txt+'</div><img class="aimg" src="assets/asmaa/asmaa-full.png?v=20261128-5" alt="الأستاذة أسماء"></section>'; }
 
 function header(opts){
   opts = opts||{};
@@ -123,7 +123,7 @@ function applyTheme(routeSi){
 function prepWelcome(then){
   const ov = document.createElement('div');
   ov.className='overlay';
-  ov.innerHTML = '<div class="celebrate prepwelcome"><img class="asmaa" src="assets/asmaa/asmaa-full.png?v=20261128-3" alt="مس أسماء">'
+  ov.innerHTML = '<div class="celebrate prepwelcome"><img class="asmaa" src="assets/asmaa/asmaa-full.png?v=20261128-5" alt="مس أسماء">'
     +'<h2>أهلًا بيك من جديد في قوس!</h2><p>كبرت، وكبرت معاك أحلامك وطموحاتك .. وحان وقت رحلة جديدة من المعرفة والإنجاز.</p>'
     +'<button class="cta green">نكبر معك، ونتعلم معاً</button></div>';
   document.body.appendChild(ov);
