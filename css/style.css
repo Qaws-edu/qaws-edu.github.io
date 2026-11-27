@@ -777,10 +777,10 @@ body.prep .chrec{border-radius:10px}
   100%{transform:translateX(calc(-100vw - 260px)) translateY(0)}
 }
 .hero .cloud{will-change:transform}
-.hero .c1{animation:qawsDrift 36s linear infinite}
+.hero .c1{animation:qawsDrift 52s linear infinite}
 .hero::before,.aband.scene::before{content:"";position:absolute;pointer-events:none;border-radius:30px}
-.hero::before{top:4px;right:-70px;width:46px;height:17px;background:linear-gradient(180deg,#fff,#EEF3FA);box-shadow:0 3px 6px rgba(74,59,110,.15);animation:qawsDrift 26s linear infinite;animation-delay:-8s}
-.aband.scene::before{top:20px;right:-120px;width:88px;height:27px;background:linear-gradient(180deg,#fff,#E4EFFB);box-shadow:0 3px 6px rgba(74,59,110,.12);animation:qawsDrift 42s linear infinite;animation-delay:-16s}
+.hero::before{top:4px;right:-70px;width:46px;height:17px;background:linear-gradient(180deg,#fff,#EEF3FA);box-shadow:0 3px 6px rgba(74,59,110,.15);animation:qawsDrift 34s linear infinite;animation-delay:-8s}
+.aband.scene::before{top:20px;right:-120px;width:88px;height:27px;background:linear-gradient(180deg,#fff,#E4EFFB);box-shadow:0 3px 6px rgba(74,59,110,.12);animation:qawsDrift 60s linear infinite;animation-delay:-16s}
 @media (prefers-reduced-motion:reduce){
   .hero .c1,.hero::before,.aband.scene::before{animation:none!important}
 }
@@ -854,4 +854,18 @@ body.prep .chrec{border-radius:10px}
 @media (min-width:1280px){
   .wrap{max-width:1200px}
   .tabbar{width:min(100%,1200px)}
+}
+
+
+/* ======== ضبط إضافي لشاشات اللابتوب ======== */
+@media (min-width:900px){
+  .acard{max-width:660px;margin-left:auto;margin-right:auto}
+  .stage .num{width:68px;height:68px;font-size:31px}
+  .node-col{flex-direction:row;justify-content:center;align-items:center;gap:34px;padding:10px 0}
+  .node-col::before{top:50%;bottom:auto;left:44px;right:44px;border-left:0;border-top:5px dotted rgba(74,59,110,.28);transform:translateY(-50%)}
+  .node-col .node{transform:none}
+  .node-col .node:nth-child(even){transform:translateY(-22px)}
+  .node-col .node:nth-child(3n){transform:translateY(18px)}
+  .node .start-tag{top:-30px}
+  .stats{max-width:780px;margin:0 auto}
 }
