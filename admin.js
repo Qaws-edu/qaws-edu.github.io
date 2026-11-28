@@ -743,7 +743,7 @@ function render(){
   else if(tab==='pools')body=vPools();
   else if(tab==='history')body=vHistory();
   else if(NEWV[tab])body=NEWV[tab].v();
-  root.innerHTML='<div class="adm-head"><h1>لوحة تحكم قَوْس</h1><span class="who">'+esc(user.email)+'</span><button class="adm-btn sm gray" id="out2" type="button">تسجيل الخروج</button></div>'
+  root.innerHTML='<div class="adm-head"><a href="index.html" style="text-decoration:none;color:inherit"><h1>لوحة تحكم قَوْس</h1></a><a class="adm-btn sm blue" id="backsite" href="index.html" style="text-decoration:none;display:inline-flex;align-items:center">العودة للموقع</a><span class="who">'+esc(user.email)+'</span><button class="adm-btn sm gray" id="out2" type="button">تسجيل الخروج</button></div>'
     +navBar()
     +body
     +(tab==='home'?'':'<div class="adm-actions">'
