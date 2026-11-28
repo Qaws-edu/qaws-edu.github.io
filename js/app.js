@@ -277,7 +277,8 @@ function stepper(si,u,cur,isTest){
 
 function videoEmbed(url){
   const m = String(url).match(/(?:youtube\.com\/(?:watch\?v=|shorts\/)|youtu\.be\/)([\w-]{6,20})/);
-  if(m) return '<div class="video-slot real"><iframe src="https://www.youtube-nocookie.com/embed/'+m[1]+'" title="فيديو الدرس" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>';
+  if(m) return '<div class="video-slot real"><iframe src="https://www.youtube-nocookie.com/embed/'+m[1]+'?rel=0&playsinline=1" title="فيديو الدرس" allowfullscreen allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe></div>'
+    +'<a class="videofallback" href="https://www.youtube.com/watch?v='+m[1]+'" target="_blank" rel="noopener">افتح الفيديو على يوتيوب</a>';
   return '<div class="video-slot real"><video controls src="'+url+'"></video></div>';
 }
 function vLesson(si,u,l){
