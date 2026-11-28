@@ -145,7 +145,7 @@ html[data-theme=dark] .lesson-sub{color:#A9B8C9}
 .lesson-body .acard.companion-sm{max-width:860px;margin:6px auto 14px}
 .lesson-nav{display:flex;gap:10px;max-width:860px;margin:18px auto 6px}
 .lnav{flex:1;text-align:center;background:#fff;border-radius:16px;padding:12px 10px;font-weight:800;color:#2A6E86;text-decoration:none;box-shadow:0 3px 10px rgba(10,60,80,.10);font-size:14.5px}
-.lnav.ghost{background:none;box-shadow:none;pointer-events:none}
+.lnav.ghost{display:none}
 html[data-theme=dark] .lnav{background:#12263C;color:#8FD3E6}
 @media (min-width:1024px){.lesson-body{width:100%;max-width:980px;margin:0 auto}.lesson-body .video-slot.real{max-width:860px}}
 .videofallback{display:block;text-align:center;margin:-6px 0 16px;font-weight:700;font-size:14px;color:#2A6E86;text-decoration:none}
