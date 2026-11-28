@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Ø¹Ø¯ÙØ§Ø¡ Ø§ÙØ­Ø±ÙÙ â ÙÙÙÙØ³</title>
+<title>عدّاء الحروف — قَوْس</title>
 <link rel="stylesheet" href="css/fonts.css?v=20261128-1">
 <link rel="stylesheet" href="css/style.css?v=20261128-1">
 <style>
@@ -53,46 +53,46 @@ html[data-theme=dark] .ov p{color:#A9BACB}
   <canvas id="cv"></canvas>
   <div id="hud">
     <div id="col">
-      <button class="hbtn" id="exitbtn" type="button">â Ø®Ø±ÙØ¬</button>
-      <button class="hbtn" id="pausebtn" type="button" hidden><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1.5" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.5" fill="currentColor"/></svg>Ø¥ÙÙØ§Ù</button>
+      <button class="hbtn" id="exitbtn" type="button">→ خروج</button>
+      <button class="hbtn" id="pausebtn" type="button" hidden><svg viewBox="0 0 24 24"><rect x="6" y="5" width="4" height="14" rx="1.5" fill="currentColor"/><rect x="14" y="5" width="4" height="14" rx="1.5" fill="currentColor"/></svg>إيقاف</button>
       <button class="hbtn" id="soundbtn" type="button" hidden></button>
     </div>
-    <div id="target" title="Ø§Ø¶ØºØ· ÙØ³ÙØ§Ø¹ Ø§Ø³Ù Ø§ÙØ­Ø±Ù">
-      <div class="trow"><span id="tlabel">Ø§Ø¬ÙØ¹ Ø§ÙØ­Ø±Ù</span><span id="tl">Ø¨</span></div>
-      <div id="cnt">Ù  / Ù¥</div>
+    <div id="target" title="اضغط لسماع اسم الحرف">
+      <div class="trow"><span id="tlabel">اجمع الحرف</span><span id="tl">ب</span></div>
+      <div id="cnt">٠ / ٥</div>
       <div id="goalbar"><i></i></div>
       <div id="hearts"></div>
     </div>
-    <div id="score"><span id="lvn">Ø§ÙÙØ³ØªÙÙ Ù¡</span></div>
+    <div id="score"><span id="lvn">المستوى ١</span></div>
   </div>
   <div id="toast"></div>
-  <div id="hint">Ø§Ø³Ø­Ø¨ ÙÙÙÙÙØ§ Ø£Ù ÙØ³Ø§Ø±ÙØ§ ÙØªØºÙÙØ± Ø§ÙÙØ³Ø§Ø±Ø ÙØ§Ø³Ø­Ø¨ ÙØ£Ø¹ÙÙ ÙØªÙÙØ²</div>
+  <div id="hint">اسحب يمينًا أو يسارًا لتغيير المسار، واسحب لأعلى لتقفز</div>
 </div>
 
 <div class="ov" id="startov"><div class="panel">
-  <h1>Ø¹Ø¯ÙØ§Ø¡ Ø§ÙØ­Ø±ÙÙ</h1>
-  <p>Ø§Ø±ÙØ¶ ÙØ¹ ÙØ³ Ø£Ø³ÙØ§Ø¡ ÙØ§Ø¬ÙØ¹ Ø§ÙØ­Ø±Ù Ø§ÙÙØ·ÙÙØ¨ ÙÙØ·. ØªØ¬ÙÙØ¨ Ø§ÙØ­Ø±ÙÙ Ø§ÙØ£Ø®Ø±Ù ÙØ§ÙØ­ÙØ§Ø¬Ø². Ø§Ø³Ø­Ø¨ ÙÙÙÙÙØ§ Ø£Ù ÙØ³Ø§Ø±ÙØ§ ÙØªØ¨Ø¯ÙÙ Ø§ÙÙØ³Ø§Ø±Ø ÙØ§Ø³Ø­Ø¨ ÙØ£Ø¹ÙÙ ÙØªÙÙØ² ÙÙÙ Ø§ÙØ­Ø§Ø¬Ø². Ø¹ÙÙ Ø§ÙØ­Ø§Ø³ÙØ¨ Ø§Ø³ØªØ®Ø¯Ù Ø§ÙØ£Ø³ÙÙ.</p>
-  <button class="cta green" id="startbtn">Ø§Ø¨Ø¯Ø£ Ø§ÙØ¬Ø±Ù</button>
-  <div class="exitrow"><button class="exitlink" id="exitbtn2" type="button">â Ø®Ø±ÙØ¬</button></div>
+  <h1>عدّاء الحروف</h1>
+  <p>اركض مع مس أسماء واجمع الحرف المطلوب فقط. تجنّب الحروف الأخرى والحواجز. اسحب يمينًا أو يسارًا لتبديل المسار، واسحب لأعلى لتقفز فوق الحاجز. على الحاسوب استخدم الأسهم.</p>
+  <button class="cta green" id="startbtn">ابدأ الجري</button>
+  <div class="exitrow"><button class="exitlink" id="exitbtn2" type="button">→ خروج</button></div>
 </div></div>
 <div class="ov" id="lvlov" hidden><div class="panel">
-  <h1 id="lvltitle">Ø§ÙÙØ³ØªÙÙ Ù¡</h1>
-  <div class="big" id="lvlbig">Ø¨</div>
+  <h1 id="lvltitle">المستوى ١</h1>
+  <div class="big" id="lvlbig">ب</div>
   <p id="lvlmsg"></p>
-  <button class="cta green" id="gobtn">Ø§ÙØ·ÙÙ</button>
+  <button class="cta green" id="gobtn">انطلق</button>
 </div></div>
 <div class="ov" id="pauseov" hidden><div class="panel">
-  <h1>Ø¥ÙÙØ§Ù ÙØ¤ÙØª</h1>
-  <p>Ø®Ø° ÙÙØ³ÙØ§Ø Ø§ÙØ·Ø±ÙÙ ÙÙØªØ¸Ø±Ù.</p>
-  <button class="cta green" id="resumebtn">Ø£ÙÙÙ Ø§ÙØ¬Ø±Ù</button>
-  <div class="exitrow"><button class="exitlink" id="exitbtn3" type="button">â Ø®Ø±ÙØ¬</button></div>
+  <h1>إيقاف مؤقت</h1>
+  <p>خذ نفسًا، الطريق ينتظرك.</p>
+  <button class="cta green" id="resumebtn">أكمل الجري</button>
+  <div class="exitrow"><button class="exitlink" id="exitbtn3" type="button">→ خروج</button></div>
 </div></div>
 <div class="ov" id="endov" hidden><div class="panel">
-  <h1 id="endtitle">Ø£Ø­Ø³ÙØª!</h1>
+  <h1 id="endtitle">أحسنت!</h1>
   <div id="starsrow"></div>
   <p id="endmsg"></p>
-  <button class="cta green" id="againbtn">Ø§ÙÙØ³ØªÙÙ Ø§ÙØªØ§ÙÙ</button>
-  <div class="exitrow"><button class="exitlink" id="exitbtn4" type="button">â Ø®Ø±ÙØ¬</button></div>
+  <button class="cta green" id="againbtn">المستوى التالي</button>
+  <div class="exitrow"><button class="exitlink" id="exitbtn4" type="button">→ خروج</button></div>
 </div></div>
 
 <script src="js/theme.js?v=20261128-1"></script>
@@ -103,39 +103,39 @@ var cv=document.getElementById('cv'), ctx=cv.getContext('2d');
 var $=function(i){return document.getElementById(i)};
 var W=0,H=0,DPR=1;
 var FATHA='\u064E',DAMMA='\u064F',KASRA='\u0650';
-var HNAME={}; HNAME[FATHA]='ÙØªØ­Ø©';HNAME[DAMMA]='Ø¶ÙØ©';HNAME[KASRA]='ÙØ³Ø±Ø©';
-var NAMES={'Ø§':'Ø£ÙÙ','Ø¨':'Ø¨Ø§Ø¡','Øª':'ØªØ§Ø¡','Ø«':'Ø«Ø§Ø¡','Ø¬':'Ø¬ÙÙ','Ø­':'Ø­Ø§Ø¡','Ø®':'Ø®Ø§Ø¡','Ø¯':'Ø¯Ø§Ù','Ø°':'Ø°Ø§Ù','Ø±':'Ø±Ø§Ø¡','Ø²':'Ø²Ø§Ù','Ø³':'Ø³ÙÙ','Ø´':'Ø´ÙÙ','Øµ':'ØµØ§Ø¯','Ø¶':'Ø¶Ø§Ø¯','Ø·':'Ø·Ø§Ø¡','Ø¸':'Ø¸Ø§Ø¡','Ø¹':'Ø¹ÙÙ','Øº':'ØºÙÙ','Ù':'ÙØ§Ø¡','Ù':'ÙØ§Ù','Ù':'ÙØ§Ù','Ù':'ÙØ§Ù','Ù':'ÙÙÙ','Ù':'ÙÙÙ','Ù':'ÙØ§Ø¡','Ù':'ÙØ§Ù','Ù':'ÙØ§Ø¡'};
-var ALL='Ø§Ø¨ØªØ«Ø¬Ø­Ø®Ø¯Ø°Ø±Ø²Ø³Ø´ØµØ¶Ø·Ø¸Ø¹ØºÙÙÙÙÙÙÙÙÙ'.split('');
-var SIMILAR={'Ø¨':'ØªØ«ÙÙØ¬','Øª':'Ø¨Ø«ÙÙÙ','Ø«':'Ø¨ØªÙÙØ´','Ù':'Ø¨ØªØ«ÙØ²','Ø¬':'Ø­Ø®Ø¹Øº','Ø­':'Ø¬Ø®Ø¹Ù','Ø®':'Ø¬Ø­Ø¹Øº','Ø¯':'Ø°Ø±Ø²','Ø³':'Ø´ØµØ¶','Ø¹':'ØºÙÙ','Ù':'Ù Ù Ù'.replace(/ /g,'')};
-/* Ø§ÙÙØ³ØªÙÙØ§Øª: Ø­Ø±Ù Ø¨ÙØ§ Ø­Ø±ÙØ© Ø«Ù Ø­Ø±Ù Ø¨Ø­Ø±ÙØ© */
+var HNAME={}; HNAME[FATHA]='فتحة';HNAME[DAMMA]='ضمة';HNAME[KASRA]='كسرة';
+var NAMES={'ا':'ألف','ب':'باء','ت':'تاء','ث':'ثاء','ج':'جيم','ح':'حاء','خ':'خاء','د':'دال','ذ':'ذال','ر':'راء','ز':'زاي','س':'سين','ش':'شين','ص':'صاد','ض':'ضاد','ط':'طاء','ظ':'ظاء','ع':'عين','غ':'غين','ف':'فاء','ق':'قاف','ك':'كاف','ل':'لام','م':'ميم','ن':'نون','ه':'هاء','و':'واو','ي':'ياء'};
+var ALL='ابتثجحخدذرزسشصضطظعغفقكلمنهوي'.split('');
+var SIMILAR={'ب':'تثنيج','ت':'بثنيق','ث':'بتنيش','ن':'بتثيز','ج':'حخعغ','ح':'جخعه','خ':'جحعغ','د':'ذرز','س':'شصض','ع':'غفق','م':'ه و ل'.replace(/ /g,'')};
+/* المستويات: حرف بلا حركة ثم حرف بحركة */
 var LEVELS=[
- {l:'Ø¨',n:5,v:.44},{l:'Øª',n:6,v:.48},{l:'Ù',n:6,v:.52,sim:1},{l:'Ø¬',n:7,v:.55},
- {l:'Ø¨',h:FATHA,n:6,v:.55},{l:'Ø³',h:DAMMA,n:6,v:.58},{l:'Ù',h:KASRA,n:7,v:.62},{l:'Ø¹',h:FATHA,n:7,v:.66}];
+ {l:'ب',n:5,v:.44},{l:'ت',n:6,v:.48},{l:'ن',n:6,v:.52,sim:1},{l:'ج',n:7,v:.55},
+ {l:'ب',h:FATHA,n:6,v:.55},{l:'س',h:DAMMA,n:6,v:.58},{l:'م',h:KASRA,n:7,v:.62},{l:'ع',h:FATHA,n:7,v:.66}];
 function levelDef(i){
   if(i<LEVELS.length) return LEVELS[i];
   var hs=[FATHA,DAMMA,KASRA];
   return {l:ALL[Math.floor(Math.random()*ALL.length)],h:Math.random()<.7?hs[Math.floor(Math.random()*3)]:'',n:8,v:Math.min(.95,.68+(i-LEVELS.length)*.03),sim:1};
 }
-function ar(n){return String(n).replace(/\d/g,function(d){return 'Ù Ù¡Ù¢Ù£Ù¤Ù¥Ù¦Ù§Ù¨Ù©'[d];});}
+function ar(n){return String(n).replace(/\d/g,function(d){return '٠١٢٣٤٥٦٧٨٩'[d];});}
 
-/* ---------- Ø­ÙØ¸ Ø§ÙØªÙØ¯ÙÙ ---------- */
+/* ---------- حفظ التقدّم ---------- */
 var KEY='qaws-runner-v1';
 function loadP(){try{return JSON.parse(localStorage.getItem(KEY))||{level:0,stars:{}};}catch(e){return {level:0,stars:{}};}}
 function saveP(p){try{localStorage.setItem(KEY,JSON.stringify(p));}catch(e){}
-  /* ÙØ±Ø¢Ø© Ø¯Ø§Ø®Ù ÙÙÙ Ø§ÙØ·ÙÙ Ø§ÙÙØ´Ø· ÙÙ ØªÙØ¯ÙÙ ÙÙÙÙØ³ Ø¥Ù ÙÙØ¬Ø¯ */
+  /* مرآة داخل ملف الطفل النشط في تقدّم قَوْس إن وُجد */
   try{var s=JSON.parse(localStorage.getItem('qaws-progress-v2'));
     if(s&&s.profiles){var pr=s.profiles[s.active]||s.profiles[Object.keys(s.profiles)[0]];
       if(pr){var t=0;for(var k in p.stars)t+=p.stars[k];pr.runner={level:p.level,stars:t};localStorage.setItem('qaws-progress-v2',JSON.stringify(s));}}}catch(e){}}
 var prog=loadP();
 
-/* ---------- Ø§ÙØµÙØ± ---------- */
+/* ---------- الصور ---------- */
 var img=new Image();img.src='assets/asmaa/asmaa-exact.png';
 
-/* ---------- Ø§ÙØ­Ø§ÙØ© ---------- */
+/* ---------- الحالة ---------- */
 var lvIdx=prog.level||0,L=null,target='',tH='',running=false,paused=false,last=0;
 var lane=1,px=1,jumpT=-1,items=[],rows=0,rowDist=0,dist=0,collected=0,lives=3,speed=.45,soundOn=true,sinceTarget=0,shake=0,hurtT=0,parts=[],toastT=null;
 var JUMP_DUR=.62,inv=0;
-var PT=.86; /* ÙÙØ¶Ø¹ Ø§ÙÙØ§Ø¹Ø¨ Ø¹ÙÙ Ø§ÙØ·Ø±ÙÙ */
+var PT=.86; /* موضع اللاعب على الطريق */
 
 function size(){
   DPR=Math.min(window.devicePixelRatio||1,2);
@@ -144,7 +144,7 @@ function size(){
 }
 window.addEventListener('resize',size);size();
 
-/* ---------- Ø§ÙØµÙØª ---------- */
+/* ---------- الصوت ---------- */
 function tone(f1,f2,dur,vol,type){try{var c=tone.c||(tone.c=new (window.AudioContext||window.webkitAudioContext)());
  var o=c.createOscillator(),g=c.createGain();o.type=type||'triangle';
  o.frequency.setValueAtTime(f1,c.currentTime);o.frequency.exponentialRampToValueAtTime(f2,c.currentTime+dur*.6);
@@ -157,17 +157,17 @@ function vib(n){try{navigator.vibrate&&navigator.vibrate(n);}catch(e){}}
 function sayName(){if(!soundOn)return;try{var t=NAMES[target]||target;if(tH)t+=' '+HNAME[tH];var u=new SpeechSynthesisUtterance(t);u.lang='ar-SA';u.rate=.8;speechSynthesis.cancel();speechSynthesis.speak(u);}catch(e){}}
 function toast(t){var el=$('toast');el.textContent=t;el.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove('on')},900);}
 
-/* ---------- ÙØ§Ø¬ÙØ© ---------- */
+/* ---------- واجهة ---------- */
 var HON='<svg viewBox="0 0 24 24"><path d="M12 20 C6 15 3 11.5 3 8.4 C3 5.9 5 4 7.4 4 C9 4 10.7 4.9 12 6.6 C13.3 4.9 15 4 16.6 4 C19 4 21 5.9 21 8.4 C21 11.5 18 15 12 20 z" fill="#F29682" stroke="#4A3B6E" stroke-width="1.8"/></svg>';
 var HOFF='<svg viewBox="0 0 24 24"><path d="M12 20 C6 15 3 11.5 3 8.4 C3 5.9 5 4 7.4 4 C9 4 10.7 4.9 12 6.6 C13.3 4.9 15 4 16.6 4 C19 4 21 5.9 21 8.4 C21 11.5 18 15 12 20 z" fill="none" stroke="#A79FB8" stroke-width="1.8"/></svg>';
 var SON='<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 9c1.6 1.6 1.6 4.4 0 6M18.5 6.5c3 3 3 8 0 11" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>';
 var SOFF='<svg viewBox="0 0 24 24"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="#A79FB8"/><path d="M16 9l6 6M22 9l-6 6" stroke="#A79FB8" stroke-width="2" stroke-linecap="round"/></svg>';
 function drawHearts(){var s='';for(var i=0;i<3;i++)s+=i<lives?HON:HOFF;$('hearts').innerHTML=s;}
-function drawSound(){$('soundbtn').innerHTML=(soundOn?SON:SOFF)+(soundOn?'Ø§ÙØµÙØª':'ØµØ§ÙØª');}
+function drawSound(){$('soundbtn').innerHTML=(soundOn?SON:SOFF)+(soundOn?'الصوت':'صامت');}
 function drawCount(){$('cnt').textContent=ar(collected)+' / '+ar(L.n);$('goalbar').firstChild.style.width=Math.round(collected/L.n*100)+'%';}
 function tlabel(){return tH?target+tH:target;}
 
-/* ---------- Ø§ÙÙÙØ¸ÙØ± ---------- */
+/* ---------- المنظور ---------- */
 function hz(){return H*.30}
 function py(p){var h=hz();return h+(H-h)*p}
 function lx(laneF,p){var half=W*(.07+.40*p);return W/2+(laneF-1)*half*.68*2*.5*1.5/1.5*1.0;}
@@ -175,7 +175,7 @@ function laneX(laneF,p){var step=W*(.07+.255*p);return W/2+(laneF-1)*step;}
 function sc(p){return .3+.8*p}
 function pOf(t){return t*t*.85+t*.15}
 
-/* ---------- Ø§ÙØ¹ÙØ§ØµØ± ---------- */
+/* ---------- العناصر ---------- */
 function mk(ch,hh){return {k:'L',ch:ch,h:hh||''};}
 function spawnRow(){
   rows++;
@@ -194,7 +194,7 @@ function spawnRow(){
 function distractor(){
   var ch=target,hh=tH,guard=0;
   while(ch===target&&hh===tH&&guard++<20){
-    if(tH){ /* ÙÙØ³ Ø§ÙØ­Ø±Ù Ø¨Ø­Ø±ÙØ© ÙØ®ØªÙÙØ© ØºØ§ÙØ¨ÙØ§ */
+    if(tH){ /* نفس الحرف بحركة مختلفة غالبًا */
       var hs=[FATHA,DAMMA,KASRA].filter(function(x){return x!==tH});
       if(Math.random()<.7){ch=target;hh=hs[Math.floor(Math.random()*2)];}
       else{ch=ALL[Math.floor(Math.random()*ALL.length)];hh=[FATHA,DAMMA,KASRA][Math.floor(Math.random()*3)];}
@@ -206,18 +206,18 @@ function distractor(){
   return {ch:ch,h:hh};
 }
 
-/* ---------- Ø¬ÙÙØ© ---------- */
+/* ---------- جولة ---------- */
 function showLevelIntro(){
   L=levelDef(lvIdx);target=L.l;tH=L.h||'';
-  $('lvltitle').textContent='Ø§ÙÙØ³ØªÙÙ '+ar(lvIdx+1);
+  $('lvltitle').textContent='المستوى '+ar(lvIdx+1);
   $('lvlbig').textContent=tlabel();
-  $('lvlmsg').textContent=(tH?'Ø§Ø­Ø±Øµ Ø¹ÙÙ Ø§ÙØ­Ø±ÙØ©: ':'')+'Ø§Ø¬ÙØ¹ '+ar(L.n)+' ÙØ±Ø§Øª ÙÙ '+(tH?'Ø§ÙØ­Ø±Ù ÙØ¹ Ø§Ù'+HNAME[tH]:'ÙØ°Ø§ Ø§ÙØ­Ø±Ù')+' ÙØªÙÙØ²'+(NAMES[target]?'. Ø§Ø³ÙÙ: '+NAMES[target]:'');
+  $('lvlmsg').textContent=(tH?'احرص على الحركة: ':'')+'اجمع '+ar(L.n)+' مرات من '+(tH?'الحرف مع ال'+HNAME[tH]:'هذا الحرف')+' لتفوز'+(NAMES[target]?'. اسمه: '+NAMES[target]:'');
   $('lvlov').hidden=false;setTimeout(sayName,250);
 }
 function beginRun(){
   $('lvlov').hidden=true;
   items=[];rows=0;rowDist=0;dist=0;collected=0;lives=3;lane=1;px=1;jumpT=-1;speed=L.v;sinceTarget=0;parts=[];hurtT=0;shake=0;inv=0;
-  $('tl').textContent=tlabel();drawHearts();drawSound();drawCount();$('lvn').textContent='Ø§ÙÙØ³ØªÙÙ '+ar(lvIdx+1);
+  $('tl').textContent=tlabel();drawHearts();drawSound();drawCount();$('lvn').textContent='المستوى '+ar(lvIdx+1);
   $('pausebtn').hidden=false;$('soundbtn').hidden=false;
   running=true;paused=false;last=performance.now();
   $('hint').style.opacity=.75;setTimeout(function(){$('hint').style.opacity=0;},4500);
@@ -231,9 +231,9 @@ function endRun(won){
   for(var i=0;i<3;i++)sr+=(i<stars)?'<svg viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="#FFD25E" stroke="#4A3B6E" stroke-width="1.6" stroke-linejoin="round"/></svg>'
    :'<svg viewBox="0 0 24 24"><path d="M12 3 L14.5 8.5 L20.5 9.2 L16 13.2 L17.3 19 L12 16 L6.7 19 L8 13.2 L3.5 9.2 L9.5 8.5 z" fill="none" stroke="#C9C2DA" stroke-width="1.6" stroke-linejoin="round"/></svg>';
   $('starsrow').innerHTML=sr;
-  $('endtitle').textContent=won?'Ø±Ø§Ø¦Ø¹! ÙØ²Øª Ø¨Ø§ÙÙØ³ØªÙÙ':'Ø§ÙØªÙØª Ø§ÙÙØ­Ø§ÙÙØ©';
-  $('endmsg').textContent=won?'ÙØ¬ÙÙÙ: '+ar(stars)+'. Ø§ÙÙØ³ØªÙÙ Ø§ÙØªØ§ÙÙ Ø£Ø³Ø±Ø¹ ÙÙÙÙÙØ§':'ÙØ§ Ø¨Ø£Ø³Ø ÙÙ ÙØ­Ø§ÙÙØ© ØªØ¬Ø¹ÙÙ Ø£ÙÙÙ. Ø¬Ø±ÙØ¨ ÙØ±Ø© Ø£Ø®Ø±Ù';
-  $('againbtn').textContent=won?'Ø§ÙÙØ³ØªÙÙ Ø§ÙØªØ§ÙÙ':'Ø£Ø¹Ø¯ Ø§ÙÙØ­Ø§ÙÙØ©';
+  $('endtitle').textContent=won?'رائع! فزت بالمستوى':'انتهت المحاولة';
+  $('endmsg').textContent=won?'نجومك: '+ar(stars)+'. المستوى التالي أسرع قليلًا':'لا بأس، كل محاولة تجعلك أقوى. جرّب مرة أخرى';
+  $('againbtn').textContent=won?'المستوى التالي':'أعد المحاولة';
   $('endov').hidden=false;
   if(won){lvIdx++;sfx('win');vib([40,40,80]);}
   window._won=won;
@@ -241,7 +241,7 @@ function endRun(won){
 function hurt(msg){if(inv>0)return;inv=1.0;lives--;hurtT=.5;shake=.35;drawHearts();sfx('bad');vib(120);toast(msg);if(lives<=0)endRun(false);}
 function burst(x,y,col){for(var i=0;i<10;i++){var a=Math.random()*6.283,s=60+Math.random()*120;parts.push({x:x,y:y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-60,life:.5,c:col});}}
 
-/* ---------- ØªØ­Ø¯ÙØ« ---------- */
+/* ---------- تحديث ---------- */
 function update(dt){
   px+=(lane-px)*Math.min(1,dt*14);
   if(jumpT>=0){jumpT+=dt;if(jumpT>=JUMP_DUR)jumpT=-1;}
@@ -252,18 +252,18 @@ function update(dt){
   for(var i=items.length-1;i>=0;i--){
     var it=items[i];it.t+=speed*dt;
     if(!it.done&&it.t>PT-.05&&it.t<PT+.045&&Math.abs(px-it.lane)<.55){
-      if(it.k==='H'){ if(jh<.4){it.done=true;burst(W/2,H*.7,'#B08968');hurt('Ø­Ø§Ø¬Ø²! Ø§ÙÙØ² ÙÙÙÙ');} }
+      if(it.k==='H'){ if(jh<.4){it.done=true;burst(W/2,H*.7,'#B08968');hurt('حاجز! اقفز فوقه');} }
       else{it.done=true;
-        if(it.good){collected++;sfx('pop');vib(15);var p=pOf(it.t);burst(laneX(it.lane,p),py(p)-40,'#FFD25E');drawCount();toast('Ø£Ø­Ø³ÙØª!');
+        if(it.good){collected++;sfx('pop');vib(15);var p=pOf(it.t);burst(laneX(it.lane,p),py(p)-40,'#FFD25E');drawCount();toast('أحسنت!');
           if(collected>=L.n){endRun(true);return;}}
-        else{burst(laneX(it.lane,pOf(it.t)),py(pOf(it.t))-40,'#F5806A');hurt('ÙÙØ³ ÙØ°Ø§ Ø§ÙØ­Ø±Ù');if(!running)return;}}
+        else{burst(laneX(it.lane,pOf(it.t)),py(pOf(it.t))-40,'#F5806A');hurt('ليس هذا الحرف');if(!running)return;}}
     }
     if(it.t>1.12)items.splice(i,1);
   }
   for(var j=parts.length-1;j>=0;j--){var q=parts[j];q.life-=dt;q.x+=q.vx*dt;q.y+=q.vy*dt;q.vy+=300*dt;if(q.life<=0)parts.splice(j,1);}
 }
 
-/* ---------- Ø±Ø³Ù ---------- */
+/* ---------- رسم ---------- */
 function isDark(){return document.documentElement.getAttribute('data-theme')==='dark';}
 function draw(){
   ctx.setTransform(DPR,0,0,DPR,0,0);
@@ -276,28 +276,28 @@ function draw(){
     ctx.fillStyle='#fff';for(var s=0;s<14;s++){ctx.globalAlpha=.4+.4*((s*7)%3)/2;ctx.fillRect((s*97)%W,(s*53)%(h*.8),2,2);}ctx.globalAlpha=1;}
   else{var sg=ctx.createRadialGradient(W*.78,h*.4,2,W*.78,h*.4,28);sg.addColorStop(0,'#FFE9A8');sg.addColorStop(1,'#FFD25E');ctx.fillStyle=sg;ctx.beginPath();ctx.arc(W*.78,h*.4,24,0,6.283);ctx.fill();
     ctx.fillStyle='rgba(255,255,255,.9)';var cx=(dist*20)%(W+120)-60;cl(cx,h*.35,1);cl((cx+W*.6)%(W+120)-60,h*.6,.7);}
-  /* ØªÙØ§Ù */
+  /* تلال */
   ctx.fillStyle=dk?'#16304A':'#A9DBB5';ctx.beginPath();ctx.moveTo(-10,h);for(var x=-10;x<=W+10;x+=20)ctx.lineTo(x,h-10-8*Math.sin(x*.03)-5*Math.sin(x*.07));ctx.lineTo(W+10,h);ctx.fill();
-  /* Ø¹Ø´Ø¨ */
+  /* عشب */
   var gg=ctx.createLinearGradient(0,h,0,H);if(dk){gg.addColorStop(0,'#1B4A3B');gg.addColorStop(1,'#14382D');}else{gg.addColorStop(0,'#B7E3A0');gg.addColorStop(1,'#8FCB7A');}
   ctx.fillStyle=gg;ctx.fillRect(-10,h,W+20,H-h+10);
-  /* Ø§ÙØ·Ø±ÙÙ */
+  /* الطريق */
   var tw=W*.045*2*1.5,bw=(W*.30)*3*.5*1.0;
   var roadTop=W*.07*1.5,roadBot=W*.30*1.5;
   ctx.fillStyle=dk?'#2B3B52':'#E9D9B8';
   ctx.beginPath();ctx.moveTo(W/2-roadTop,h);ctx.lineTo(W/2+roadTop,h);ctx.lineTo(W/2+roadBot*1.0+W*.0,H);ctx.lineTo(W/2-roadBot,H);ctx.closePath();ctx.fill();
   ctx.strokeStyle=dk?'#8196AA':'#fff';ctx.lineWidth=3;
   [-1.5,1.5].forEach(function(o){ctx.beginPath();ctx.moveTo(laneX(1+o,0),py(0));ctx.lineTo(laneX(1+o,1.05),py(1.05));ctx.stroke();});
-  /* Ø®Ø·ÙØ· ÙØªÙØ·Ø¹Ø© ØªØªØ­Ø±Ù */
+  /* خطوط متقطعة تتحرك */
   ctx.strokeStyle=dk?'rgba(232,238,245,.55)':'rgba(255,255,255,.85)';
   for(var o2=-.5;o2<=.5;o2+=1){for(var d=0;d<8;d++){var t0=((d/8)+(dist*.9)%(1/8)),t1=t0+.045;var p0=pOf(Math.min(t0,1)),p1=pOf(Math.min(t1,1.05));
     ctx.lineWidth=1+4*p0;ctx.beginPath();ctx.moveTo(laneX(1+o2,p0),py(p0));ctx.lineTo(laneX(1+o2,p1),py(p1));ctx.stroke();}}
-  /* Ø§ÙØ¹ÙØ§ØµØ± ÙØ§ÙØ´Ø®ØµÙØ© Ø¨Ø§ÙØªØ±ØªÙØ¨ */
+  /* العناصر والشخصية بالترتيب */
   var list=items.slice().sort(function(a,b){return a.t-b.t});
   var drawnP=false;
   for(var i=0;i<list.length;i++){var it=list[i];if(!drawnP&&it.t>PT){drawPlayer();drawnP=true;}drawItem(it);}
   if(!drawnP)drawPlayer();
-  /* Ø¬Ø²ÙØ¦Ø§Øª */
+  /* جزيئات */
   for(var j=0;j<parts.length;j++){var q=parts[j];ctx.globalAlpha=Math.max(0,q.life*2);ctx.fillStyle=q.c;ctx.beginPath();ctx.arc(q.x,q.y,4,0,6.283);ctx.fill();}ctx.globalAlpha=1;
   if(hurtT>0){ctx.fillStyle='rgba(245,128,106,'+(hurtT*.5)+')';ctx.fillRect(0,0,W,H);}
 }
@@ -344,11 +344,11 @@ function frame(t){
   draw();requestAnimationFrame(frame);
 }
 
-/* ---------- Ø§ÙØªØ­ÙÙ ---------- */
+/* ---------- التحكم ---------- */
 function moveL(){if(!running||paused)return;lane=Math.max(0,lane-1);}
 function moveR(){if(!running||paused)return;lane=Math.min(2,lane+1);}
 function jump(){if(!running||paused||jumpT>=0)return;jumpT=0;sfx('jump');}
-/* Ø§ÙÙØ§Ø¹Ø¯Ø©: Ø§ÙÙØ³Ø§Ø±Ø§Øª Ø¨ØªØ±ØªÙØ¨ Ø¨ØµØ±Ù ÙÙ Ø§ÙÙØ³Ø§Ø± ÙÙÙÙÙÙ Ø¹ÙÙ Ø§ÙØ´Ø§Ø´Ø© */
+/* القاعدة: المسارات بترتيب بصري من اليسار لليمين على الشاشة */
 var sx=0,sy=0,sid=null,done=false;
 var stage=$('stage');
 stage.addEventListener('touchstart',function(e){if(e.target.closest&&e.target.closest('button,#target'))return;var t=e.changedTouches[0];sx=t.clientX;sy=t.clientY;sid=t.identifier;done=false;},{passive:true});
@@ -375,10 +375,10 @@ document.addEventListener('visibilitychange',function(){if(document.hidden&&runn
 $('startbtn').onclick=function(){$('startov').hidden=true;showLevelIntro();};
 $('gobtn').onclick=beginRun;
 $('againbtn').onclick=function(){$('endov').hidden=true;showLevelIntro();};
-/* Ø®Ø· Cairo Ø¬Ø§ÙØ² ÙØ¨Ù Ø£ÙÙ Ø±Ø³Ù */
-try{document.fonts.load("800 30px Cairo","Ø¨Ù");}catch(e){}
+/* خط Cairo جاهز قبل أول رسم */
+try{document.fonts.load("800 30px Cairo","بَ");}catch(e){}
 size();L=levelDef(lvIdx);target=L.l;tH=L.h||'';
-/* ÙØ§Ø¬ÙØ© ÙÙØ§Ø®ØªØ¨Ø§Ø± Ø§ÙØ¢ÙÙ */
+/* واجهة للاختبار الآلي */
 window.RG={state:function(){return {running:running,paused:paused,lane:lane,px:px,jumping:jumpT>=0,lives:lives,collected:collected,need:L.n,level:lvIdx,target:target+tH,items:items.map(function(i){return {k:i.k,ch:i.ch,h:i.h,good:i.good,lane:i.lane,t:i.t}}),won:window._won}},
   left:moveL,right:moveR,jump:jump,swipe:swipe,speedUp:function(v){speed=v;},prog:function(){return prog;}};
 })();
