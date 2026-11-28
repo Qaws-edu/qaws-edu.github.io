@@ -295,12 +295,18 @@ function vLesson(si,u,l){
   if(ls.body) media += '<section class="infocard"><div class="cmsbody">'+ls.body+'</div></section>';
   const sk = '<section class="infocard"><h3>ملخص الدرس</h3><div class="skl"><i></i><i></i><i class="s"></i></div></section>'
     +'<section class="infocard"><h3>الكلمات الجديدة</h3><div class="tiles"><i></i><i></i><i></i><i></i></div></section>';
+  const prevL = l>0 ? l-1 : null, nextL = l < (un.lessons.length-1) ? l+1 : null;
+  const pn = '<div class="lesson-nav">'
+    + (prevL!=null ? '<a class="lnav" href="#/lesson/'+si+'/'+u+'/'+prevL+'">→ الدرس السابق</a>' : '<span class="lnav ghost"></span>')
+    + (nextL!=null ? '<a class="lnav" href="#/lesson/'+si+'/'+u+'/'+nextL+'">الدرس التالي ←</a>' : '<span class="lnav ghost"></span>')
+    + '</div>';
   return header({back:'#/stage/'+si, title:st.name})
   +'<section class="strip"><div class="stl"><b>'+un.name+'</b><span>'+ls.title+' · '+ls.ty+'</span></div><div class="steps">'+stepper(si,u,l,false)+'</div></section>'
-  +BAND
-  +'<div class="lesson-body">'+media+sk
+  +'<div class="lesson-body"><h1 class="lesson-title">'+ls.title+'</h1><div class="lesson-sub">'+ls.ty+'</div>'+media
+  +'<section class="acard companion-sm"><div class="abub">ركّزي على الحرف الجديد، والباقي هيجي مع التدريب.</div><img class="aimg" src="assets/asmaa/asmaa-full.png?v=20261128-6" alt="الأستاذة أسماء"></section>'
+  +sk
   +'<a class="gbtn" href="letters-game.html">'+TILE_LETTER+'<span>العب لعبة الحروف</span></a>'
-  +'<button class="cta green" id="finish">أنهيتُ الدرس ✓</button>'
+  +pn+'<button class="cta green" id="finish">أنهيتُ الدرس ✓</button>'
   +'<a class="link" href="#/stage/'+si+'">العودة إلى '+un.name+'</a></div>'
   +GROUND+nav('stages');
 }
