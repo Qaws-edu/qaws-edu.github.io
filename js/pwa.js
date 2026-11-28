@@ -34,6 +34,7 @@
     btn.querySelector('.x').onclick = function () { close(ios ? 14 : 7); };
     if (action) btn.querySelector('.go').onclick = action;
     document.body.appendChild(btn);
+    if (location.hash.indexOf('/lesson/') >= 0) btn.style.display = 'none';
   }
   window.addEventListener('beforeinstallprompt', function (e) {
     e.preventDefault(); deferred = e;
@@ -42,6 +43,7 @@
     });
   });
   window.addEventListener('appinstalled', function () { close(365); });
+  window.addEventListener('hashchange', function () { if (btn) btn.style.display = (location.hash.indexOf('/lesson/') >= 0) ? 'none' : ''; });
   if (ios) setTimeout(function () {
     bar('للتثبيت: اضغط زر المشاركة ثم «إضافة إلى الشاشة الرئيسية»', null);
   }, 2500);
