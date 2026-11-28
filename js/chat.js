@@ -236,9 +236,20 @@ function mountOwnerThreads(){
   db.collection('students').orderBy('lastActive','desc').limit(50).get().then(snap=>{
     const el=document.querySelector('#owlist'); if(!el) return;
     if(snap.empty){ el.innerHTML='<div class="emptynote">لا توجد أسئلة بعد</div>'; return; }
+    const DEFAULTS=['ملفي','طالب','','مستخدم'];
     el.innerHTML=snap.docs.map(d=>{
       const s=d.data();
-      return '<button class="prow owrow" data-t="'+d.id+'" data-n="'+esc(s.name||'طالب')+'"><div class="pm"><h3>'+esc(s.name||'طالب')+'</h3></div><div class="go">‹</div></button>';
+      const raw=(s.name||'').trim();
+      const code=String(d.id||'').slice(-4).toUpperCase();
+      let when='';
+      try{ const ts=s.lastActive&&s.lastActive.toDate?s.lastActive.toDate():null;
+        if(ts) when=ts.toLocaleDateString('ar-EG',{day:'numeric',month:'numeric'}); }catch(e){}
+      const anon=(!raw||DEFAULTS.indexOf(raw)>=0);
+      const label=anon?('طالب '+code):raw;
+      const sub=anon?when:('#'+code+(when?' · '+when:''));
+      return '<button class="prow owrow" data-t="'+d.id+'" data-n="'+esc(label)+'"><div class="pm"><h3>'+esc(label)+'</h3>'
+        +(sub?'<p style="margin:0;font-size:11.5px;opacity:.6">'+esc(sub)+'</p>':'')
+        +'</div><div class="go">‹</div></button>';
     }).join('');
     document.querySelectorAll('.owrow').forEach(b=>b.onclick=()=>mountOwnerThread(b.dataset.t, b.dataset.n));
   }).catch(()=>{ const el=document.querySelector('#owlist'); if(el) el.innerHTML='<div class="chatload">تعذّر التحميل.</div>'; });
