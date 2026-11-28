@@ -40,7 +40,7 @@ function mountList(){
     +'<section class="banner"><h1>الاختبارات</h1><p>اختبر نفسك واحصل على نتيجتك فورًا</p></section>'
     +U().acard('ركّز جيدًا، أنت قادر على ذلك')
     +'<div class="content">'+cards
-    +'<a class="ownerlink" href="#/exams-admin">دخول المعلّمة — إدارة الاختبارات</a></div>'
+    +'</div>'
     +U().GROUND+U().nav('exams');
 }
 
