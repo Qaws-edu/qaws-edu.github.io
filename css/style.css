@@ -10,6 +10,7 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'Tajawal',sans-serif;font-weight:500;background:#0E5A6E;color:#fff;user-select:none}
+html,body{overflow-x:clip}
 .wrap{max-width:430px;margin:0 auto;min-height:100vh;position:relative;
   background:radial-gradient(120% 40% at 70% 0%,rgba(255,255,255,.28),transparent 60%),linear-gradient(180deg,var(--t1) 0%,var(--t2) 55%,var(--t3) 100%);box-shadow:0 0 30px rgba(0,0,0,.3)}
 a{text-decoration:none;color:inherit}
